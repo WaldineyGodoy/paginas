@@ -1,6 +1,0 @@
-{
-  "name": "B2W Invest Landing Page",
-  "description": "Guia completo para investir no setor de energia com segurança, com checkout integrado à Hotmart.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
