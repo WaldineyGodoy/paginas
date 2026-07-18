@@ -716,5 +716,49 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
   tick();setInterval(tick,1000);
 })();
 </script>
+
+<!-- Eventos de conversão do Pixel -->
+<script>
+(function(){
+  if(typeof fbq!=='function')return;
+
+  var produto={
+    content_name:'Workshop Usinas de Investimento',
+    content_category:'Workshop',
+    content_ids:['workshop-usinas-29-07'],
+    content_type:'product',
+    value:47.00,
+    currency:'BRL'
+  };
+
+  // ViewContent — dispara com engajamento real (15s OU 25% de rolagem),
+  // não na simples chegada, para não virar uma cópia do PageView.
+  var viewDisparado=false;
+  function dispararViewContent(){
+    if(viewDisparado)return;
+    viewDisparado=true;
+    fbq('track','ViewContent',produto);
+  }
+  setTimeout(dispararViewContent,15000);
+  window.addEventListener('scroll',function(){
+    var alturaRolavel=document.documentElement.scrollHeight-window.innerHeight;
+    if(alturaRolavel>0&&window.scrollY/alturaRolavel>=0.25)dispararViewContent();
+  },{passive:true});
+
+  // InitiateCheckout — dispara no clique de qualquer um dos CTAs da Hotmart.
+  document.querySelectorAll('a[href*="hotmart.com"]').forEach(function(link){
+    link.addEventListener('click',function(){
+      fbq('track','InitiateCheckout',{
+        content_name:produto.content_name,
+        content_ids:produto.content_ids,
+        content_type:'product',
+        num_items:1,
+        value:produto.value,
+        currency:produto.currency
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>
