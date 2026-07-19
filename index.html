@@ -4,7 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Workshop Usinas de Investimento — Segurança e Retorno Real | B2W Invest</title>
-<meta name="description" content="Workshop ao vivo pelo Zoom: aprenda a investir em usinas de energia com segurança e retorno real. Dia 08/07 às 20h. Aula + tira-dúvidas. Apenas R$67,00.">
+<meta name="description" content="Workshop ao vivo pelo Zoom: aprenda a investir em usinas de energia com segurança e retorno real. Dia 29/07 às 20h. Aula + tira-dúvidas. Apenas R$47,00.">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '27234731879517718');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=27234731879517718&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -38,6 +55,28 @@
   --shadow-brand:0 4px 20px rgba(242,107,0,.35);--shadow-gold:0 4px 20px rgba(212,175,55,.3);
   --ease-smooth:cubic-bezier(.4,0,.2,1);--ease-spring:cubic-bezier(.34,1.56,.64,1);
 }
+
+/* ============================================================
+   ANIMAÇÕES E RAIOS DE ENERGIA
+   ============================================================ */
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes pulse-glow { 0%, 100% { filter: drop-shadow(0 0 4px rgba(242,107,0,0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(242,107,0,0.8)); } }
+@keyframes spin-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.svg-anim-float { animation: float 3s ease-in-out infinite; }
+.svg-anim-pulse { animation: pulse-glow 2.5s ease-in-out infinite; }
+.svg-anim-spin { animation: spin-slow 8s linear infinite; }
+
+.energy-rays-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.ray {
+  position: absolute; width: 2px; height: 200px; top: -200px;
+  background: linear-gradient(to bottom, transparent, var(--color-brand), var(--color-gold), transparent);
+  opacity: 0; filter: blur(3px) drop-shadow(0 0 8px var(--color-brand)); animation: shoot 8s infinite ease-in;
+}
+.ray:nth-child(1) { left: 15%; animation-duration: 7s; }
+.ray:nth-child(2) { left: 35%; animation-delay: 2s; animation-duration: 9s; height: 150px; }
+.ray:nth-child(3) { left: 75%; animation-delay: 5s; animation-duration: 8s; }
+.ray:nth-child(4) { left: 88%; animation-delay: 1s; animation-duration: 6s; height: 250px; }
+@keyframes shoot { 0% { transform: translateY(-200px); opacity: 0; } 10% { opacity: 0.8; } 80% { opacity: 0.6; } 100% { transform: translateY(2000px); opacity: 0; } }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -133,10 +172,13 @@ img{max-width:100%;display:block}
 
 /* Card de informação do evento (lado direito do hero) */
 .event-card{
-  position:relative;background:linear-gradient(150deg,#14183A,#1C2248);
-  border:1px solid rgba(212,175,55,.28);border-radius:var(--radius-2xl);
-  padding:32px;box-shadow:var(--shadow-xl);overflow:hidden;
+  position:relative;background:linear-gradient(150deg,rgba(20,24,58,.6),rgba(28,34,72,.6));
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(212,175,55,.4);border-radius:var(--radius-2xl);
+  padding:32px;box-shadow:0 16px 64px rgba(0,0,0,.4);overflow:hidden;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s;
 }
+.event-card:hover{transform:scale(1.02);box-shadow:0 20px 80px rgba(242,107,0,.25)}
 .event-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--color-brand),var(--color-gold))}
 .event-card::after{content:'◈';position:absolute;right:-22px;top:-26px;font-size:140px;opacity:.04;color:var(--color-gold)}
 .ev-live{
@@ -189,11 +231,13 @@ section{padding:84px 0}
 .pains{background:var(--color-bg-subtle)}
 .pain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;max-width:920px;margin-left:auto;margin-right:auto}
 .pain-item{
-  display:flex;align-items:flex-start;gap:14px;background:var(--color-surface);
-  border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:20px 22px;
-  transition:border-color .2s,transform .2s;
+  display:flex;align-items:flex-start;gap:14px;background:rgba(20,24,58,.4);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.05);border-radius:var(--radius-lg);padding:20px 22px;
+  box-shadow:0 8px 32px rgba(0,0,0,.2);
+  transition:border-color .4s cubic-bezier(.34,1.56,.64,1),transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s;
 }
-.pain-item:hover{border-color:var(--color-brand);transform:translateX(4px)}
+.pain-item:hover{border-color:var(--color-brand);transform:translateX(4px) scale(1.03);box-shadow:0 12px 40px rgba(242,107,0,.15);z-index:1}
 .pain-x{width:30px;height:30px;border-radius:50%;background:var(--color-brand-soft);color:var(--color-brand);display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:15px}
 .pain-item p{font-size:16px;color:var(--color-ink-secondary);line-height:1.5}
 @media(max-width:720px){.pain-grid{grid-template-columns:1fr}}
@@ -202,11 +246,14 @@ section{padding:84px 0}
 .steps{display:flex;flex-direction:column;gap:28px;margin-top:56px}
 .step{
   display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;
-  background:linear-gradient(135deg,#14183A,#10142F);border:1px solid var(--color-border);
+  background:linear-gradient(135deg,rgba(20,24,58,.5),rgba(16,20,47,.5));
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.08);
   border-radius:var(--radius-2xl);padding:34px 38px;position:relative;overflow:hidden;
-  transition:border-color .25s,box-shadow .25s;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+  transition:border-color .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s,transform .4s cubic-bezier(.34,1.56,.64,1);
 }
-.step:hover{border-color:rgba(212,175,55,.4);box-shadow:var(--shadow-lg)}
+.step:hover{border-color:rgba(212,175,55,.6);box-shadow:0 16px 48px rgba(212,175,55,.15);transform:scale(1.02);z-index:2}
 .step-num{
   font-family:var(--font-display);font-size:64px;font-weight:800;line-height:1;
   width:108px;height:108px;border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;
@@ -223,10 +270,12 @@ section{padding:84px 0}
 .benefits{background:linear-gradient(180deg,#070A1E,#0E1230)}
 .ben-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
 .ben{
-  background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);
-  padding:28px 24px;transition:transform .2s,border-color .2s,box-shadow .2s;
+  background:rgba(20,24,58,.3);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-xl);
+  padding:28px 24px;box-shadow:0 8px 32px rgba(0,0,0,.2);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1),border-color .4s,box-shadow .4s;
 }
-.ben:hover{transform:translateY(-4px);border-color:var(--color-gold);box-shadow:var(--shadow-gold)}
+.ben:hover{transform:translateY(-4px) scale(1.04);border-color:var(--color-gold);box-shadow:0 12px 40px rgba(212,175,55,.2);z-index:2}
 .ben-ico{width:50px;height:50px;border-radius:var(--radius-lg);background:var(--color-gold-soft);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px}
 .ben h4{font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:8px}
 .ben p{font-size:14px;color:var(--color-ink-muted);line-height:1.55}
@@ -255,10 +304,13 @@ section{padding:84px 0}
     #0E1230;
 }
 .offer-card{
-  max-width:620px;margin:0 auto;background:linear-gradient(160deg,#14183A,#1C2248);
-  border:1.5px solid rgba(212,175,55,.3);border-radius:var(--radius-2xl);
-  padding:48px 44px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow-xl);
+  max-width:620px;margin:0 auto;background:linear-gradient(160deg,rgba(20,24,58,.7),rgba(28,34,72,.7));
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1.5px solid rgba(212,175,55,.4);border-radius:var(--radius-2xl);
+  padding:48px 44px;text-align:center;position:relative;overflow:hidden;box-shadow:0 16px 64px rgba(0,0,0,.5);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s;
 }
+.offer-card:hover{transform:scale(1.02);box-shadow:0 24px 80px rgba(212,175,55,.25)}
 .offer-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--color-brand),var(--color-gold))}
 .offer-flag{display:inline-block;background:var(--color-brand);color:#fff;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 18px;border-radius:var(--radius-full);margin-bottom:24px}
 .offer-from{font-size:18px;color:var(--color-ink-muted);margin-bottom:4px}
@@ -275,14 +327,16 @@ section{padding:84px 0}
 .guarantee .shield{width:42px;height:42px;border-radius:50%;background:var(--color-gold-soft);border:1.5px solid var(--color-gold);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 @media(max-width:560px){.offer-card{padding:36px 22px}.offer-now .big{font-size:64px}}
 
-/* COMO FUNCIONA — 3 passos pós compra */
+/* COMO FUNCIONA — 4 passos pós compra */
 .how{background:var(--color-bg-subtle)}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
-.how-item{text-align:center;padding:18px}
-.how-ico{width:74px;height:74px;border-radius:var(--radius-xl);background:var(--color-surface);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px;position:relative}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:50px}
+.how-item{text-align:center;padding:24px 18px;background:rgba(20,24,58,.3);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius-xl);box-shadow:0 8px 24px rgba(0,0,0,.15);transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s}
+.how-item:hover{transform:translateY(-6px) scale(1.04);box-shadow:0 16px 40px rgba(242,107,0,.15);border-color:rgba(242,107,0,.3);z-index:2}
+.how-ico{width:74px;height:74px;border-radius:var(--radius-xl);background:rgba(20,24,58,.6);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px;position:relative;box-shadow:inset 0 2px 10px rgba(255,255,255,.05)}
 .how-ico::after{content:attr(data-n);position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--color-brand);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:var(--font-display)}
 .how-item h4{font-family:var(--font-display);font-size:19px;font-weight:700;margin-bottom:8px}
 .how-item p{font-size:15px;color:var(--color-ink-muted);line-height:1.55}
+@media(max-width:960px){.how-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.how-grid{grid-template-columns:1fr;gap:32px}}
 
 /* INSTRUTOR */
@@ -308,9 +362,12 @@ section{padding:84px 0}
 /* 2 ESCOLHAS */
 .choices{background:var(--color-bg-subtle)}
 .choice-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;margin-top:50px}
-.choice{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:32px 30px}
-.choice.bad{border-color:rgba(239,68,68,.3)}
-.choice.good{border-color:rgba(34,197,94,.4);background:linear-gradient(160deg,#14183A,rgba(34,197,94,.06))}
+.choice{background:rgba(20,24,58,.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius-xl);padding:32px 30px;box-shadow:0 8px 32px rgba(0,0,0,.2);transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s}
+.choice:hover{transform:scale(1.03);box-shadow:0 12px 48px rgba(0,0,0,.3);z-index:2}
+.choice.bad{border-color:rgba(239,68,68,.4);background:linear-gradient(160deg,rgba(20,24,58,.5),rgba(239,68,68,.05))}
+.choice.bad:hover{box-shadow:0 12px 48px rgba(239,68,68,.15)}
+.choice.good{border-color:rgba(34,197,94,.5);background:linear-gradient(160deg,rgba(20,24,58,.5),rgba(34,197,94,.1))}
+.choice.good:hover{box-shadow:0 12px 48px rgba(34,197,94,.15)}
 .choice-ico{font-size:40px;margin-bottom:16px}
 .choice h4{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:12px}
 .choice.bad h4{color:#F87171}
@@ -351,11 +408,15 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
 </style>
 </head>
 <body>
+<div class="energy-rays-container">
+  <div class="ray"></div><div class="ray"></div><div class="ray"></div><div class="ray"></div>
+</div>
 
 <!-- ===================== TOPBAR ===================== -->
 <header class="topbar">
   <div class="wrap topbar-inner">
     <div class="brand">
+      <img src="https://b2wenergia.com.br/wp-content/uploads/2025/12/Logo-Laranja-estreito.png" alt="B2W Invest Logo" style="height: 32px; width: auto;">
       <div class="brand-logo">B2W<span class="o"> Invest</span></div>
       <span class="brand-badge">◈ Workshop ao vivo</span>
     </div>
@@ -367,7 +428,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-left">
-      <span class="eyebrow"><span class="dot"></span> Vagas limitadas · Turma 08/07</span>
+      <span class="eyebrow"><span class="dot"></span> Vagas limitadas · Turma 29/07</span>
       <h1>Descubra como investir em <span class="hlo">usinas de energia</span> com <span class="hl">segurança e retorno real</span> — mesmo começando do zero.</h1>
       <p class="hero-lead">Um workshop ao vivo e direto ao ponto, onde você vai entender como transformar usinas de investimento em uma fonte de renda previsível, protegida da inflação e descorrelacionada da bolsa.</p>
       <div class="hero-pills">
@@ -375,14 +436,14 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
         <span class="pill"><span class="ck">✓</span> Busca renda previsível</span>
         <span class="pill"><span class="ck">✓</span> Cansou de perder na bolsa</span>
       </div>
-      <a href="https://go.hotmart.com/W106446079G?dp=1" target="_blank" rel="noopener" class="cta cta-pulse">Quero minha vaga por R$67</a>
+      <a href="https://go.hotmart.com/W106446079G?dp=1" target="_blank" rel="noopener" class="cta cta-pulse">Quero minha vaga por R$47</a>
       <p class="cta-sub">⚡ Acesso imediato ao link do Zoom após a inscrição.</p>
     </div>
 
     <!-- Card do evento -->
     <div class="event-card">
       <span class="ev-live"><span class="rec"></span> Transmissão ao vivo</span>
-      <div class="ev-date">08/07 <span>· quarta · 20h</span></div>
+      <div class="ev-date">29/07 <span>· quarta · 20h</span></div>
       <div class="ev-meta">
         <div class="ev-row"><span class="ev-ico gold">🎥</span><span>Ao vivo pelo <b>Zoom</b> — aula + tira-dúvidas</span></div>
         <div class="ev-row"><span class="ev-ico">⏱️</span><span>Cerca de <b>2 horas</b> de conteúdo prático</span></div>
@@ -390,7 +451,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
       </div>
       <div class="ev-price">
         <span class="from">R$197</span>
-        <span class="now"><small>R$</small>67<small>,00</small></span>
+        <span class="now"><small>R$</small>47<small>,00</small></span>
       </div>
       <a href="https://go.hotmart.com/W106446079G?dp=1" target="_blank" rel="noopener" class="cta">Garantir vaga agora</a>
       <p class="ev-note">Pagamento único · Pix ou cartão · 100% seguro</p>
@@ -403,7 +464,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
   <div class="wrap strip-inner">
     <div class="strip-item"><b>+12 anos</b> no mercado de energia</div>
     <div class="strip-item"><b>+300</b> alunos capacitados</div>
-    <div class="strip-item"><b>R$67</b> investimento único</div>
+    <div class="strip-item"><b>R$47</b> investimento único</div>
     <div class="strip-item"><b>7 dias</b> de garantia</div>
   </div>
 </div>
@@ -415,12 +476,12 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
     <h2 class="sec-title">O Workshop Usinas de Investimento é para você que…</h2>
     <p class="sec-lead">Se você se identifica com pelo menos 2 dos pontos abaixo, este workshop foi feito para o seu momento.</p>
     <div class="pain-grid">
-      <div class="pain-item"><span class="pain-x">✕</span><p>Deixa o dinheiro parado na poupança perdendo para a inflação</p></div>
-      <div class="pain-item"><span class="pain-x">✕</span><p>Quer começar a investir, mas tem medo de perder dinheiro</p></div>
-      <div class="pain-item"><span class="pain-x">✕</span><p>Já se frustrou com a montanha-russa da bolsa de valores</p></div>
-      <div class="pain-item"><span class="pain-x">✕</span><p>Busca uma renda passiva previsível, mês após mês</p></div>
-      <div class="pain-item"><span class="pain-x">✕</span><p>Ouve falar de investir em energia, mas não sabe por onde começar</p></div>
-      <div class="pain-item"><span class="pain-x">✕</span><p>Quer diversificar com ativos reais, fora do papel e da especulação</p></div>
+      <div class="pain-item"><span class="pain-x">✓</span><p>Sente que está perdendo oportunidades por total desconhecimento</p></div>
+      <div class="pain-item"><span class="pain-x">✓</span><p>Quer investir, mas não conhece o setor</p></div>
+      <div class="pain-item"><span class="pain-x">✓</span><p>Pensa em investir em imóvel porém procura outras oportunidades</p></div>
+      <div class="pain-item"><span class="pain-x">✓</span><p>Busca renda passiva previsível, mês após mês</p></div>
+      <div class="pain-item"><span class="pain-x">✓</span><p>A Oportunidade lhe atrai porém gosta de avaliar os riscos</p></div>
+      <div class="pain-item"><span class="pain-x">✓</span><p>Como começar com proteção e segurança nesse novo mercado</p></div>
     </div>
   </div>
 </section>
@@ -438,7 +499,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
         <div>
           <span class="step-tag">Passo 01 · Fundamento</span>
           <h3>Entenda o ativo: o que é uma usina de investimento</h3>
-          <p>Você vai compreender como funciona o mercado de geração de energia, por que ele gera contratos de longo prazo e o que torna esse ativo <b>previsível e protegido da inflação</b> — sem precisar ser engenheiro ou especialista.</p>
+          <p>Você vai compreender como funciona o mercado de geração de energia, por que ele gera contratos de longo prazo e o que torna esse ativo <b>previsível e protegido da inflação</b>, porque sua rentabilidade está acima da média do mercado — sem precisar ser engenheiro ou especialista.</p>
         </div>
       </div>
       <div class="step">
@@ -446,15 +507,22 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
         <div>
           <span class="step-tag">Passo 02 · Segurança</span>
           <h3>Analise o risco e blinde o seu capital</h3>
-          <p>Aqui você aprende os critérios para avaliar uma oportunidade real, identificar as <b>3 armadilhas mais comuns</b> e estruturar o investimento de forma segura. O foco é simples: proteger primeiro, render depois.</p>
+          <p>Aqui você aprende os critérios para avaliar uma oportunidade real, identificar as <b>3 armadilhas mais comuns</b> e estruturar o investimento de forma segura.<br>
+          Inversão de Fluxo e viabilidade técnica<br>
+          TUSD e Fio B (Taxas e tarifas que determinam o seu retorno líquido)<br>
+          O foco é simples: proteger primeiro, render depois.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">03</div>
         <div>
           <span class="step-tag">Passo 03 · Retorno</span>
-          <h3>Monte sua estratégia de retorno real</h3>
-          <p>Por fim, você vê na prática como projetar o retorno, reinvestir e construir uma <b>fonte de renda recorrente</b>. Você sai com um plano claro do próximo passo — e tira todas as dúvidas ao vivo comigo.</p>
+          <h3>Monte sua estratégia com os modelos de negócios necessários para um retorno real e com segurança jurídica</h3>
+          <p>Micro ou Mini-Geração<br>
+          Auto Consumo Remoto ou Geração Compartilhada.<br>
+          Associação, Consórcio ou Cooperativa.<br><br>
+          Por fim, você vê na prática como projetar o retorno, reinvestir e construir uma <b>fonte de renda recorrente</b>.<br>
+          Você sai com um plano claro do próximo passo — e tira todas as dúvidas ao vivo comigo.</p>
         </div>
       </div>
     </div>
@@ -465,16 +533,16 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
 <section class="benefits">
   <div class="wrap center">
     <span class="sec-tag">O resultado</span>
-    <h2 class="sec-title">Ao final do workshop, você vai conseguir…</h2>
+    <h2 class="sec-title">Ao final do workshop, você vai conseguir:</h2>
   </div>
   <div class="wrap">
     <div class="ben-grid">
-      <div class="ben"><div class="ben-ico">🛡️</div><h4>Investir com segurança</h4><p>Saber exatamente o que olhar antes de colocar um real em qualquer usina.</p></div>
-      <div class="ben"><div class="ben-ico">📈</div><h4>Buscar retorno real</h4><p>Entender como projetar ganhos acima da poupança e da inflação.</p></div>
-      <div class="ben"><div class="ben-ico">🔁</div><h4>Gerar renda recorrente</h4><p>Construir uma fonte de renda previsível com ativos reais.</p></div>
-      <div class="ben"><div class="ben-ico">🧭</div><h4>Ter um plano claro</h4><p>Sair com o próximo passo definido, sem achismo nem ansiedade.</p></div>
-      <div class="ben"><div class="ben-ico">⚖️</div><h4>Diversificar de verdade</h4><p>Reduzir a dependência da bolsa e da renda fixa tradicional.</p></div>
-      <div class="ben"><div class="ben-ico">💬</div><h4>Tirar suas dúvidas</h4><p>Perguntar ao vivo e sair sem nenhuma dúvida travando sua decisão.</p></div>
+      <div class="ben"><div class="ben-ico"><svg class="svg-anim-spin" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand)"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg></div><h4>Ter um plano claro</h4><p>Saber qual o mínimo necessário para começar nesse setor.</p></div>
+      <div class="ben"><div class="ben-ico"><svg class="svg-anim-pulse" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div><h4>Investir com segurança</h4><p>Quais os riscos e o que pode inviabilizar o seu empreendimento.</p></div>
+      <div class="ben"><div class="ben-ico"><svg class="svg-anim-float" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand)"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div><h4>Buscar retorno real</h4><p>Qual o modelo de negócio mais rentável — Micro Geração ou Mini Geração.</p></div>
+      <div class="ben"><div class="ben-ico"><svg class="svg-anim-float" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand)"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div><h4>Diversificar de verdade</h4><p>Como participar desse novo mercado com segurança, entendendo as regras do jogo.</p></div>
+      <div class="ben"><div class="ben-ico"><svg class="svg-anim-spin" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand)"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></div><h4>Gerar renda recorrente</h4><p>Qual a modalidade que garante receita mensal e recorrente: Autoconsumo remoto ou Geração Compartilhada.</p></div>
+      <div class="ben"><div class="ben-ico"><svg class="svg-anim-pulse" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><h4>Tirar suas dúvidas</h4><p>Esclarecer todas suas dúvidas com perguntas ao vivo que travam sua decisão.</p></div>
     </div>
   </div>
 </section>
@@ -485,7 +553,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
     <span class="sec-tag">Tudo que está incluído</span>
     <h2 class="sec-title">Veja o que você recebe ao garantir sua vaga</h2>
     <div class="agenda-box">
-      <div class="agenda-row"><span class="agenda-check">✓</span><div class="txt"><b>Workshop ao vivo pelo Zoom (08/07, 20h)</b><span>Aula completa e didática, com exemplos reais</span></div><span class="val">R$197</span></div>
+      <div class="agenda-row"><span class="agenda-check">✓</span><div class="txt"><b>Workshop ao vivo pelo Zoom (29/07, 20h)</b><span>Aula completa e didática, com exemplos reais</span></div><span class="val">R$197</span></div>
       <div class="agenda-row"><span class="agenda-check">✓</span><div class="txt"><b>Sessão de tira-dúvidas ao vivo</b><span>Pergunte e seja respondido na hora</span></div><span class="val">R$97</span></div>
       <div class="agenda-row"><span class="agenda-check">✓</span><div class="txt"><b>Acesso a ferramentas de análise de risco e projeção de retorno</b><span>Avalie a usina e simule seus ganhos antes de investir</span></div><span class="val">R$94</span></div>
     </div>
@@ -497,13 +565,13 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
   <div class="wrap center">
     <span class="sec-tag">A oferta</span>
     <h2 class="sec-title">Tudo isso por um <span class="hl">único investimento</span></h2>
-    <p class="sec-lead" style="margin-bottom:44px">O valor real de tudo que está incluído passa de <b style="color:#F87171;text-decoration:line-through">R$388</b>. Mas para a turma de 08/07, você garante por:</p>
+    <p class="sec-lead" style="margin-bottom:44px">O valor real de tudo que está incluído passa de <b style="color:#F87171;text-decoration:line-through">R$388</b>. Mas para a turma de 29/07, você garante por:</p>
 
     <div class="offer-card">
       <span class="offer-flag">Vagas limitadas</span>
       <div class="offer-from">De <s>R$197</s> por apenas</div>
-      <div class="offer-now"><span class="cur">R$</span><span class="big">67</span></div>
-      <div class="offer-inst">à vista — ou em até <b>9x de R$8,40</b> no cartão</div>
+      <div class="offer-now"><span class="cur">R$</span><span class="big">47</span></div>
+      <div class="offer-inst">à vista — ou em até <b>9x de R$5,89</b> no cartão</div>
       <span class="offer-once">✦ Pagamento único · acesso garantido</span>
 
       <div class="offer-list">
@@ -528,19 +596,24 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
     <h2 class="sec-title">Como você participa</h2>
     <div class="how-grid">
       <div class="how-item">
-        <div class="how-ico" data-n="1">📝</div>
+        <div class="how-ico" data-n="1"><svg class="svg-anim-float" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-gold)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
         <h4>Faça sua inscrição</h4>
-        <p>Garanta sua vaga por R$67 via Pix ou cartão em poucos cliques.</p>
+        <p>Garanta sua vaga por R$47 via Pix ou cartão em poucos cliques.</p>
       </div>
       <div class="how-item">
-        <div class="how-ico" data-n="2">📩</div>
-        <h4>Receba o link no e-mail</h4>
-        <p>O acesso ao Zoom chega imediatamente no e-mail cadastrado.</p>
+        <div class="how-ico" data-n="2"><svg class="svg-anim-pulse" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-gold)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+        <h4>Entre no Grupo de WhatsApp da Comunidade</h4>
+        <p>Acesse o nosso grupo exclusivo e silencioso para os inscritos.</p>
       </div>
       <div class="how-item">
-        <div class="how-ico" data-n="3">🎥</div>
+        <div class="how-ico" data-n="3"><svg class="svg-anim-float" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-gold)"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></div>
+        <h4>Receba o link no grupo</h4>
+        <p>O link de acesso à sala do Zoom será enviado diretamente por lá.</p>
+      </div>
+      <div class="how-item">
+        <div class="how-ico" data-n="4"><svg class="svg-anim-pulse" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-gold)"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></div>
         <h4>Participe ao vivo</h4>
-        <p>Dia 08/07 às 20h, entre, aprenda e tire suas dúvidas comigo.</p>
+        <p>Dia 29/07 às 20h, entre, aprenda e tire todas as suas dúvidas comigo.</p>
       </div>
     </div>
   </div>
@@ -550,7 +623,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
 <section class="host">
   <div class="wrap host-grid">
     <div class="host-photo">
-      <img src="foto perfil.png" alt="Waldiney Godoy — instrutor do Workshop Usinas de Investimento">
+      <img src="https://b2wenergia.com.br/wp-content/uploads/2026/06/foto-perfil.png" alt="Waldiney Godoy — instrutor do Workshop Usinas de Investimento">
       <div class="ph-tag">Especialista em investimentos em energia e ativos reais</div>
     </div>
     <div>
@@ -558,6 +631,10 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
       <h2>Waldiney Godoy</h2>
       <div class="role">Especialista B2W Invest · Usinas de Energia</div>
       <p>Há mais de <b>12 anos no mercado de energia e investimentos em ativos reais</b>, ajudo investidores a saírem da especulação e construírem renda previsível com segurança.</p>
+      <p>Presidente da Associação B2W de Energia<br>
+      Signatário do Pacto Global da ONU - ODS 7<br>
+      Relações Públicas e Institucional da FRNGD - Frente Norte-rio-grandense de Geração Distribuída<br>
+      Representante da Sociedade Civil na CEI - Comissão Especial de Inquérito de Geração Distribuída.</p>
       <p>Já capacitei <b>mais de 300 alunos</b> que hoje enxergam as usinas de investimento como elas realmente são: um ativo sólido, protegido da inflação e com retorno real ao longo do tempo.</p>
       <p>Neste workshop, meu objetivo é um só: <b>te dar clareza para dar o primeiro passo com segurança</b> — sem promessas mágicas e sem letras miúdas.</p>
       <div class="host-stats">
@@ -578,13 +655,13 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
       <div class="choice bad">
         <div class="choice-ico">😟</div>
         <h4>Opção 1</h4>
-        <p>Continuar com o dinheiro parado, perdendo para a inflação e adiando o sonho da renda passiva — enquanto vê outras pessoas investindo em ativos reais e construindo patrimônio.</p>
+        <p>Continuar em velhos mercados com muita oferta e baixa demanda, com despesas ocultas e rentabilidade abaixo da renda fixa, ver as oportunidades passarem bem diante dos seus olhos e não tomar uma decisão segura por falta de conhecimento.</p>
       </div>
       <div class="choice-or">ou</div>
       <div class="choice good">
         <div class="choice-ico">🚀</div>
         <h4>Opção 2</h4>
-        <p>Investir <b>menos de R$70 uma única vez</b> e, em uma noite, ganhar a clareza e a segurança para dar o primeiro passo rumo a um investimento com retorno real e previsível.</p>
+        <p>Investir <b>menos de R$ 50,00 uma única vez</b> em uma noite e ganhar clareza e segurança para tomar a decisão de não entrar nesse setor, mas com convicção, análise profissional e coerência — ou, ainda melhor, dar o primeiro passo rumo a um investimento com retorno real e previsível com o conhecimento de um expert.</p>
       </div>
     </div>
     <p class="sec-lead" style="margin-top:38px"><b style="color:#fff">Você já sabe qual delas é a mais inteligente.</b> Comece agora.</p>
@@ -602,11 +679,11 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q">O que é o Workshop Usinas de Investimento? <span class="ico">+</span></button>
-        <div class="faq-a"><p>É um workshop ao vivo, pelo Zoom, onde você aprende de forma simples e prática como investir em usinas de energia com segurança e retorno real. Tem aula completa e uma sessão de tira-dúvidas ao vivo.</p></div>
+        <div class="faq-a"><p>É um workshop ao vivo, pelo Zoom, onde você aprende de forma simples e prática a conhecer o mercado de energia e por que oferecem retorno acima da média do mercado com segurança e rentabilidade real. Tem aula completa e uma sessão de tira-dúvidas ao vivo.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Quando e onde acontece? <span class="ico">+</span></button>
-        <div class="faq-a"><p>No dia <b>08/07, às 20h</b>, ao vivo pelo Zoom. Assim que você se inscreve, recebe o link de acesso no seu e-mail. Quem participar também recebe a gravação.</p></div>
+        <div class="faq-a"><p>No dia <b>29/07, às 20h</b>, ao vivo pelo Zoom. Assim que você se inscreve, recebe o link de acesso no seu e-mail. Quem participar também recebe a gravação.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Preciso já saber investir ou ter muito dinheiro? <span class="ico">+</span></button>
@@ -614,7 +691,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
       </div>
       <div class="faq-item">
         <button class="faq-q">Qual é a forma de pagamento? <span class="ico">+</span></button>
-        <div class="faq-a"><p>Você pode pagar via <b>Pix</b> ou <b>cartão de crédito</b> (à vista de R$67 ou em até 9x de R$8,40).</p></div>
+        <div class="faq-a"><p>Você pode pagar via <b>Pix</b> ou <b>cartão de crédito</b> (à vista de R$47 ou em até 9x de R$5,89).</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">O pagamento é seguro? <span class="ico">+</span></button>
@@ -635,7 +712,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
 <!-- ===================== CTA FINAL ===================== -->
 <section class="finalcta">
   <div class="wrap">
-    <h2>Sua próxima decisão financeira <span class="hl">começa em 08/07, às 20h</span></h2>
+    <h2>Sua próxima decisão financeira <span class="hl">começa em 29/07, às 20h</span></h2>
     <p>Garanta sua vaga, receba o link do Zoom e dê o primeiro passo para investir com segurança e retorno real.</p>
     <div class="countdown" id="countdown">
       <div class="cd-box"><span class="n" id="cd-d">00</span><span class="l">dias</span></div>
@@ -643,7 +720,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
       <div class="cd-box"><span class="n" id="cd-m">00</span><span class="l">min</span></div>
       <div class="cd-box"><span class="n" id="cd-s">00</span><span class="l">seg</span></div>
     </div>
-    <a href="https://go.hotmart.com/W106446079G?dp=1" target="_blank" rel="noopener" class="cta cta-pulse" style="font-size:20px;padding:24px 50px">Garantir minha vaga por R$67</a>
+    <a href="https://go.hotmart.com/W106446079G?dp=1" target="_blank" rel="noopener" class="cta cta-pulse" style="font-size:20px;padding:24px 50px">Garantir minha vaga por R$47</a>
     <p class="cta-sub">Vagas limitadas · Acesso imediato ao Zoom · Garantia de 7 dias</p>
   </div>
 </section>
@@ -652,7 +729,7 @@ footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:6
 <footer>
   <div class="wrap">
     <div class="foot-logo">B2W<span class="o"> Invest</span></div>
-    <p>Workshop Usinas de Investimento — Segurança e Retorno Real · Turma 08/07/2026 · 20h · Ao vivo pelo Zoom</p>
+    <p>Workshop Usinas de Investimento — Segurança e Retorno Real · Turma 29/07/2026 · 20h · Ao vivo pelo Zoom</p>
     <p class="foot-disc">
       Este conteúdo é educacional e não constitui recomendação ou oferta de investimento. Rentabilidade passada não garante resultados futuros. Todo investimento envolve riscos.<br>
       Termos de Uso e Política de Privacidade · Copyright © B2W Invest — 2026. Todos os direitos reservados.
@@ -678,9 +755,9 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
   });
 });
 
-// Countdown até 08/07/2026 20:00
+// Countdown até 29/07/2026 20:00
 (function(){
-  var target=new Date('2026-07-08T20:00:00-03:00').getTime();
+  var target=new Date('2026-07-29T20:00:00-03:00').getTime();
   function pad(n){return String(n).padStart(2,'0');}
   function tick(){
     var diff=target-Date.now();
@@ -696,6 +773,52 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
     document.getElementById('cd-s').textContent=pad(s);
   }
   tick();setInterval(tick,1000);
+})();
+</script>
+
+<!-- Eventos de conversão do Pixel -->
+<script>
+(function(){
+  if(typeof fbq!=='function')return;
+
+  var produto={
+    content_name:'Workshop Usinas de Investimento',
+    content_category:'Workshop',
+    content_ids:['workshop-usinas-29-07'],
+    content_type:'product',
+    value:47.00,
+    currency:'BRL'
+  };
+
+  // ViewContent — dispara quando há engajamento real (15s OU 25% de rolagem),
+  // não na simples chegada. Assim o evento significa "leu a oferta",
+  // e não vira uma cópia do PageView.
+  var viewDisparado=false;
+  function dispararViewContent(){
+    if(viewDisparado)return;
+    viewDisparado=true;
+    fbq('track','ViewContent',produto);
+  }
+  setTimeout(dispararViewContent,15000);
+  window.addEventListener('scroll',function(){
+    var alturaRolavel=document.documentElement.scrollHeight-window.innerHeight;
+    if(alturaRolavel>0&&window.scrollY/alturaRolavel>=0.25)dispararViewContent();
+  },{passive:true});
+
+  // InitiateCheckout — dispara no clique de qualquer um dos 6 CTAs da Hotmart.
+  // Este é o evento que a campanha vai usar para otimizar.
+  document.querySelectorAll('a[href*="hotmart.com"]').forEach(function(link){
+    link.addEventListener('click',function(){
+      fbq('track','InitiateCheckout',{
+        content_name:produto.content_name,
+        content_ids:produto.content_ids,
+        content_type:'product',
+        num_items:1,
+        value:produto.value,
+        currency:produto.currency
+      });
+    });
+  });
 })();
 </script>
 </body>
