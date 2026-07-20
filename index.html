@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscrição Confirmada - Workshop Usinas de Investimento</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-bg:#070A1E;--color-bg-subtle:#0E1230;--color-surface:#14183A;
+  --color-border:rgba(255,255,255,0.08);--color-border-strong:rgba(255,255,255,0.15);
+  --color-brand:#F26B00;--color-brand-soft:rgba(242,107,0,0.12);
+  --orange-300:#FF9A4D;--orange-400:#FF821E;
+  --color-gold:#D4AF37;--color-gold-soft:rgba(212,175,55,0.12);
+  --navy-200:#8AA2E0;
+  --color-ink:#E2E8F0;--color-ink-primary:#F8FAFC;--color-ink-secondary:#CBD5E1;--color-ink-muted:#94A3B8;
+  --color-success:#22C55E;
+  --font-display:'Outfit', sans-serif;--font-body:'Inter', sans-serif;--font-mono:'JetBrains Mono', monospace;
+  --radius-md:8px;--radius-lg:12px;--radius-xl:16px;--radius-2xl:24px;--radius-full:9999px;
+  --shadow-brand:0 8px 24px rgba(242,107,0,0.35);
+  --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--color-bg);color:var(--color-ink);
+  font-family:var(--font-body);-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.center{text-align:center}
+
+.cta{
+  display:inline-flex !important;align-items:center !important;justify-content:center !important;
+  font-family:var(--font-display) !important;font-weight:800 !important;text-decoration:none !important;
+  background:linear-gradient(135deg, #25D366, #128C7E) !important; /* WhatsApp Green */
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  color:#fff !important;border-radius:var(--radius-full) !important;
+  padding:20px 44px !important;font-size:19px !important;letter-spacing:.01em !important;cursor:pointer !important;
+  box-shadow: 0 8px 32px rgba(37,211,102,0.4), inset 0 2px 4px rgba(255,255,255,0.3) !important;
+  transition:transform .18s var(--ease-spring),box-shadow .18s !important;
+  text-transform:uppercase !important;line-height:1.2 !important;
+}
+.cta:hover{transform:translateY(-3px) scale(1.02) !important;box-shadow: 0 12px 40px rgba(37,211,102,0.6), inset 0 2px 4px rgba(255,255,255,0.4) !important;}
+.cta:active{transform:translateY(0) !important;}
+.cta-pulse{animation:pulse 2.4s infinite !important;}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.35), inset 0 2px 4px rgba(255,255,255,0.3)}50%{box-shadow:0 4px 36px rgba(37,211,102,.65), inset 0 2px 4px rgba(255,255,255,0.3)}}
+
+.topbar{
+  position:sticky;top:0;z-index:200;
+  background:rgba(7,10,30,.82);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--color-border);
+}
+.topbar-inner{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.01em}
+.brand-logo .o{color:var(--color-brand)}
+.brand-logo .g{color:var(--color-gold)}
+
+.hero{
+  position:relative;
+  background:
+    radial-gradient(900px 480px at 80% -10%,rgba(37,211,102,.16),transparent 60%),
+    radial-gradient(700px 500px at 10% 110%,rgba(212,175,55,.10),transparent 60%),
+    linear-gradient(178deg,#0E1230 0%,#070A1E 70%);
+  padding:80px 0 100px;overflow:hidden;
+}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;text-align:center}}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(37,211,102,0.12);border:1.5px solid rgba(37,211,102,.4);
+  border-radius:var(--radius-full);padding:6px 16px;
+  font-size:12px;font-weight:700;color:#25D366;
+  letter-spacing:.04em;text-transform:uppercase;margin-bottom:22px;
+}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:#25D366;box-shadow:0 0 0 4px rgba(37,211,102,.25);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.3}}
+
+.hero h1{
+  font-family:var(--font-display);font-weight:800;
+  font-size:clamp(36px,5vw,56px);line-height:1.06;letter-spacing:-.02em;margin-bottom:24px;
+}
+.hero h1 .hl{color:var(--color-gold)}
+.hero h1 .hlo{color:#25D366}
+
+.hero-lead{font-size:20px;color:var(--color-ink-secondary);line-height:1.6;margin-bottom:36px}
+
+.steps-list{display:flex;flex-direction:column;gap:16px;margin-bottom:40px}
+.step-item{
+  display:flex;align-items:flex-start;gap:16px;
+  background:rgba(20,24,58,.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:20px 24px;
+  text-align:left;
+}
+.step-item .icon{font-size:24px}
+.step-item h4{font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:6px;color:var(--color-ink-primary)}
+.step-item p{font-size:15px;color:var(--color-ink-muted);line-height:1.5}
+
+.host-photo{
+  position:relative;border-radius:var(--radius-2xl);overflow:hidden;
+  border:1px solid rgba(255,255,255,0.08);
+}
+.host-photo img{width:100%;display:block;border-radius:var(--radius-2xl)}
+.ph-tag{
+  position:absolute;bottom:24px;left:24px;right:24px;
+  background:rgba(7,10,30,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);
+  padding:14px 20px;font-size:13px;font-weight:600;text-align:center;color:#fff;
+}
+
+footer{background:#001225;border-top:1px solid var(--color-border);padding:48px 0 36px;text-align:center}
+.foot-logo{font-family:var(--font-display);font-size:24px;font-weight:800;margin-bottom:16px}
+.foot-logo .o{color:var(--color-brand)}.foot-logo .g{color:var(--color-gold)}
+footer p{font-size:13px;color:var(--color-ink-muted);line-height:1.7;max-width:680px;margin:0 auto}
+
+.energy-rays-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.ray { position: absolute; width: 2px; height: 200px; top: -200px; background: linear-gradient(to bottom, transparent, #25D366, var(--color-gold), transparent); opacity: 0; filter: blur(3px) drop-shadow(0 0 8px #25D366); animation: shoot 8s infinite ease-in; }
+.ray:nth-child(1) { left: 15%; animation-duration: 7s; }
+.ray:nth-child(2) { left: 35%; animation-delay: 2s; animation-duration: 9s; height: 150px; }
+.ray:nth-child(3) { left: 75%; animation-delay: 5s; animation-duration: 8s; }
+.ray:nth-child(4) { left: 88%; animation-delay: 1s; animation-duration: 6s; height: 250px; }
+@keyframes shoot { 0% { transform: translateY(-200px); opacity: 0; } 10% { opacity: 0.8; } 80% { opacity: 0.6; } 100% { transform: translateY(2000px); opacity: 0; } }
+</style>
+</head>
+<body>
+
+<div class="energy-rays-container">
+  <div class="ray"></div><div class="ray"></div><div class="ray"></div><div class="ray"></div>
+</div>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <img src="https://b2wenergia.com.br/wp-content/uploads/2025/12/Logo-Laranja-estreito.png" alt="B2W Invest Logo" style="height: 32px; width: auto;">
+      <div class="brand-logo">B2W<span class="o"> Invest</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div style="position:relative;z-index:2">
+      <span class="eyebrow"><span class="dot"></span> Inscrição confirmada com sucesso!</span>
+      <h1>Parabéns! Sua vaga no <span class="hl">Workshop Usinas de Investimento</span> está <span class="hlo">garantida</span>.</h1>
+      
+      <p class="hero-lead">Você acaba de dar o primeiro passo para aprender a investir em energia com retorno real. O evento vai acontecer ao vivo no dia <strong style="color:white">29/07 às 20h</strong>.</p>
+      
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="icon">📱</div>
+          <div>
+            <h4>Passo 1: Entre na Comunidade VIP</h4>
+            <p>Todo o material de apoio, lembretes e o <strong>link de acesso do Zoom</strong> serão enviados exclusivamente pelo nosso grupo oficial do WhatsApp. É silencioso e 100% focado no evento.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="icon">📅</div>
+          <div>
+            <h4>Passo 2: Anote na sua agenda</h4>
+            <p>O nosso encontro será no dia <strong>29/07 às 20h</strong>. Coloque um alarme no seu celular agora mesmo para não esquecer.</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://chat.whatsapp.com/HRodusLMaLDCk8Km2BvwZc" target="_blank" class="cta cta-pulse">ENTRAR NO GRUPO DO WHATSAPP</a>
+    </div>
+
+    <div class="host-photo" style="position:relative;z-index:2">
+      <img src="https://b2wenergia.com.br/wp-content/uploads/2026/06/foto-perfil.png" alt="Waldiney Godoy - instrutor do Workshop Usinas de Investimento">
+      <div class="ph-tag">Waldiney Godoy<br><span style="font-weight:400;font-size:12px;color:var(--color-ink-secondary)">Especialista em investimentos em energia</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-logo">B2W<span class="o"> Invest</span></div>
+    <p>Este site não é afiliado ao Facebook ou a qualquer entidade do Facebook. Depois que você sair do Facebook, a responsabilidade não é deles e sim do nosso site.</p>
+    <div class="foot-disc">CNPJ 12.345.678/0001-90 | B2W Energia<br>Todos os direitos reservados © 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
