@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Usina · B2W Invest</title>
+<meta name="description" content="Ficha técnica e projeção de geração da usina solar.">
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+
+<style>
+/* ==========================================================================
+   Tokens: B2W Invest design system (b2w-invest-design-system.html).
+   Tema travado em dark, que e' o padrao da marca. Nao inverter por secao.
+   ========================================================================== */
+:root{
+  --orange-300:#FF9B52; --orange-500:#F26B00; --orange-600:#D45D00;
+  --navy-300:#6481BF;  --navy-800:#031952;
+  --gold-400:#D4AF37;
+
+  --bg-base:#070A1E; --bg-subtle:#0E1230;
+  --surface:#14183A; --surface-raised:#1C2248;
+  --border:#282D4A; --border-strong:#404562;
+  --ink-1:#F8F9FB; --ink-2:#B8BCCE; --ink-3:#5F6480;
+
+  --brand:#F26B00; --brand-hover:#FF7B20; --brand-soft:rgba(242,107,0,.14);
+  --gold:#D4AF37; --gold-soft:rgba(212,175,55,.12);
+
+  /* Cores de dado, validadas contra a superficie #14183A:
+     CVD deltaE 22,2 (protan) e 25,8 (visao normal), contraste >= 3:1. */
+  --data-result:#D45D00;
+  --data-deduction:#6481BF;
+
+  --font-display:'Manrope',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+
+  --r-sm:6px; --r-md:8px; --r-lg:12px; --r-xl:16px; --r-2xl:24px; --r-full:9999px;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-6:24px; --s-8:32px; --s-12:48px; --s-16:64px; --s-20:80px;
+
+  --shadow-md:0 4px 16px rgba(0,0,0,.4);
+  --shadow-xl:0 16px 64px rgba(0,0,0,.6);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --maxw:1180px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg-base); color:var(--ink-1);
+  font-family:var(--font-body); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:var(--font-display); line-height:1.1; margin:0; letter-spacing:-.02em}
+p{margin:0}
+.mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums}
+
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--s-6)}
+section{padding:var(--s-20) 0; position:relative}
+@media(max-width:768px){ section{padding:var(--s-16) 0} .wrap{padding:0 var(--s-4)} }
+
+/* ---- Eyebrow: usado no maximo 2x na pagina inteira ---- */
+.eyebrow{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:var(--s-4);
+}
+
+/* ---- Reveal on scroll (IntersectionObserver, nunca listener de scroll) ---- */
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease)}
+.reveal.in{opacity:1; transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1; transform:none; transition:none}
+  *{animation-duration:.001ms !important; transition-duration:.001ms !important}
+}
+
+/* ==========================  HERO  ========================== */
+.hero{
+  min-height:100dvh; display:grid; align-items:center;
+  padding-top:var(--s-16); padding-bottom:var(--s-16);
+  background:
+    radial-gradient(90ch 60ch at 78% 12%, rgba(242,107,0,.10), transparent 62%),
+    radial-gradient(70ch 50ch at 8% 92%, rgba(27,58,140,.30), transparent 60%),
+    var(--bg-base);
+}
+.hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:var(--s-16); align-items:center}
+@media(max-width:900px){ .hero-grid{grid-template-columns:1fr; gap:var(--s-12)} }
+
+.plant-name{font-size:clamp(2.4rem,6vw,4rem); font-weight:800}
+.plant-place{
+  display:flex; align-items:center; gap:var(--s-2);
+  color:var(--ink-2); font-size:1rem; margin-top:var(--s-4);
+}
+.hero-lead{color:var(--ink-2); font-size:1.05rem; max-width:46ch; margin-top:var(--s-6)}
+
+.hero-figure{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r-2xl); padding:var(--s-8); box-shadow:var(--shadow-xl);
+}
+.figure-label{color:var(--ink-3); font-size:13px; letter-spacing:.02em}
+.figure-value{
+  font-family:var(--font-display); font-weight:800; letter-spacing:-.03em;
+  font-size:clamp(2.6rem,7vw,3.6rem); line-height:1; margin-top:var(--s-2);
+  color:var(--ink-1);
+}
+.figure-unit{font-size:1.1rem; color:var(--brand); font-weight:700; margin-left:.35rem}
+.figure-note{color:var(--ink-3); font-size:13px; margin-top:var(--s-3)}
+.spark{width:100%; height:96px; margin-top:var(--s-6); display:block; overflow:visible}
+
+/* ==========================  SPEC CARDS  ========================== */
+/* Grid de cards, nao tabela com hairline em toda linha. */
+.spec-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s-4); margin-top:var(--s-12)}
+@media(max-width:900px){ .spec-grid{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:560px){ .spec-grid{grid-template-columns:1fr} }
+.spec{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r-xl); padding:var(--s-6);
+  transition:border-color .3s var(--ease), transform .3s var(--ease);
+}
+.spec:hover{border-color:var(--border-strong); transform:translateY(-2px)}
+.spec i{font-size:22px; color:var(--brand); display:block; margin-bottom:var(--s-3)}
+.spec-k{color:var(--ink-3); font-size:13px}
+.spec-v{
+  font-family:var(--font-display); font-weight:700; font-size:1.6rem;
+  margin-top:var(--s-1); letter-spacing:-.02em;
+}
+.spec-v small{font-size:.9rem; color:var(--ink-2); font-weight:500; margin-left:.25rem}
+.spec--wide{grid-column:span 2}
+@media(max-width:560px){ .spec--wide{grid-column:span 1} }
+
+/* ==========================  CHART  ========================== */
+.chart-panel{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r-2xl); padding:var(--s-8); margin-top:var(--s-8);
+}
+@media(max-width:560px){ .chart-panel{padding:var(--s-4)} }
+.chart-head{display:flex; flex-wrap:wrap; gap:var(--s-4); justify-content:space-between; align-items:baseline}
+.chart-total{font-family:var(--font-display); font-weight:800; font-size:1.5rem; letter-spacing:-.02em}
+.chart-total span{color:var(--brand); font-size:1rem; margin-left:.3rem}
+#genChart{width:100%; height:300px; display:block; margin-top:var(--s-6); overflow:visible}
+@media(max-width:560px){ #genChart{height:240px} }
+.bar-rect{transition:opacity .2s ease}
+.chart-panel:hover .bar-rect{opacity:.55}
+.chart-panel .bar-g:hover .bar-rect{opacity:1}
+.bar-val{
+  font-family:var(--font-mono); font-size:10.5px; fill:var(--ink-2);
+  opacity:0; transition:opacity .2s ease;
+}
+.bar-g:hover .bar-val{opacity:1}
+.axis-lbl{font-family:var(--font-mono); font-size:11px; fill:var(--ink-3)}
+.grid-line{stroke:var(--border); stroke-width:1}
+
+/* ==========================  WATERFALL  ========================== */
+.fall{margin-top:var(--s-8); display:grid; gap:var(--s-3)}
+.fall-row{
+  display:grid;
+  grid-template-columns:minmax(140px,220px) 1fr auto;
+  align-items:center; gap:var(--s-4);
+  padding:var(--s-3) 0;
+}
+@media(max-width:640px){ .fall-row{grid-template-columns:1fr auto; gap:var(--s-2)} .fall-track{grid-column:1/-1} }
+.fall-k{color:var(--ink-2); font-size:.95rem}
+.fall-track{height:14px; border-radius:var(--r-full); background:var(--bg-subtle); overflow:hidden}
+.fall-fill{
+  height:100%; width:0; border-radius:var(--r-full);
+  transition:width 1s var(--ease);
+}
+.fall-fill--ded{background:var(--data-deduction)}
+.fall-fill--res{background:var(--data-result)}
+.fall-v{font-family:var(--font-mono); font-size:.95rem; color:var(--ink-1); white-space:nowrap}
+.fall-row--total{
+  border-top:1px solid var(--border-strong); margin-top:var(--s-3); padding-top:var(--s-6);
+}
+.fall-row--total .fall-k{color:var(--ink-1); font-weight:600; font-family:var(--font-display)}
+.fall-row--total .fall-v{color:var(--data-result); font-size:1.25rem; font-weight:600}
+.legend{display:flex; gap:var(--s-6); margin-top:var(--s-6); flex-wrap:wrap}
+.legend b{display:inline-flex; align-items:center; gap:var(--s-2); font-weight:500; font-size:13px; color:var(--ink-2)}
+.swatch{width:12px; height:12px; border-radius:3px; display:inline-block}
+
+/* ==========================  CUSTOS  ========================== */
+.cost-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:var(--s-4); margin-top:var(--s-8)}
+.cost{
+  background:var(--bg-subtle); border:1px solid var(--border);
+  border-radius:var(--r-lg); padding:var(--s-5) var(--s-6);
+}
+.cost-k{color:var(--ink-3); font-size:13px}
+.cost-v{font-family:var(--font-mono); font-size:1.35rem; margin-top:var(--s-1); color:var(--ink-1)}
+
+/* ==========================  INVESTIMENTO  ========================== */
+.invest{
+  background:linear-gradient(140deg, var(--navy-800), var(--bg-subtle));
+  border:1px solid var(--border); border-radius:var(--r-2xl);
+  padding:var(--s-16) var(--s-8); text-align:center;
+}
+.invest .figure-value{font-size:clamp(2.8rem,9vw,4.5rem); color:var(--gold)}
+.invest .figure-label{font-size:.95rem}
+
+/* ==========================  FOOTER / ESTADOS  ========================== */
+footer{border-top:1px solid var(--border); padding:var(--s-12) 0; color:var(--ink-3); font-size:13px}
+.state{
+  min-height:100dvh; display:grid; place-items:center; text-align:center; padding:var(--s-8);
+}
+.state-card{max-width:44ch}
+.state i{font-size:40px; color:var(--brand)}
+.state h2{font-size:1.5rem; margin:var(--s-4) 0 var(--s-3)}
+.state p{color:var(--ink-2)}
+.skel{background:var(--surface); border-radius:var(--r-lg); animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.55}50%{opacity:.85}}
+[hidden]{display:none !important}
+
+/* Tabela alternativa: exigida porque a cor sozinha nunca carrega identidade. */
+.table-toggle{
+  margin-top:var(--s-6); background:none; border:1px solid var(--border);
+  color:var(--ink-2); font-family:var(--font-body); font-size:13px;
+  padding:var(--s-2) var(--s-4); border-radius:var(--r-full); cursor:pointer;
+  transition:border-color .2s ease, color .2s ease;
+}
+.table-toggle:hover{border-color:var(--border-strong); color:var(--ink-1)}
+.table-toggle:active{transform:scale(.98)}
+table{width:100%; border-collapse:collapse; margin-top:var(--s-6); font-size:14px}
+th,td{text-align:left; padding:var(--s-3) var(--s-2); color:var(--ink-2)}
+th{color:var(--ink-3); font-weight:500; font-size:12px; letter-spacing:.04em; text-transform:uppercase}
+tbody tr+tr{border-top:1px solid var(--border)}
+td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
+</style>
+</head>
+<body>
+
+<!-- Estado: link invalido ou ausente -->
+<div class="state" id="stateError" hidden>
+  <div class="state-card">
+    <i class="ph ph-link-break" aria-hidden="true"></i>
+    <h2>Link inválido</h2>
+    <p>Este endereço não carrega os dados de nenhuma usina. Peça um novo link a quem enviou o original.</p>
+  </div>
+</div>
+
+<!-- Estado: carregando -->
+<div class="state" id="stateLoading">
+  <div class="state-card" style="width:min(520px,90vw)">
+    <div class="skel" style="height:56px"></div>
+    <div class="skel" style="height:18px; margin-top:16px; width:60%"></div>
+    <div class="skel" style="height:180px; margin-top:32px"></div>
+  </div>
+</div>
+
+<main id="page" hidden>
+
+  <!-- ============ HERO: identidade + a grandeza que importa ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1 class="plant-name" id="plantName"></h1>
+        <p class="plant-place">
+          <i class="ph ph-map-pin" aria-hidden="true"></i>
+          <span id="plantPlace"></span>
+        </p>
+        <p class="hero-lead" id="heroLead"></p>
+      </div>
+
+      <figure class="hero-figure" style="margin:0">
+        <figcaption class="figure-label">Geração prevista no ano</figcaption>
+        <div class="figure-value"><span id="annualKwh">0</span><span class="figure-unit">kWh</span></div>
+        <p class="figure-note" id="annualNote"></p>
+        <svg class="spark" id="spark" preserveAspectRatio="none" aria-hidden="true"></svg>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ FICHA TÉCNICA: cards, nao tabela de hairlines ============ -->
+  <section>
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Ficha técnica</p>
+        <h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">O que está instalado</h2>
+      </div>
+      <div class="spec-grid" id="specGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ GERAÇÃO 12 MESES: magnitude ao longo do tempo ============ -->
+  <section style="background:var(--bg-subtle)">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">Geração ao longo do ano</h2>
+        <p style="color:var(--ink-2); max-width:60ch; margin-top:var(--s-4)">
+          Projeção mensal a partir da potência instalada e da irradiância local.
+        </p>
+      </div>
+
+      <div class="chart-panel reveal">
+        <div class="chart-head">
+          <div class="chart-total"><span id="chartTotal">0</span><span>kWh no ano</span></div>
+          <div class="figure-label">Passe o cursor para ver o mês</div>
+        </div>
+        <svg id="genChart" role="img" aria-labelledby="genChartTitle"></svg>
+        <title id="genChartTitle">Geração mensal prevista, em kWh</title>
+        <button class="table-toggle" data-target="genTable" aria-expanded="false">Ver como tabela</button>
+        <div id="genTable" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASCATA TARIFÁRIA: decomposicao ============ -->
+  <section>
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Composição da tarifa</p>
+        <h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">Do que sai da concessionária ao que fica</h2>
+        <p style="color:var(--ink-2); max-width:60ch; margin-top:var(--s-4)" id="fallIntro"></p>
+      </div>
+
+      <div class="fall reveal" id="fall"></div>
+
+      <div class="legend reveal">
+        <b><span class="swatch" style="background:var(--data-deduction)"></span> Deduções</b>
+        <b><span class="swatch" style="background:var(--data-result)"></span> Tarifa líquida</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CUSTOS MENSAIS ============ -->
+  <section id="costSection" style="background:var(--bg-subtle)" hidden>
+    <div class="wrap">
+      <div class="reveal">
+        <h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">Custos mensais da operação</h2>
+      </div>
+      <div class="cost-grid reveal" id="costGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ INVESTIMENTO ============ -->
+  <section>
+    <div class="wrap">
+      <div class="invest reveal">
+        <p class="figure-label">Valor investido</p>
+        <div class="figure-value" id="investValue"></div>
+        <p class="figure-note" id="investNote"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap" style="display:flex; flex-wrap:wrap; gap:var(--s-4); justify-content:space-between">
+      <span>B2W Invest</span>
+      <span id="footConc"></span>
+    </div>
+  </footer>
+</main>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ---------- 1. Decodifica o slug ----------------------------------------
+     Espelho exato de generateSlug() em PowerPlantModal.jsx: JSON -> UTF-8
+     escapado -> btoa -> base64url. Aqui o caminho e' o inverso.            */
+  function decodeSlug(raw){
+    if(!raw) return null;
+    try{
+      let b64 = raw.replace(/-/g,'+').replace(/_/g,'/');
+      while(b64.length % 4) b64 += '=';
+      const bin = atob(b64);
+      const json = decodeURIComponent(
+        Array.from(bin, c => '%' + c.charCodeAt(0).toString(16).padStart(2,'0')).join('')
+      );
+      const o = JSON.parse(json);
+      return (o && typeof o === 'object' && o.name !== undefined) ? o : null;
+    }catch(e){ return null; }
+  }
+
+  const raw  = window.location.search.replace(/^\?/,'');
+  const data = decodeSlug(raw);
+
+  if(!data){
+    document.getElementById('stateLoading').hidden = true;
+    document.getElementById('stateError').hidden = false;
+    return;
+  }
+
+  /* ---------- 2. Formatadores --------------------------------------------
+     Dado ausente vira travessao, nunca zero: zero afirmaria uma medicao
+     que nao existe.                                                        */
+  const nf   = new Intl.NumberFormat('pt-BR');
+  const brl  = new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
+  const brl4 = new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:4,maximumFractionDigits:4});
+  const has  = v => v !== null && v !== undefined && v !== '' && !Number.isNaN(Number(v));
+  const num  = v => has(v) ? Number(v) : null;
+  const fmt  = (v,f) => has(v) ? f(Number(v)) : '-';
+
+  /* ---------- 3. Preenche identidade ------------------------------------- */
+  const meses  = data.geracao12 || [];
+  const anual  = meses.reduce((a,m) => a + (num(m.v) || 0), 0);
+  const potStr = has(data.potencia) ? nf.format(num(data.potencia)) + ' kWp' : null;
+
+  document.title = (data.name || 'Usina') + ' · B2W Invest';
+  document.getElementById('plantName').textContent = data.name || 'Usina';
+
+  const place = [data.cidade, data.uf].filter(Boolean).join('/') || 'Local não informado';
+  document.getElementById('plantPlace').textContent = data.cep ? place + ' · CEP ' + data.cep : place;
+
+  document.getElementById('heroLead').textContent = potStr
+    ? 'Usina de ' + potStr + ' conectada à rede da ' + (data.concessionaria || 'concessionária') + '.'
+    : 'Ficha técnica e projeção de geração desta usina.';
+
+  document.getElementById('annualNote').textContent = meses.length
+    ? 'Soma dos ' + meses.length + ' meses projetados.'
+    : 'Projeção mensal não informada.';
+
+  document.getElementById('footConc').textContent = data.concessionaria || '';
+
+  /* ---------- 4. Ficha técnica ------------------------------------------- */
+  const specs = [
+    ['ph-solar-panel','Potência instalada', has(data.potencia) ? nf.format(num(data.potencia)) : null, 'kWp'],
+    ['ph-squares-four','Módulos',           has(data.modulos)  ? nf.format(num(data.modulos))  : null, 'un'],
+    ['ph-lightning','Potência do módulo',   has(data.potModulos) ? nf.format(num(data.potModulos)) : null, 'W'],
+    ['ph-cpu','Potência do inversor',       has(data.potInversor) ? nf.format(num(data.potInversor)) : null, 'W'],
+    ['ph-factory','Fabricante do inversor', data.fabInversor || null, ''],
+    ['ph-plug','Concessionária',            data.concessionaria || null, '']
+  ];
+  document.getElementById('specGrid').innerHTML = specs.map(([icon,k,v,u]) => `
+    <div class="spec reveal">
+      <i class="${icon}" aria-hidden="true"></i>
+      <div class="spec-k">${k}</div>
+      <div class="spec-v">${v === null ? '-' : v}${v !== null && u ? `<small>${u}</small>` : ''}</div>
+    </div>`).join('');
+
+  /* ---------- 5. Gráfico de geração --------------------------------------
+     Uma serie so': magnitude ao longo do tempo, sem legenda (o titulo ja'
+     nomeia a serie) e sem rotulo em todo ponto.                            */
+  const W = 1000, H = 300, PADB = 34, PADT = 16;
+  const maxV = Math.max(...meses.map(m => num(m.v) || 0), 1);
+  const svg  = document.getElementById('genChart');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  if(meses.length){
+    const step = W / meses.length;
+    const bw   = Math.max(10, step * 0.52);
+    let out = '';
+
+    // Grade recessiva: tres linhas, nada mais.
+    for(let i=1;i<=3;i++){
+      const y = PADT + (H - PADT - PADB) * (i/3);
+      out += `<line class="grid-line" x1="0" x2="${W}" y1="${y}" y2="${y}"/>`;
+    }
+
+    meses.forEach((m,i) => {
+      const v  = num(m.v) || 0;
+      const h  = (v / maxV) * (H - PADT - PADB);
+      const x  = i * step + (step - bw)/2;
+      const y  = H - PADB - h;
+      out += `<g class="bar-g">
+        <rect x="${i*step}" y="${PADT}" width="${step}" height="${H-PADT-PADB}" fill="transparent"/>
+        <rect class="bar-rect" x="${x}" y="${H-PADB}" width="${bw}" height="0" rx="4"
+              fill="var(--data-result)" data-h="${h}" data-y="${y}"/>
+        <text class="bar-val" x="${x + bw/2}" y="${y - 8}" text-anchor="middle">${nf.format(v)}</text>
+        <text class="axis-lbl" x="${x + bw/2}" y="${H-12}" text-anchor="middle">${m.m || ''}</text>
+      </g>`;
+    });
+    svg.innerHTML = out;
+  }
+
+  /* ---------- 6. Sparkline do hero (mesma serie, forma resumida) --------- */
+  if(meses.length > 1){
+    const sw = 600, sh = 96;
+    const pts = meses.map((m,i) => {
+      const v = num(m.v) || 0;
+      return [ (i/(meses.length-1)) * sw, sh - (v/maxV) * (sh - 8) - 4 ];
+    });
+    const d = pts.map((p,i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+    const spark = document.getElementById('spark');
+    spark.setAttribute('viewBox', `0 0 ${sw} ${sh}`);
+    spark.innerHTML =
+      `<path d="${d} L${sw} ${sh} L0 ${sh} Z" fill="var(--brand-soft)"/>
+       <path id="sparkLine" d="${d}" fill="none" stroke="var(--brand)" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+
+  /* ---------- 7. Cascata tarifária ---------------------------------------
+     tarifa - desconto - fio B - gestao = liquida. As percentagens vem do
+     slug; os valores em reais sao derivados aqui, na mesma ordem que
+     getTariffValues() usa no CRM.                                          */
+  const tarifa = num(data.tarifaCons);
+  const descP  = num(data.descCliente);
+  const fioB   = num(data.fioB);
+  const gestP  = num(data.gestao);
+
+  if(tarifa !== null){
+    const descR = descP !== null ? tarifa * (descP/100) : null;
+    const base  = (descR !== null && fioB !== null) ? tarifa - descR - fioB : null;
+    const gestR = (base !== null && gestP !== null) ? base * (gestP/100) : null;
+    // A cascata tem de fechar NA TELA: se as parcelas exibidas sao todas
+    // conhecidas, o resultado e' a subtracao delas, nao o valor do slug. Os
+    // dois coincidem quando vem do CRM (mesma formula em getTariffValues);
+    // divergindo, mostrar o do slug deixaria a conta visivelmente errada.
+    const calc  = (descR !== null && fioB !== null && gestR !== null)
+      ? tarifa - descR - fioB - gestR : null;
+    const liq   = calc !== null ? calc : num(data.tarifaLiq);
+
+    const rows = [
+      ['Tarifa da concessionária', tarifa, null],
+      [descP !== null ? `Desconto ao cliente (${nf.format(descP)}%)` : 'Desconto ao cliente', descR, 'ded'],
+      ['Fio B', fioB, 'ded'],
+      [gestP !== null ? `Gestão (${nf.format(gestP)}%)` : 'Gestão', gestR, 'ded']
+    ];
+
+    document.getElementById('fallIntro').textContent =
+      'Cada linha desconta da tarifa cheia. O que sobra é a tarifa líquida por kWh.';
+
+    document.getElementById('fall').innerHTML =
+      rows.map(([k,v,role]) => {
+        const pct = (v !== null && tarifa) ? Math.min(100, Math.abs(v/tarifa)*100) : 0;
+        return `<div class="fall-row">
+          <div class="fall-k">${k}</div>
+          <div class="fall-track">
+            <div class="fall-fill ${role === 'ded' ? 'fall-fill--ded' : 'fall-fill--res'}" data-pct="${pct}"></div>
+          </div>
+          <div class="fall-v">${role === 'ded' && v !== null ? '−' : ''}${fmt(v, brl4)}</div>
+        </div>`;
+      }).join('') +
+      `<div class="fall-row fall-row--total">
+        <div class="fall-k">Tarifa líquida</div>
+        <div class="fall-track">
+          <div class="fall-fill fall-fill--res" data-pct="${(liq !== null && tarifa) ? Math.min(100,(liq/tarifa)*100) : 0}"></div>
+        </div>
+        <div class="fall-v">${fmt(liq, brl4)}</div>
+      </div>`;
+  }
+
+  /* ---------- 8. Custos mensais ------------------------------------------ */
+  const serv = data.servicos && typeof data.servicos === 'object' ? data.servicos : {};
+  const servKeys = Object.keys(serv).filter(k => has(serv[k]) && Number(serv[k]) > 0);
+  if(servKeys.length){
+    document.getElementById('costSection').hidden = false;
+    document.getElementById('costGrid').innerHTML = servKeys.map(k => `
+      <div class="cost">
+        <div class="cost-k">${k}</div>
+        <div class="cost-v">${brl.format(Number(serv[k]))}</div>
+      </div>`).join('');
+  }
+
+  /* ---------- 9. Investimento -------------------------------------------- */
+  document.getElementById('investValue').textContent = fmt(data.valorInvestido, brl);
+  document.getElementById('investNote').textContent =
+    (has(data.valorInvestido) && has(data.potencia) && Number(data.potencia) > 0)
+      ? brl.format(Number(data.valorInvestido)/Number(data.potencia)) + ' por kWp instalado'
+      : '';
+
+  /* ---------- 10. Tabela alternativa (identidade nunca so' por cor) ------ */
+  document.querySelector('.table-toggle').addEventListener('click', function(){
+    const box  = document.getElementById(this.dataset.target);
+    const open = box.hidden;
+    if(open && !box.innerHTML){
+      box.innerHTML = `<table><thead><tr><th>Mês</th><th style="text-align:right">kWh</th></tr></thead><tbody>` +
+        meses.map(m => `<tr><td>${m.m || '-'}</td><td class="num">${fmt(m.v, nf)}</td></tr>`).join('') +
+        `</tbody></table>`;
+    }
+    box.hidden = !open;
+    this.setAttribute('aria-expanded', String(open));
+    this.textContent = open ? 'Ocultar tabela' : 'Ver como tabela';
+  });
+
+  /* ---------- 11. Entra em cena --------------------------------------------
+     IntersectionObserver, nunca listener de scroll. Cada animacao existe por
+     um motivo: revelar hierarquia na ordem em que o dado deve ser lido.    */
+  document.getElementById('stateLoading').hidden = true;
+  document.getElementById('page').hidden = false;
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Contadores: o numero cresce ate' o valor real, dando peso a grandeza.
+  function countTo(el, target, format){
+    if(reduce || !target){ el.textContent = format(target || 0); return; }
+    const dur = 1100, t0 = performance.now();
+    (function tick(now){
+      const p = Math.min(1, (now - t0)/dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = format(Math.round(target * e));
+      if(p < 1) requestAnimationFrame(tick);
+    })(t0);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if(!en.isIntersecting) return;
+      en.target.classList.add('in');
+
+      if(en.target.id === 'genChart' || en.target.closest('.chart-panel')){
+        svg.querySelectorAll('.bar-rect').forEach((r,i) => {
+          const h = Number(r.dataset.h), y = Number(r.dataset.y);
+          if(reduce){ r.setAttribute('height',h); r.setAttribute('y',y); return; }
+          r.style.transition = `height .8s var(--ease) ${i*45}ms, y .8s var(--ease) ${i*45}ms`;
+          requestAnimationFrame(() => { r.setAttribute('height',h); r.setAttribute('y',y); });
+        });
+      }
+      if(en.target.id === 'fall'){
+        en.target.querySelectorAll('.fall-fill').forEach((f,i) => {
+          setTimeout(() => { f.style.width = f.dataset.pct + '%'; }, reduce ? 0 : i*110);
+        });
+      }
+      io.unobserve(en.target);
+    });
+  }, {threshold:.25});
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  const fallEl = document.getElementById('fall');
+  if(fallEl) io.observe(fallEl);
+
+  countTo(document.getElementById('annualKwh'), anual, v => nf.format(v));
+  countTo(document.getElementById('chartTotal'), anual, v => nf.format(v));
+
+  // Traco do sparkline desenhando-se: comunica que o dado tem um percurso.
+  const line = document.getElementById('sparkLine');
+  if(line && !reduce){
+    const len = line.getTotalLength();
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    line.style.transition = 'stroke-dashoffset 1.6s var(--ease) .2s';
+    requestAnimationFrame(() => { line.style.strokeDashoffset = '0'; });
+  }
+})();
+</script>
+</body>
+</html>
