@@ -198,6 +198,52 @@ section{padding:var(--s-20) 0; position:relative}
 .invest .figure-value{font-size:clamp(2.8rem,9vw,4.5rem); color:var(--gold)}
 .invest .figure-label{font-size:.95rem}
 
+
+/* ==========================  PORTAO DE ACESSO  ========================== */
+.gate{min-height:100dvh; display:grid; place-items:center; padding:var(--s-8) var(--s-4)}
+.gate-card{
+  width:min(440px,100%); background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r-2xl); padding:var(--s-8); box-shadow:var(--shadow-xl);
+}
+.gate-brand{font-family:var(--font-mono); font-size:11px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--brand)}
+.gate-card h2{font-size:1.5rem; margin:var(--s-3) 0 var(--s-2)}
+.gate-sub{color:var(--ink-2); font-size:.95rem; margin-bottom:var(--s-6)}
+.field{display:grid; gap:var(--s-2); margin-bottom:var(--s-4)}
+.field label{font-size:13px; color:var(--ink-2); font-weight:500}
+.field input{
+  width:100%; padding:var(--s-3) var(--s-4);
+  background:var(--bg-base); color:var(--ink-1);
+  border:1px solid var(--border-strong); border-radius:var(--r-md);
+  font-family:var(--font-body); font-size:1rem; outline:none;
+  transition:border-color .2s ease;
+}
+.field input::placeholder{color:var(--ink-3)}
+.field input:focus{border-color:var(--brand); box-shadow:0 0 0 3px var(--brand-soft)}
+.field input[inputmode="numeric"]{font-family:var(--font-mono); letter-spacing:.3em; text-align:center; font-size:1.4rem}
+.btn{
+  width:100%; padding:var(--s-3) var(--s-6); border:none; border-radius:var(--r-md);
+  background:var(--brand); color:#fff; font-family:var(--font-body);
+  font-weight:600; font-size:1rem; cursor:pointer;
+  transition:background .2s ease, transform .1s ease;
+}
+.btn:hover:not(:disabled){background:var(--brand-hover)}
+.btn:active:not(:disabled){transform:scale(.98)}
+.btn:disabled{opacity:.55; cursor:default}
+.btn-ghost{
+  width:100%; margin-top:var(--s-3); background:none; border:none;
+  color:var(--ink-2); font-family:var(--font-body); font-size:.9rem;
+  cursor:pointer; padding:var(--s-2); text-decoration:underline;
+}
+.btn-ghost:hover{color:var(--ink-1)}
+.gate-msg{
+  margin-top:var(--s-4); padding:var(--s-3) var(--s-4); border-radius:var(--r-md);
+  font-size:.9rem; display:none;
+}
+.gate-msg.erro{display:block; background:rgba(239,68,68,.12); color:#FCA5A5; border:1px solid rgba(239,68,68,.3)}
+.gate-msg.ok{display:block; background:var(--brand-soft); color:var(--orange-300); border:1px solid rgba(242,107,0,.3)}
+.gate-legal{color:var(--ink-3); font-size:12px; margin-top:var(--s-6); line-height:1.5}
+
 /* ==========================  FOOTER / ESTADOS  ========================== */
 footer{border-top:1px solid var(--border); padding:var(--s-12) 0; color:var(--ink-3); font-size:13px}
 .state{
@@ -244,6 +290,54 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
     <div class="skel" style="height:56px"></div>
     <div class="skel" style="height:18px; margin-top:16px; width:60%"></div>
     <div class="skel" style="height:180px; margin-top:32px"></div>
+  </div>
+</div>
+
+
+<!-- Portao: captura do lead antes de exibir a pagina -->
+<div class="gate" id="gate" hidden>
+  <div class="gate-card">
+    <span class="gate-brand">B2W Invest</span>
+    <h2 id="gateTitle">Veja os números desta usina</h2>
+    <p class="gate-sub" id="gateSub">Informe seus dados para liberar o acesso.</p>
+
+    <form id="formCadastro" autocomplete="on">
+      <div class="field">
+        <label for="gNome">Nome completo</label>
+        <input id="gNome" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="gEmail">E-mail</label>
+        <input id="gEmail" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="gTel">WhatsApp com DDD</label>
+        <input id="gTel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="84 90000-0000" required>
+      </div>
+      <button class="btn" type="submit" id="btnCadastro">Receber código no WhatsApp</button>
+      <button class="btn-ghost" type="button" id="linkJaTenho">Já vi esta página antes</button>
+    </form>
+
+    <form id="formLogin" autocomplete="on" hidden>
+      <div class="field">
+        <label for="lTel">WhatsApp com DDD</label>
+        <input id="lTel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="84 90000-0000" required>
+      </div>
+      <button class="btn" type="submit" id="btnLogin">Receber código</button>
+      <button class="btn-ghost" type="button" id="linkPrimeiraVez">É minha primeira vez aqui</button>
+    </form>
+
+    <form id="formCodigo" hidden>
+      <div class="field">
+        <label for="gCod">Código de 6 dígitos</label>
+        <input id="gCod" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required>
+      </div>
+      <button class="btn" type="submit" id="btnCodigo">Entrar</button>
+      <button class="btn-ghost" type="button" id="linkVoltar">Usar outro número</button>
+    </form>
+
+    <div class="gate-msg" id="gateMsg" role="status" aria-live="polite"></div>
+    <p class="gate-legal">Ao continuar você concorda em receber contato da B2W Energia sobre esta usina.</p>
   </div>
 </div>
 
@@ -576,11 +670,116 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
     this.textContent = open ? 'Ocultar tabela' : 'Ver como tabela';
   });
 
-  /* ---------- 11. Entra em cena --------------------------------------------
+  /* ---------- 11. Portao de acesso ----------------------------------------
+     O objetivo e' CAPTURAR O LEAD, nao esconder numeros: o dado da usina
+     viaja dentro do proprio link e um atob() no console revela tudo. Por
+     isso a checagem do token e' local e barata; quem valida de verdade e'
+     a Edge Function, no momento de emitir o token.                        */
+  const API   = 'https://abbysvxnnhwvvzhftoms.supabase.co/functions/v1/usina-acesso';
+  const ANON  = 'sb_publishable_HOPodX4h1n_dENhaszQIuw_6-bTmtVN';
+  const CHAVE = 'b2w_usina_token';
+
+  const gate = document.getElementById('gate');
+  const msg  = document.getElementById('gateMsg');
+  const fCad = document.getElementById('formCadastro');
+  const fLog = document.getElementById('formLogin');
+  const fCod = document.getElementById('formCodigo');
+  let telefoneEmUso = '';
+
+  function tokenValido(){
+    try{
+      const t = localStorage.getItem(CHAVE);
+      if(!t || !t.includes('.')) return false;
+      const p = JSON.parse(atob(t.split('.')[0].replace(/-/g,'+').replace(/_/g,'/')));
+      return typeof p.exp === 'number' && p.exp > Date.now();
+    }catch(e){ return false; }
+  }
+
+  function aviso(texto, tipo){
+    msg.textContent = texto || '';
+    msg.className = 'gate-msg' + (texto ? ' ' + tipo : '');
+  }
+
+  function mostrar(form){
+    [fCad,fLog,fCod].forEach(f => { f.hidden = f !== form; });
+    aviso('');
+  }
+
+  async function chamar(corpo, botao, rotuloOcupado){
+    const rotulo = botao.textContent;
+    botao.disabled = true; botao.textContent = rotuloOcupado;
+    try{
+      const r = await fetch(API, {
+        method:'POST',
+        headers:{'Content-Type':'application/json', apikey:ANON, Authorization:'Bearer '+ANON},
+        body: JSON.stringify(corpo)
+      });
+      // fetch nao lanca em status 4xx/5xx: o corpo e' que diz o que houve.
+      return await r.json();
+    }catch(e){
+      return { erro:'Sem conexão. Tente de novo.' };
+    }finally{
+      botao.disabled = false; botao.textContent = rotulo;
+    }
+  }
+
+  function abrirPagina(){
+    gate.hidden = true;
+    document.getElementById('page').hidden = false;
+    iniciarCena();
+  }
+
+  fCad.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    telefoneEmUso = document.getElementById('gTel').value;
+    const res = await chamar({
+      acao:'cadastrar',
+      nome: document.getElementById('gNome').value,
+      email: document.getElementById('gEmail').value,
+      telefone: telefoneEmUso
+    }, document.getElementById('btnCadastro'), 'Enviando...');
+    if(res.erro) return aviso(res.erro, 'erro');
+    mostrar(fCod);
+    aviso('Código enviado no WhatsApp. Ele vale por ' + (res.expiraEm || 10) + ' minutos.', 'ok');
+  });
+
+  fLog.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    telefoneEmUso = document.getElementById('lTel').value;
+    const res = await chamar({ acao:'entrar', telefone: telefoneEmUso },
+                             document.getElementById('btnLogin'), 'Enviando...');
+    if(res.encontrado === false){
+      mostrar(fCad);
+      document.getElementById('gTel').value = telefoneEmUso;
+      return aviso('Não encontramos esse número. Complete o cadastro abaixo.', 'erro');
+    }
+    if(res.erro) return aviso(res.erro, 'erro');
+    mostrar(fCod);
+    aviso('Código enviado no WhatsApp. Ele vale por ' + (res.expiraEm || 10) + ' minutos.', 'ok');
+  });
+
+  fCod.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const res = await chamar({
+      acao:'verificar', telefone: telefoneEmUso,
+      codigo: document.getElementById('gCod').value
+    }, document.getElementById('btnCodigo'), 'Verificando...');
+    if(res.erro) return aviso(res.erro, 'erro');
+    try{ localStorage.setItem(CHAVE, res.token); }catch(e){ /* modo privado */ }
+    abrirPagina();
+  });
+
+  document.getElementById('linkJaTenho').addEventListener('click', () => mostrar(fLog));
+  document.getElementById('linkPrimeiraVez').addEventListener('click', () => mostrar(fCad));
+  document.getElementById('linkVoltar').addEventListener('click', () => mostrar(fCad));
+
+  document.getElementById('stateLoading').hidden = true;
+  if(tokenValido()){ abrirPagina(); } else { gate.hidden = false; }
+
+  /* ---------- 12. Entra em cena --------------------------------------------
      IntersectionObserver, nunca listener de scroll. Cada animacao existe por
      um motivo: revelar hierarquia na ordem em que o dado deve ser lido.    */
-  document.getElementById('stateLoading').hidden = true;
-  document.getElementById('page').hidden = false;
+  function iniciarCena(){
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -642,6 +841,7 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
     line.style.transition = 'stroke-dashoffset 1.6s var(--ease) .2s';
     requestAnimationFrame(() => { line.style.strokeDashoffset = '0'; });
   }
+  }  // fim de iniciarCena
 })();
 </script>
 </body>
