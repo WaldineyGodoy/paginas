@@ -578,10 +578,35 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
   // distincao importa porque `null` significaria "nao informado", e aqui o
   // valor e' conhecido e igual a zero por regra.
   const fioBefetivo = isGD1 ? 0 : fioBv;
-  const baseG  = (tarifa !== null && descR !== null && fioBefetivo !== null) ? tarifa - descR - fioBefetivo : null;
+
+  /* Tributos da Geracao Compartilhada -------------------------------------
+     Base = TE + (TUSD - Fio B). Como TE + TUSD = tarifa cheia, a base e'
+     simplesmente `tarifa - Fio B`. O Fio B fica fora porque ja' vem com os
+     impostos embutidos na conta da concessionaria — e por isso usa o fioBv
+     bruto, nao o efetivo: a exclusao e' uma propriedade da parcela, nao do
+     que a usina paga.
+     Ordem: ICMS primeiro; PIS e COFINS incidem sobre o valor JA' reduzido
+     pelo ICMS.                                                             */
+  const icmsP = num(data.icms), pisP = num(data.pis), cofP = num(data.cofins);
+  const temAliquotas = icmsP !== null && pisP !== null && cofP !== null;
+  const baseTrib = (tarifa !== null && fioBv !== null) ? tarifa - fioBv : null;
+
+  let vIcms = null, vPisCof = null, tributos = null;
+  if(isCompartilhada && temAliquotas && baseTrib !== null){
+    vIcms   = baseTrib * (icmsP/100);
+    vPisCof = (baseTrib - vIcms) * ((pisP + cofP)/100);
+    tributos = vIcms + vPisCof;
+  }
+  // Geracao Compartilhada sem aliquotas cadastradas nao vira zero: zero
+  // apresentaria uma tarifa 34% maior que a real como se fosse fato.
+  const tributosPendentes = isCompartilhada && !temAliquotas;
+  const tributosNaConta = isCompartilhada ? tributos : 0;
+
+  const baseG  = (tarifa !== null && descR !== null && fioBefetivo !== null && tributosNaConta !== null)
+                 ? tarifa - descR - fioBefetivo - tributosNaConta : null;
   const gestR  = (baseG !== null && gestP !== null) ? baseG * (gestP/100) : null;
-  const liq    = (tarifa !== null && descR !== null && fioBefetivo !== null && gestR !== null)
-                 ? tarifa - descR - fioBefetivo - gestR : num(data.tarifaLiq);
+  const liq    = (baseG !== null && gestR !== null) ? baseG - gestR
+                 : (isCompartilhada ? null : num(data.tarifaLiq));
   const investido = num(data.valorInvestido);
 
   /* ---------- 5b. Grafico -------------------------------------------------
@@ -711,12 +736,18 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
     const rows = [
       ['Tarifa da concessionária', tarifa, null],
       [descP !== null ? `Desconto ao cliente (${nf.format(descP)}%)` : 'Desconto ao cliente', descR, 'ded'],
-      [isGD1 ? 'Fio B (isento, GD1)' : 'Fio B', isGD1 ? 0 : fioBv, 'ded'],
-      [gestP !== null ? `Gestão (${nf.format(gestP)}%)` : 'Gestão', gestR, 'ded']
+      [isGD1 ? 'Fio B (isento, GD1)' : 'Fio B', isGD1 ? 0 : fioBv, 'ded']
     ];
+    if(isCompartilhada){
+      rows.push([icmsP !== null ? `ICMS (${nf.format(icmsP)}%)` : 'ICMS', vIcms, 'ded']);
+      rows.push([(pisP !== null && cofP !== null)
+        ? `PIS + COFINS (${nf.format(pisP + cofP)}%)` : 'PIS + COFINS', vPisCof, 'ded']);
+    }
+    rows.push([gestP !== null ? `Gestão (${nf.format(gestP)}%)` : 'Gestão', gestR, 'ded']);
 
-    document.getElementById('fallIntro').textContent =
-      'Cada linha desconta da tarifa cheia. O que sobra é a tarifa líquida por kWh.';
+    document.getElementById('fallIntro').textContent = tributosPendentes
+      ? 'Esta usina é de Geração Compartilhada e sofre dedução de ICMS, PIS e COFINS, mas as alíquotas da concessionária ainda não foram cadastradas. A tarifa líquida abaixo está incompleta.'
+      : 'Cada linha desconta da tarifa cheia. O que sobra é a tarifa líquida por kWh.';
 
     document.getElementById('fall').innerHTML =
       rows.map(([k,v,role]) => {
