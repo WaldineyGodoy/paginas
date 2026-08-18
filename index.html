@@ -140,17 +140,17 @@ section{padding:var(--s-20) 0; position:relative}
 .chart-head{display:flex; flex-wrap:wrap; gap:var(--s-4); justify-content:space-between; align-items:baseline}
 .chart-total{font-family:var(--font-display); font-weight:800; font-size:1.5rem; letter-spacing:-.02em}
 .chart-total span{color:var(--brand); font-size:1rem; margin-left:.3rem}
-#genChart{width:100%; height:300px; display:block; margin-top:var(--s-6); overflow:visible}
-@media(max-width:560px){ #genChart{height:240px} }
+#genChart{width:100%; height:auto; aspect-ratio:1000/300; display:block; margin-top:var(--s-6); overflow:visible}
+@media(max-width:560px){ #genChart{aspect-ratio:1000/380} }
 .bar-rect{transition:opacity .2s ease}
 .chart-panel:hover .bar-rect{opacity:.55}
 .chart-panel .bar-g:hover .bar-rect{opacity:1}
 .bar-val{
-  font-family:var(--font-mono); font-size:10.5px; fill:var(--ink-2);
+  font-family:var(--font-mono); font-size:17px; fill:var(--ink-2);
   opacity:0; transition:opacity .2s ease;
 }
 .bar-g:hover .bar-val{opacity:1}
-.axis-lbl{font-family:var(--font-mono); font-size:11px; fill:var(--ink-3)}
+.axis-lbl{font-family:var(--font-mono); font-size:18px; fill:var(--ink-3)}
 .grid-line{stroke:var(--border); stroke-width:1}
 
 /* ==========================  WATERFALL  ========================== */
@@ -387,9 +387,22 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
   const nf   = new Intl.NumberFormat('pt-BR');
   const brl  = new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
   const brl4 = new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:4,maximumFractionDigits:4});
-  const has  = v => v !== null && v !== undefined && v !== '' && !Number.isNaN(Number(v));
-  const num  = v => has(v) ? Number(v) : null;
-  const fmt  = (v,f) => has(v) ? f(Number(v)) : '-';
+  // valorInvestido chega do CRM ja' formatado ("R$ 300.000,00"), nao como
+  // numero. Aceitar as duas formas: separador de milhar pt-BR fora, virgula
+  // decimal vira ponto. String sem digito nenhum continua sendo ausencia.
+  const toNum = v => {
+    if(v === null || v === undefined || v === '') return NaN;
+    if(typeof v === 'number') return v;
+    let c = String(v).replace(/[^\d,.-]/g,'');
+    // So' trata ponto como separador de milhar quando ha' virgula decimal
+    // junto (formato pt-BR "300.000,00"). Sem virgula, o ponto e' decimal:
+    // "1.032" e' um numero e nao pode virar 1032.
+    if(c.includes(',')) c = c.replace(/\./g,'').replace(',','.');
+    return c === '' || c === '-' ? NaN : Number(c);
+  };
+  const has  = v => !Number.isNaN(toNum(v));
+  const num  = v => has(v) ? toNum(v) : null;
+  const fmt  = (v,f) => has(v) ? f.format(toNum(v)) : '-';
 
   /* ---------- 3. Preenche identidade ------------------------------------- */
   const meses  = data.geracao12 || [];
@@ -545,8 +558,8 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
   /* ---------- 9. Investimento -------------------------------------------- */
   document.getElementById('investValue').textContent = fmt(data.valorInvestido, brl);
   document.getElementById('investNote').textContent =
-    (has(data.valorInvestido) && has(data.potencia) && Number(data.potencia) > 0)
-      ? brl.format(Number(data.valorInvestido)/Number(data.potencia)) + ' por kWp instalado'
+    (has(data.valorInvestido) && has(data.potencia) && toNum(data.potencia) > 0)
+      ? brl.format(toNum(data.valorInvestido)/toNum(data.potencia)) + ' por kWp instalado'
       : '';
 
   /* ---------- 10. Tabela alternativa (identidade nunca so' por cor) ------ */
@@ -573,15 +586,23 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
 
   // Contadores: o numero cresce ate' o valor real, dando peso a grandeza.
   function countTo(el, target, format){
-    if(reduce || !target){ el.textContent = format(target || 0); return; }
+    const end = Number(target) || 0;
+    if(reduce || !end){ el.textContent = format(end); return; }
+    el.textContent = format(0);
     const dur = 1100, t0 = performance.now();
+    let done = false;
+    const finish = () => { if(!done){ done = true; el.textContent = format(end); } };
+    // Rede de seguranca: se o rAF for estrangulado (aba em segundo plano), o
+    // numero chega ao valor final mesmo assim, em vez de travar em zero.
+    setTimeout(finish, dur + 300);
     (function tick(now){
+      if(done) return;
       const p = Math.min(1, (now - t0)/dur);
-      const e = 1 - Math.pow(1 - p, 3);
-      el.textContent = format(Math.round(target * e));
-      if(p < 1) requestAnimationFrame(tick);
+      el.textContent = format(Math.round(end * (1 - Math.pow(1 - p, 3))));
+      if(p < 1) requestAnimationFrame(tick); else done = true;
     })(t0);
   }
+
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach(en => {
