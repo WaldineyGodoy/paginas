@@ -540,13 +540,24 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
   document.getElementById('footConc').textContent = data.concessionaria || '';
 
   /* ---------- 4. Ficha técnica ------------------------------------------- */
+  // Enquadramento e modalidade chegam do CRM ja' rotulados ('GD1'/'GD2' e
+  // 'Auto Consumo Remoto'/'Geração Compartilhada'). Link antigo nao os traz.
+  // Desconhecido continua desconhecido: assumir GD1 removeria o Fio B de uma
+  // usina que talvez o pague, inflando o numero que o investidor le.
+  const enquadramento = /^GD[12]$/.test(String(data.tipoUsina || '')) ? data.tipoUsina : null;
+  const modalidadeTxt = data.modalidade || null;
+  const isGD1 = enquadramento === 'GD1';
+  const isCompartilhada = /compartilhada/i.test(modalidadeTxt || '');
+
   const specs = [
     ['ph-solar-panel','Potência instalada', has(data.potencia) ? nf.format(num(data.potencia)) : null, 'kWp'],
     ['ph-squares-four','Módulos',           has(data.modulos)  ? nf.format(num(data.modulos))  : null, 'un'],
     ['ph-lightning','Potência do módulo',   has(data.potModulos) ? nf.format(num(data.potModulos)) : null, 'W'],
     ['ph-cpu','Potência do inversor',       has(data.potInversor) ? nf.format(num(data.potInversor)) : null, 'W'],
     ['ph-factory','Fabricante do inversor', data.fabInversor || null, ''],
-    ['ph-plug','Concessionária',            data.concessionaria || null, '']
+    ['ph-plug','Concessionária',            data.concessionaria || null, ''],
+    ['ph-certificate','Enquadramento',        enquadramento, ''],
+    ['ph-share-network','Modalidade',         modalidadeTxt, '']
   ];
   document.getElementById('specGrid').innerHTML = specs.map(([icon,k,v,u]) => `
     <div class="spec reveal">
@@ -563,10 +574,14 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
   const fioBv  = num(data.fioB);
   const gestP  = num(data.gestao);
   const descR  = (tarifa !== null && descP !== null) ? tarifa * (descP/100) : null;
-  const baseG  = (tarifa !== null && descR !== null && fioBv !== null) ? tarifa - descR - fioBv : null;
+  // GD1 nao paga Fio B: ele sai da conta, nao vira zero por acaso. A
+  // distincao importa porque `null` significaria "nao informado", e aqui o
+  // valor e' conhecido e igual a zero por regra.
+  const fioBefetivo = isGD1 ? 0 : fioBv;
+  const baseG  = (tarifa !== null && descR !== null && fioBefetivo !== null) ? tarifa - descR - fioBefetivo : null;
   const gestR  = (baseG !== null && gestP !== null) ? baseG * (gestP/100) : null;
-  const liq    = (tarifa !== null && descR !== null && fioBv !== null && gestR !== null)
-                 ? tarifa - descR - fioBv - gestR : num(data.tarifaLiq);
+  const liq    = (tarifa !== null && descR !== null && fioBefetivo !== null && gestR !== null)
+                 ? tarifa - descR - fioBefetivo - gestR : num(data.tarifaLiq);
   const investido = num(data.valorInvestido);
 
   /* ---------- 5b. Grafico -------------------------------------------------
@@ -696,7 +711,7 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
     const rows = [
       ['Tarifa da concessionária', tarifa, null],
       [descP !== null ? `Desconto ao cliente (${nf.format(descP)}%)` : 'Desconto ao cliente', descR, 'ded'],
-      ['Fio B', fioBv, 'ded'],
+      [isGD1 ? 'Fio B (isento, GD1)' : 'Fio B', isGD1 ? 0 : fioBv, 'ded'],
       [gestP !== null ? `Gestão (${nf.format(gestP)}%)` : 'Gestão', gestR, 'ded']
     ];
 
