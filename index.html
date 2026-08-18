@@ -131,27 +131,42 @@ section{padding:var(--s-20) 0; position:relative}
 .spec--wide{grid-column:span 2}
 @media(max-width:560px){ .spec--wide{grid-column:span 1} }
 
-/* ==========================  CHART  ========================== */
+/* ==========================  CHART  ==========================
+   Este painel adota a paleta do bloco "O jeito KAIROGEN": ciano puro sobre
+   preto quase absoluto, com o ciano aparecendo em texto, bordas finas e
+   fundos de baixa opacidade. E' o unico ponto da pagina fora do tema
+   B2W Invest, por pedido do dono.                                          */
 .chart-panel{
-  background:var(--surface); border:1px solid var(--border);
+  background:linear-gradient(#050505, #000000);
+  border:1px solid rgba(255,255,255,.08);
   border-radius:var(--r-2xl); padding:var(--s-8); margin-top:var(--s-8);
+  position:relative; overflow:hidden;
+}
+.chart-panel::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(at 100% 0, rgba(0,255,255,.10), transparent 55%);
 }
 @media(max-width:560px){ .chart-panel{padding:var(--s-4)} }
-.chart-head{display:flex; flex-wrap:wrap; gap:var(--s-4); justify-content:space-between; align-items:baseline}
-.chart-total{font-family:var(--font-display); font-weight:800; font-size:1.5rem; letter-spacing:-.02em}
-.chart-total span{color:var(--brand); font-size:1rem; margin-left:.3rem}
-#genChart{width:100%; height:auto; aspect-ratio:1000/300; display:block; margin-top:var(--s-6); overflow:visible}
-@media(max-width:560px){ #genChart{aspect-ratio:1000/380} }
-.bar-rect{transition:opacity .2s ease}
-.chart-panel:hover .bar-rect{opacity:.55}
-.chart-panel .bar-g:hover .bar-rect{opacity:1}
-.bar-val{
-  font-family:var(--font-mono); font-size:17px; fill:var(--ink-2);
-  opacity:0; transition:opacity .2s ease;
+.chart-head{display:flex; flex-wrap:wrap; gap:var(--s-4); justify-content:space-between; align-items:baseline; position:relative}
+.chart-total{font-family:var(--font-display); font-weight:800; font-size:1.5rem; letter-spacing:-.02em; color:#fff}
+.chart-total span{color:#00FFFF; font-size:1rem; margin-left:.3rem}
+#genChart{width:100%; height:auto; aspect-ratio:1000/470; display:block; margin-top:var(--s-6); overflow:visible; position:relative}
+@media(max-width:560px){ #genChart{aspect-ratio:1000/560} }
+
+/* O valor de cada barra e' permanente: o dado nao pode depender de hover,
+   que nao existe em toque. */
+.bar-val{font-family:var(--font-mono); font-size:15px; fill:#00FFFF}
+.axis-lbl{font-family:var(--font-mono); font-size:17px; fill:rgba(255,255,255,.55)}
+.band-lbl{font-family:var(--font-mono); font-size:15px; fill:rgba(255,255,255,.55); letter-spacing:.08em}
+.band-max{font-family:var(--font-mono); font-size:14px; fill:rgba(255,255,255,.35)}
+.grid-line{stroke:rgba(255,255,255,.08); stroke-width:1}
+.pt-val{font-family:var(--font-mono); font-size:14px}
+.chart-legend{
+  display:flex; flex-wrap:wrap; gap:var(--s-6); margin-top:var(--s-6);
+  position:relative; font-size:13px; color:rgba(255,255,255,.55);
 }
-.bar-g:hover .bar-val{opacity:1}
-.axis-lbl{font-family:var(--font-mono); font-size:18px; fill:var(--ink-3)}
-.grid-line{stroke:var(--border); stroke-width:1}
+.chart-legend b{display:inline-flex; align-items:center; gap:var(--s-2); font-weight:500}
+.chart-legend i{width:14px; height:3px; border-radius:2px; display:inline-block}
 
 /* ==========================  WATERFALL  ========================== */
 .fall{margin-top:var(--s-8); display:grid; gap:var(--s-3)}
@@ -388,10 +403,15 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
       <div class="chart-panel reveal">
         <div class="chart-head">
           <div class="chart-total"><span id="chartTotal">0</span><span>kWh no ano</span></div>
-          <div class="figure-label">Passe o cursor para ver o mês</div>
+          <div class="figure-label">Projeção pela irradiância local</div>
         </div>
         <svg id="genChart" role="img" aria-labelledby="genChartTitle"></svg>
         <title id="genChartTitle">Geração mensal prevista, em kWh</title>
+        <div class="chart-legend">
+          <b><i style="background:linear-gradient(#00FFFF,#00D4FF)"></i> Geração (kWh)</b>
+          <b><i style="background:#D45D00"></i> Receita líquida (R$)</b>
+          <b><i style="background:#6481BF"></i> Rentabilidade (% ao mês)</b>
+        </div>
         <button class="table-toggle" data-target="genTable" aria-expanded="false">Ver como tabela</button>
         <div id="genTable" hidden></div>
       </div>
@@ -535,47 +555,126 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
       <div class="spec-v">${v === null ? '-' : v}${v !== null && u ? `<small>${u}</small>` : ''}</div>
     </div>`).join('');
 
-  /* ---------- 5. Gráfico de geração --------------------------------------
-     Uma serie so': magnitude ao longo do tempo, sem legenda (o titulo ja'
-     nomeia a serie) e sem rotulo em todo ponto.                            */
-  const W = 1000, H = 300, PADB = 34, PADT = 16;
-  const maxV = Math.max(...meses.map(m => num(m.v) || 0), 1);
-  const svg  = document.getElementById('genChart');
+  /* ---------- 5. Insumos do grafico --------------------------------------
+     A tarifa liquida e o valor investido sao necessarios aqui, antes de
+     desenhar: as duas linhas derivam deles.                               */
+  const tarifa = num(data.tarifaCons);
+  const descP  = num(data.descCliente);
+  const fioBv  = num(data.fioB);
+  const gestP  = num(data.gestao);
+  const descR  = (tarifa !== null && descP !== null) ? tarifa * (descP/100) : null;
+  const baseG  = (tarifa !== null && descR !== null && fioBv !== null) ? tarifa - descR - fioBv : null;
+  const gestR  = (baseG !== null && gestP !== null) ? baseG * (gestP/100) : null;
+  const liq    = (tarifa !== null && descR !== null && fioBv !== null && gestR !== null)
+                 ? tarifa - descR - fioBv - gestR : num(data.tarifaLiq);
+  const investido = num(data.valorInvestido);
+
+  /* ---------- 5b. Grafico -------------------------------------------------
+     Tres grandezas de escalas muito diferentes: kWh na casa de milhares,
+     reais na casa de milhares e rentabilidade em unidades de porcento. Num
+     eixo so' a rentabilidade viraria uma reta colada no zero, e eixo duplo
+     faria o cruzamento entre as curvas depender da escala escolhida, nao do
+     dado. Cada grandeza fica na sua faixa, com a propria escala, todas
+     compartilhando o eixo dos meses.                                       */
+  const W = 1000, H = 470;
+  const svg = document.getElementById('genChart');
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-  if(meses.length){
-    const step = W / meses.length;
-    const bw   = Math.max(10, step * 0.52);
-    let out = '';
+  const serieGer = meses.map(m => num(m.v));
+  const serieRec = serieGer.map(v => (v !== null && liq !== null) ? v * liq : null);
+  const serieRen = serieRec.map(r => (r !== null && investido) ? (r / investido) * 100 : null);
 
-    // Grade recessiva: tres linhas, nada mais.
-    for(let i=1;i<=3;i++){
-      const y = PADT + (H - PADT - PADB) * (i/3);
+  const maxDe = a => { const f = a.filter(v => v !== null); return f.length ? Math.max(...f) : null; };
+  const maxGer = maxDe(serieGer);
+
+  if(meses.length && maxGer){
+    const step = W / meses.length;
+    const bw   = Math.max(10, step * 0.46);
+    const cx   = i => i * step + step/2;
+
+    // Faixas: barras em cima, depois as duas linhas.
+    const A = { top: 44,  bot: 238 };   // geracao
+    const B = { top: 296, bot: 348 };   // receita liquida
+    const C = { top: 404, bot: 452 };   // rentabilidade
+
+    let out = `<defs>
+      <radialGradient id="gBar" cx="50%" cy="0%" r="120%">
+        <stop offset="0%"  stop-color="#00FFFF" stop-opacity="1"/>
+        <stop offset="55%" stop-color="#00D4FF" stop-opacity=".7"/>
+        <stop offset="100%" stop-color="#00FFFF" stop-opacity=".18"/>
+      </radialGradient>
+    </defs>`;
+
+    // Grade recessiva so' na faixa das barras.
+    for(let k=1;k<=3;k++){
+      const y = A.top + (A.bot - A.top) * (k/3);
       out += `<line class="grid-line" x1="0" x2="${W}" y1="${y}" y2="${y}"/>`;
     }
 
-    meses.forEach((m,i) => {
-      const v  = num(m.v) || 0;
-      const h  = (v / maxV) * (H - PADT - PADB);
-      const x  = i * step + (step - bw)/2;
-      const y  = H - PADB - h;
-      out += `<g class="bar-g">
-        <rect x="${i*step}" y="${PADT}" width="${step}" height="${H-PADT-PADB}" fill="transparent"/>
-        <rect class="bar-rect" x="${x}" y="${H-PADB}" width="${bw}" height="0" rx="4"
-              fill="var(--data-result)" data-h="${h}" data-y="${y}"/>
-        <text class="bar-val" x="${x + bw/2}" y="${y - 8}" text-anchor="middle">${nf.format(v)}</text>
-        <text class="axis-lbl" x="${x + bw/2}" y="${H-12}" text-anchor="middle">${m.m || ''}</text>
-      </g>`;
+    // ---- Faixa A: barras de geracao, com valor sempre visivel ----
+    out += `<text class="band-lbl" x="0" y="22">GERAÇÃO kWh</text>`;
+    out += `<text class="band-max" x="${W}" y="22" text-anchor="end">máx ${nf.format(Math.round(maxGer))}</text>`;
+    meses.forEach((m,idx) => {
+      const v = serieGer[idx];
+      if(v === null) return;
+      const h = (v / maxGer) * (A.bot - A.top);
+      const x = cx(idx) - bw/2;
+      out += `<rect class="bar-rect" x="${x}" y="${A.bot}" width="${bw}" height="0" rx="4"
+                    fill="url(#gBar)" data-h="${h}" data-y="${A.bot - h}"/>`;
+      out += `<text class="bar-val" x="${cx(idx)}" y="${A.bot - h - 9}" text-anchor="middle">${nf.format(v)}</text>`;
     });
+
+    // ---- helper de linha ----
+    // Escala min-max com 15% de folga, nao zero-base: a variacao mes a mes e'
+    // pequena diante do valor absoluto, e ancorar no zero achataria a curva
+    // ate' virar uma reta. Linha admite base nao-zero; barra nao admitiria.
+    const linha = (serie, band, cor, rotulo, fmtPonto) => {
+      const val = serie.filter(v => v !== null);
+      let g = `<text class="band-lbl" x="0" y="${band.top - 16}">${rotulo}</text>`;
+      if(val.length < 2) return g;
+
+      const lo = Math.min(...val), hi = Math.max(...val);
+      const folga = (hi - lo) * .15 || Math.abs(hi) * .05 || 1;
+      const p0 = lo - folga, p1 = hi + folga;
+
+      g += `<text class="band-max" x="${W}" y="${band.top - 16}" text-anchor="end">`
+         + `${fmtPonto(lo)} a ${fmtPonto(hi)}</text>`;
+
+      const pts = serie.map((v,idx) => v === null ? null
+        : [cx(idx), band.bot - ((v - p0) / (p1 - p0)) * (band.bot - band.top)]);
+      const ok = pts.filter(Boolean);
+      const d = ok.map((q,k) => (k ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ');
+
+      g += `<path d="${d}" fill="none" stroke="${cor}" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="linha-serie" pathLength="1"/>`;
+      // Um rotulo so', no ultimo ponto. A faixa de valores ja' esta' no topo;
+      // numero em todo ponto viraria ruido.
+      const ult = ok[ok.length-1];
+      g += `<circle cx="${ult[0]}" cy="${ult[1]}" r="4" fill="${cor}"/>`;
+      g += `<text class="pt-val" x="${ult[0] - 8}" y="${ult[1] - 10}" fill="${cor}" `
+         + `text-anchor="end">${fmtPonto(val[val.length-1])}</text>`;
+      return g;
+    };
+
+    out += linha(serieRec, B, '#D45D00', 'RECEITA LÍQUIDA', v => brl.format(v));
+    out += linha(serieRen, C, '#6481BF', 'RENTABILIDADE % AO MÊS',
+                 v => v.toFixed(2).replace('.', ',') + '%');
+
+    // ---- Eixo dos meses, compartilhado pelas tres faixas ----
+    meses.forEach((m,idx) => {
+      out += `<text class="axis-lbl" x="${cx(idx)}" y="${H - 2}" text-anchor="middle">${m.m || ''}</text>`;
+    });
+
     svg.innerHTML = out;
   }
 
   /* ---------- 6. Sparkline do hero (mesma serie, forma resumida) --------- */
-  if(meses.length > 1){
+  if(meses.length > 1 && maxGer){
     const sw = 600, sh = 96;
     const pts = meses.map((m,i) => {
       const v = num(m.v) || 0;
-      return [ (i/(meses.length-1)) * sw, sh - (v/maxV) * (sh - 8) - 4 ];
+      return [ (i/(meses.length-1)) * sw, sh - (v/maxGer) * (sh - 8) - 4 ];
     });
     const d = pts.map((p,i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
     const spark = document.getElementById('spark');
@@ -590,27 +689,14 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
      tarifa - desconto - fio B - gestao = liquida. As percentagens vem do
      slug; os valores em reais sao derivados aqui, na mesma ordem que
      getTariffValues() usa no CRM.                                          */
-  const tarifa = num(data.tarifaCons);
-  const descP  = num(data.descCliente);
-  const fioB   = num(data.fioB);
-  const gestP  = num(data.gestao);
-
+  // tarifa, descP, fioBv, gestP, descR, gestR e liq foram calculados na secao
+  // 5: o grafico depende deles. A cascata reusa os mesmos valores, para as
+  // duas leituras da mesma conta nunca divergirem na tela.
   if(tarifa !== null){
-    const descR = descP !== null ? tarifa * (descP/100) : null;
-    const base  = (descR !== null && fioB !== null) ? tarifa - descR - fioB : null;
-    const gestR = (base !== null && gestP !== null) ? base * (gestP/100) : null;
-    // A cascata tem de fechar NA TELA: se as parcelas exibidas sao todas
-    // conhecidas, o resultado e' a subtracao delas, nao o valor do slug. Os
-    // dois coincidem quando vem do CRM (mesma formula em getTariffValues);
-    // divergindo, mostrar o do slug deixaria a conta visivelmente errada.
-    const calc  = (descR !== null && fioB !== null && gestR !== null)
-      ? tarifa - descR - fioB - gestR : null;
-    const liq   = calc !== null ? calc : num(data.tarifaLiq);
-
     const rows = [
       ['Tarifa da concessionária', tarifa, null],
       [descP !== null ? `Desconto ao cliente (${nf.format(descP)}%)` : 'Desconto ao cliente', descR, 'ded'],
-      ['Fio B', fioB, 'ded'],
+      ['Fio B', fioBv, 'ded'],
       [gestP !== null ? `Gestão (${nf.format(gestP)}%)` : 'Gestão', gestR, 'ded']
     ];
 
@@ -814,6 +900,15 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
           if(reduce){ r.setAttribute('height',h); r.setAttribute('y',y); return; }
           r.style.transition = `height .8s var(--ease) ${i*45}ms, y .8s var(--ease) ${i*45}ms`;
           requestAnimationFrame(() => { r.setAttribute('height',h); r.setAttribute('y',y); });
+        });
+        // As linhas se desenham depois das barras: a ordem conta a leitura,
+        // primeiro quanto gerou, depois quanto rende.
+        svg.querySelectorAll('.linha-serie').forEach((ln,i) => {
+          if(reduce) return;
+          ln.style.strokeDasharray = 1;
+          ln.style.strokeDashoffset = 1;
+          ln.style.transition = `stroke-dashoffset 1.1s var(--ease) ${600 + i*250}ms`;
+          requestAnimationFrame(() => { ln.style.strokeDashoffset = '0'; });
         });
       }
       if(en.target.id === 'fall'){
