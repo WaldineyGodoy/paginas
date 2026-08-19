@@ -264,6 +264,34 @@ section{padding:var(--s-20) 0; position:relative}
 
 
 
+
+/* ==========================  VIABILIDADE  ========================== */
+.kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--s-4); margin-top:var(--s-12)}
+@media(max-width:860px){ .kpi-grid{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:480px){ .kpi-grid{grid-template-columns:1fr} }
+.kpi{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r-xl); padding:var(--s-6); border-top:2px solid var(--brand);
+}
+.kpi:nth-child(2){border-top-color:var(--gold)}
+.kpi:nth-child(3){border-top-color:#00FFFF}
+.kpi:nth-child(4){border-top-color:var(--navy-300)}
+.kpi-k{color:var(--ink-3); font-size:12px; letter-spacing:.06em; text-transform:uppercase}
+.kpi-v{
+  font-family:var(--font-display); font-weight:800; letter-spacing:-.02em;
+  font-size:clamp(1.6rem,4vw,2.1rem); margin-top:var(--s-2); line-height:1;
+}
+.kpi-n{color:var(--ink-3); font-size:12px; margin-top:var(--s-3); line-height:1.5}
+
+#fluxoChart{width:100%; height:auto; aspect-ratio:1000/460; display:block; overflow:visible; position:relative}
+@media(max-width:560px){ #fluxoChart{aspect-ratio:1000/620} }
+.fx-zero{stroke:rgba(255,255,255,.35); stroke-width:1.5; stroke-dasharray:5 5}
+.fx-nom{fill:none; stroke:#00FFFF; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round}
+.fx-desc{fill:none; stroke:#0E9F6E; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:7 5}
+.fx-eq{stroke:var(--gold); stroke-width:1.5; stroke-dasharray:3 4}
+.fx-lbl{font-family:var(--font-mono); font-size:15px; fill:rgba(255,255,255,.55)}
+.fx-eq-lbl{font-family:var(--font-mono); font-size:15px; fill:var(--gold)}
+
 /* ==========================  MAPA  ==========================
    Satelite da Esri via Leaflet. Escolhido em vez do embed do Google porque
    nao exige chave, e' documentado e deixa o visual sob controle: o embed sem
@@ -673,6 +701,37 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
         <button class="table-toggle" data-target="projTabela" aria-expanded="false">Ver como tabela</button>
         <div id="projTabela" hidden></div>
       </div>
+    </div>
+  </section>
+
+
+  <!-- ============ VIABILIDADE FINANCEIRA ============ -->
+  <section id="finSection" style="background:var(--bg-subtle)" hidden>
+    <div class="wrap">
+      <div class="reveal">
+        <h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">Viabilidade financeira</h2>
+        <p style="color:var(--ink-2); max-width:64ch; margin-top:var(--s-4)" id="finIntro"></p>
+      </div>
+
+      <div class="kpi-grid" id="finKpis"></div>
+
+      <div class="chart-panel reveal">
+        <div class="chart-head">
+          <div class="chart-total"><span id="finEq">0</span><span>até o ponto de equilíbrio</span></div>
+        </div>
+        <svg id="fluxoChart" role="img" aria-labelledby="fluxoTitle"></svg>
+        <title id="fluxoTitle">Retorno acumulado do investimento, em reais</title>
+
+        <div class="chart-legend">
+          <b><i style="background:#00FFFF"></i> Retorno acumulado</b>
+          <b><i style="background:#0E9F6E"></i> Retorno descontado</b>
+          <b><i style="background:var(--gold)"></i> Ponto de equilíbrio</b>
+        </div>
+        <button class="table-toggle" data-target="finTabela" aria-expanded="false">Ver como tabela</button>
+        <div id="finTabela" hidden></div>
+      </div>
+
+      <p class="proj-nota" id="finNota" style="color:var(--ink-3)"></p>
     </div>
   </section>
 
@@ -1383,6 +1442,186 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
                 + (isCompartilhada ? '<td class="num">' + brl4.format(p.impostos) + '</td>' : '')
                 + '<td class="num">' + brl4.format(p.gestao) + '</td>'
                 + '<td class="num">' + brl4.format(p.liquida) + '</td></tr>';
+            }).join('')
+          + '</tbody></table>';
+      }
+      box.hidden = !abrir;
+      this.setAttribute('aria-expanded', String(abrir));
+      this.textContent = abrir ? 'Ocultar tabela' : 'Ver como tabela';
+    });
+  }
+
+
+  /* ---------- 8c. Viabilidade financeira ----------------------------------
+     Fluxo de caixa sobre a MESMA projecao tarifaria da secao anterior, para as
+     duas leituras nunca divergirem. Investimento em t=0; a receita de cada ano
+     e' a geracao anual vezes a tarifa liquida daquele ano, menos os custos
+     operacionais, que sobem pela mesma inflacao.
+
+     Premissas que o modelo NAO faz, e que valem saber ao ler os numeros:
+     nao ha' degradacao dos modulos (a geracao e' a mesma nos dez anos) e o
+     horizonte para no decimo ano, embora a usina dure bem mais. A primeira
+     puxa o resultado para cima, a segunda para baixo.                       */
+  const TAXA_DESCONTO = INFLACAO;   // desconto pela inflacao: retorno em moeda de hoje
+
+  const custoMensal = servKeys.reduce(function(a, k){ return a + Number(serv[k]); }, 0);
+
+  function calcularViabilidade(){
+    if(!proj || !investido || !anual) return null;
+
+    // t=0 e' o desembolso; cada ano seguinte traz o resultado daquele exercicio.
+    const fluxos = [-investido];
+    const detalhe = [];
+    proj.forEach(function(p, k){
+      const receita = anual * p.liquida;
+      const custo   = custoMensal * 12 * Math.pow(1 + INFLACAO, k);
+      fluxos.push(receita - custo);
+      detalhe.push({ ano: p.ano, receita: receita, custo: custo, liquido: receita - custo });
+    });
+
+    const vpl = function(taxa){
+      return fluxos.reduce(function(a, f, i){ return a + f / Math.pow(1 + taxa, i); }, 0);
+    };
+
+    // Bissecao em vez de Newton: mais lenta e nao diverge quando o fluxo e' magro.
+    let lo = -0.99, hi = 10;
+    if(vpl(lo) * vpl(hi) < 0){
+      for(let i = 0; i < 200; i++){
+        const m = (lo + hi) / 2;
+        if(vpl(m) > 0){ lo = m; } else { hi = m; }
+      }
+    } else { lo = hi = NaN; }
+    const tir = (lo + hi) / 2;
+
+    const entradas = fluxos.slice(1).reduce(function(a, b){ return a + b; }, 0);
+    const roi = (entradas - investido) / investido;
+
+    // Acumulado ano a ano, nominal e descontado, para o grafico e o payback.
+    const acumulado = []; let an = -investido, ad = -investido;
+    fluxos.slice(1).forEach(function(f, i){
+      an += f;
+      ad += f / Math.pow(1 + TAXA_DESCONTO, i + 1);
+      acumulado.push({ ano: proj[i].ano, nominal: an, descontado: ad });
+    });
+
+    // Interpola dentro do ano em que a curva cruza o zero.
+    function payback(serie){
+      let ant = -investido;
+      for(let i = 0; i < acumulado.length; i++){
+        const v = acumulado[i][serie];
+        if(v >= 0) return i + (ant < 0 ? (-ant) / (v - ant) : 0);
+        ant = v;
+      }
+      return null;
+    }
+
+    return {
+      fluxos: fluxos, detalhe: detalhe, acumulado: acumulado,
+      roi: roi, tir: tir, vpl: vpl(TAXA_DESCONTO),
+      payback: payback('nominal'), paybackDesc: payback('descontado')
+    };
+  }
+
+  const fin = calcularViabilidade();
+
+  if(fin){
+    document.getElementById('finSection').hidden = false;
+
+    const anos = function(v){
+      if(v === null) return 'não atingido em ' + proj.length + ' anos';
+      const a = Math.floor(v), m = Math.round((v - a) * 12);
+      return a + (a === 1 ? ' ano' : ' anos') + (m ? ' e ' + m + (m === 1 ? ' mês' : ' meses') : '');
+    };
+    const pct = function(v){ return nf.format(Math.round(v * 1000) / 10) + '%'; };
+
+    document.getElementById('finIntro').textContent =
+      'Sobre ' + brl.format(investido) + ' investidos e ' + nf.format(anual)
+      + ' kWh de geração anual, usando a mesma projeção de tarifa da seção anterior. '
+      + 'Custo operacional de ' + brl.format(custoMensal) + ' por mês, corrigido pela mesma inflação.';
+
+    const kpis = [
+      ['ROI em ' + proj.length + ' anos', pct(fin.roi),
+       'Soma dos resultados menos o investimento, sobre o investimento.'],
+      ['TIR', isNaN(fin.tir) ? '-' : pct(fin.tir) + ' a.a.',
+       'Taxa que zera o valor presente do fluxo. Conferida: o VPL calculado nela dá zero.'],
+      ['Payback', anos(fin.payback),
+       'Quando o retorno acumulado alcança o valor investido.'],
+      ['Payback descontado', anos(fin.paybackDesc),
+       'O mesmo, com o dinheiro trazido a valor de hoje pela inflação de ' + nf.format(INFLACAO * 100) + '%.']
+    ];
+    document.getElementById('finKpis').innerHTML = kpis.map(function(k){
+      return '<div class="kpi reveal"><div class="kpi-k">' + k[0] + '</div>'
+           + '<div class="kpi-v">' + k[1] + '</div>'
+           + '<div class="kpi-n">' + k[2] + '</div></div>';
+    }).join('');
+
+    document.getElementById('finEq').textContent = anos(fin.payback);
+
+    document.getElementById('finNota').textContent =
+      'O modelo mantém a geração constante nos ' + proj.length + ' anos, sem degradação dos módulos, '
+      + 'e para no décimo ano embora a usina dure bem mais. A primeira simplificação puxa o resultado '
+      + 'para cima, a segunda para baixo. Valor presente líquido a '
+      + nf.format(INFLACAO * 100) + '%: ' + brl.format(fin.vpl) + '.';
+
+    // ---- grafico do retorno acumulado ----
+    const FW = 1000, FH = 460, FB = 46, FT = 30, FL = 8;
+    const svgF = document.getElementById('fluxoChart');
+    svgF.setAttribute('viewBox', '0 0 ' + FW + ' ' + FH);
+
+    const todos = fin.acumulado.reduce(function(a, p){ return a.concat([p.nominal, p.descontado]); }, [-investido]);
+    const vMax = Math.max.apply(null, todos), vMin = Math.min.apply(null, todos);
+    const yF = function(v){ return FH - FB - ((v - vMin) / (vMax - vMin)) * (FH - FB - FT); };
+    const stepF = (FW - FL) / fin.acumulado.length;
+    const xF = function(i){ return FL + i * stepF + stepF / 2; };
+
+    let outF = '';
+    // Zero: e' onde o investimento se paga. Merece linha propria, nao so' cor.
+    outF += '<line class="fx-zero" x1="0" x2="' + FW + '" y1="' + yF(0) + '" y2="' + yF(0) + '"/>';
+    outF += '<text class="fx-lbl" x="4" y="' + (yF(0) - 8) + '">investimento pago</text>';
+
+    const linha = function(serie, classe){
+      const d = fin.acumulado.map(function(p, i){
+        return (i ? 'L' : 'M') + xF(i).toFixed(1) + ' ' + yF(p[serie]).toFixed(1);
+      }).join(' ');
+      return '<path class="' + classe + '" d="' + d + '" pathLength="1"/>';
+    };
+    outF += linha('nominal', 'fx-nom');
+    outF += linha('descontado', 'fx-desc');
+
+    // Marca vertical no ano do equilibrio.
+    if(fin.payback !== null){
+      // O acumulado no indice i vale para i+1 anos decorridos, entao um payback
+      // de 3,7 anos cai no indice 2,7 e nao em 3,7. Sem o -1 a marca ficava um
+      // passo inteiro a' direita do ponto em que a curva cruza o zero.
+      const xe = FL + (fin.payback - 1) * stepF + stepF / 2;
+      outF += '<line class="fx-eq" x1="' + xe + '" x2="' + xe + '" y1="' + FT + '" y2="' + (FH - FB) + '"/>';
+      outF += '<circle cx="' + xe + '" cy="' + yF(0) + '" r="5" fill="var(--gold)"/>';
+      outF += '<text class="fx-eq-lbl" x="' + (xe + 10) + '" y="' + (FT + 16) + '">equilíbrio: ' + anos(fin.payback) + '</text>';
+    }
+
+    fin.acumulado.forEach(function(p, i){
+      outF += '<text class="fx-lbl" x="' + xF(i) + '" y="' + (FH - 14) + '" text-anchor="middle">' + p.ano + '</text>';
+    });
+    const ult = fin.acumulado[fin.acumulado.length - 1];
+    outF += '<text class="fx-lbl" x="' + (xF(fin.acumulado.length - 1)) + '" y="' + (yF(ult.nominal) - 14)
+          + '" text-anchor="end" fill="#00FFFF">' + brl.format(ult.nominal) + '</text>';
+
+    svgF.innerHTML = outF;
+
+    document.querySelector('[data-target="finTabela"]').addEventListener('click', function(){
+      const box = document.getElementById('finTabela');
+      const abrir = box.hidden;
+      if(abrir && !box.innerHTML){
+        box.innerHTML = '<table><thead><tr><th>Ano</th>'
+          + '<th style="text-align:right">Receita</th><th style="text-align:right">Custo</th>'
+          + '<th style="text-align:right">Resultado</th><th style="text-align:right">Acumulado</th>'
+          + '</tr></thead><tbody>'
+          + fin.detalhe.map(function(d, i){
+              return '<tr><td>' + d.ano + '</td>'
+                + '<td class="num">' + brl.format(d.receita) + '</td>'
+                + '<td class="num">' + brl.format(d.custo) + '</td>'
+                + '<td class="num">' + brl.format(d.liquido) + '</td>'
+                + '<td class="num">' + brl.format(fin.acumulado[i].nominal) + '</td></tr>';
             }).join('')
           + '</tbody></table>';
       }
