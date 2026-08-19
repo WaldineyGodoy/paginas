@@ -259,6 +259,56 @@ section{padding:var(--s-20) 0; position:relative}
 .gate-msg.ok{display:block; background:var(--brand-soft); color:var(--orange-300); border:1px solid rgba(242,107,0,.3)}
 .gate-legal{color:var(--ink-3); font-size:12px; margin-top:var(--s-6); line-height:1.5}
 
+
+/* ==========================  360  ==========================
+   Familia de layout propria: tres pilares em faixa horizontal e os
+   diferenciais em duas colunas separadas por filete. Nao repete o grid de
+   cards da ficha tecnica nem o painel do grafico.                         */
+.s360{background:var(--bg-subtle); position:relative; overflow:hidden}
+.s360::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(60ch 60ch at 88% 8%, rgba(212,175,55,.07), transparent 60%);
+}
+.s360-head{display:grid; grid-template-columns:auto 1fr; gap:var(--s-8); align-items:center; position:relative}
+@media(max-width:720px){ .s360-head{grid-template-columns:1fr; gap:var(--s-4)} }
+.s360-num{
+  font-family:var(--font-display); font-weight:800; line-height:.85;
+  font-size:clamp(4rem,12vw,7rem); letter-spacing:-.05em;
+  background:linear-gradient(135deg, var(--gold), var(--brand));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.s360-num sup{font-size:.35em; vertical-align:super; margin-left:.05em}
+
+.pilares{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s-4); margin-top:var(--s-12); position:relative}
+@media(max-width:860px){ .pilares{grid-template-columns:1fr} }
+.pilar{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r-xl); padding:var(--s-6);
+  border-top:2px solid var(--brand);
+  transition:transform .3s var(--ease), border-color .3s var(--ease);
+}
+.pilar:nth-child(2){border-top-color:var(--gold)}
+.pilar:nth-child(3){border-top-color:var(--navy-300)}
+.pilar:hover{transform:translateY(-3px)}
+.pilar-nome{font-family:var(--font-display); font-weight:800; font-size:1.15rem; letter-spacing:-.01em}
+.pilar-papel{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--brand); display:block; margin-bottom:var(--s-2);
+}
+.pilar:nth-child(2) .pilar-papel{color:var(--gold)}
+.pilar:nth-child(3) .pilar-papel{color:var(--navy-300)}
+.pilar p{color:var(--ink-2); font-size:.92rem; margin-top:var(--s-3)}
+
+.difs{
+  display:grid; grid-template-columns:1fr 1fr; gap:0 var(--s-12);
+  margin-top:var(--s-16); position:relative;
+}
+@media(max-width:860px){ .difs{grid-template-columns:1fr; gap:0} }
+.dif{display:grid; grid-template-columns:auto 1fr; gap:var(--s-4); padding:var(--s-6) 0; border-top:1px solid var(--border)}
+.dif i{font-size:24px; color:var(--gold); line-height:1}
+.dif h4{font-family:var(--font-display); font-size:1.02rem; font-weight:700; margin:0}
+.dif p{color:var(--ink-2); font-size:.9rem; margin-top:var(--s-2)}
+
 /* ==========================  FOOTER / ESTADOS  ========================== */
 footer{border-top:1px solid var(--border); padding:var(--s-12) 0; color:var(--ink-3); font-size:13px}
 .state{
@@ -446,6 +496,86 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
     </div>
   </section>
 
+
+  <!-- ============ INVESTIMENTO 360 (pagina 10 do material B2W Invest) ============ -->
+  <section class="s360">
+    <div class="wrap">
+      <div class="s360-head reveal">
+        <div class="s360-num">360<sup>°</sup></div>
+        <div>
+          <h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">Investimento 360°</h2>
+          <p style="color:var(--ink-2); max-width:56ch; margin-top:var(--s-3)">
+            Cuidamos de tudo para facilitar seu investimento em usinas fotovoltaicas,
+            com máxima rentabilidade e sem complicações.
+          </p>
+        </div>
+      </div>
+
+      <div class="pilares">
+        <article class="pilar reveal">
+          <span class="pilar-papel">Incorporadora</span>
+          <h3 class="pilar-nome">B2W Energia</h3>
+          <p>Prospecta as áreas e constrói as usinas, da viabilidade do terreno à homologação junto à concessionária.</p>
+        </article>
+        <article class="pilar reveal">
+          <span class="pilar-papel">Comercializadora</span>
+          <h3 class="pilar-nome">B2W Gestora</h3>
+          <p>Prospecta os assinantes e administra a carteira de clientes que consome a energia produzida pela usina.</p>
+        </article>
+        <article class="pilar reveal">
+          <span class="pilar-papel">Gestão patrimonial</span>
+          <h3 class="pilar-nome">B2W Invest</h3>
+          <p>Cuida do patrimônio do investidor: acompanha a operação, presta contas e faz o repasse mensal.</p>
+        </article>
+      </div>
+
+      <div class="difs">
+        <div class="dif reveal">
+          <i class="ph ph-trend-up" aria-hidden="true"></i>
+          <div>
+            <h4>Máxima rentabilidade</h4>
+            <p>Solução completa ao investidor. Somada à força da marca, sustenta uma carteira de empreendimentos entre as mais valorizadas do mercado.</p>
+          </div>
+        </div>
+        <div class="dif reveal">
+          <i class="ph ph-map-trifold" aria-hidden="true"></i>
+          <div>
+            <h4>Localização privilegiada</h4>
+            <p>Usinas implantadas onde a irradiação rende mais por metro quadrado, o que aumenta a geração sem aumentar a área.</p>
+          </div>
+        </div>
+        <div class="dif reveal">
+          <i class="ph ph-users-three" aria-hidden="true"></i>
+          <div>
+            <h4>Gestão de assinantes</h4>
+            <p>Prospecção e gestão da carteira pela nossa comercializadora. O investidor não precisa procurar quem consome a energia da usina.</p>
+          </div>
+        </div>
+        <div class="dif reveal">
+          <i class="ph ph-wrench" aria-hidden="true"></i>
+          <div>
+            <h4>Gestão total do empreendimento</h4>
+            <p>Da construção à administração. Operação, manutenção, faturamento e prestação de contas ficam conosco.</p>
+          </div>
+        </div>
+        <div class="dif reveal">
+          <i class="ph ph-lightning" aria-hidden="true"></i>
+          <div>
+            <h4>Déficit energético</h4>
+            <p>A eletrificação da frota puxa a demanda para cima nos próximos anos, ampliando o espaço para geração distribuída.</p>
+          </div>
+        </div>
+        <div class="dif reveal">
+          <i class="ph ph-buildings" aria-hidden="true"></i>
+          <div>
+            <h4>Valorização do empreendimento</h4>
+            <p>Conforme o sistema de distribuição se aproxima do limite de capacidade, as usinas já homologadas tendem a valer mais.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ INVESTIMENTO ============ -->
   <section>
     <div class="wrap">
@@ -561,7 +691,7 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
   ];
   document.getElementById('specGrid').innerHTML = specs.map(([icon,k,v,u]) => `
     <div class="spec reveal">
-      <i class="${icon}" aria-hidden="true"></i>
+      <i class="ph ${icon}" aria-hidden="true"></i>
       <div class="spec-k">${k}</div>
       <div class="spec-v">${v === null ? '-' : v}${v !== null && u ? `<small>${u}</small>` : ''}</div>
     </div>`).join('');
@@ -582,7 +712,7 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
   /* Tributos da Geracao Compartilhada -------------------------------------
      Base = TE + (TUSD - Fio B). Como TE + TUSD = tarifa cheia, a base e'
      simplesmente `tarifa - Fio B`. O Fio B fica fora porque ja' vem com os
-     impostos embutidos na conta da concessionaria — e por isso usa o fioBv
+     impostos embutidos na conta da concessionaria : e por isso usa o fioBv
      bruto, nao o efetivo: a exclusao e' uma propriedade da parcela, nao do
      que a usina paga.
      Ordem: ICMS primeiro; PIS e COFINS incidem sobre o valor JA' reduzido
