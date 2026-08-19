@@ -1755,8 +1755,16 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
   document.getElementById('linkPrimeiraVez').addEventListener('click', () => mostrar(fCad));
   document.getElementById('linkVoltar').addEventListener('click', () => mostrar(fCad));
 
+  // Atalho do visualizador local: pula o portao para testar o conteudo sem
+  // passar pela captura de lead. Vale SO' fora do ar (file:// ou localhost).
+  // Em producao o hash nao faz nada, senao qualquer um burlaria a captura
+  // acrescentando #pular na URL.
+  const local = location.protocol === 'file:'
+    || ['localhost','127.0.0.1','[::1]'].indexOf(location.hostname) >= 0;
+  const pular = local && location.hash === '#pular';
+
   document.getElementById('stateLoading').hidden = true;
-  if(tokenValido()){ abrirPagina(); } else { gate.hidden = false; }
+  if(pular || tokenValido()){ abrirPagina(); } else { gate.hidden = false; }
 
   /* ---------- 12. Entra em cena --------------------------------------------
      IntersectionObserver, nunca listener de scroll. Cada animacao existe por
