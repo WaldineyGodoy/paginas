@@ -260,6 +260,40 @@ section{padding:var(--s-20) 0; position:relative}
 .gate-legal{color:var(--ink-3); font-size:12px; margin-top:var(--s-6); line-height:1.5}
 
 
+
+/* ==========================  PROJECAO TARIFARIA  ==========================
+   Mesma linguagem do grafico de geracao: preto quase absoluto, brilho radial
+   e gradiente nas barras. Cinco componentes empilhadas, cada uma com sua cor,
+   validadas contra a superficie #050505 em todos os pares: pior caso deltaE
+   16,9 em visao normal e 9,4 em deuteranopia.                              */
+.proj-panel{
+  background:linear-gradient(#050505, #000000);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-2xl); padding:var(--s-8); margin-top:var(--s-8);
+  position:relative; overflow:hidden;
+}
+.proj-panel::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(at 0 0, rgba(0,255,255,.08), transparent 55%);
+}
+@media(max-width:560px){ .proj-panel{padding:var(--s-4)} }
+#projChart{width:100%; height:auto; aspect-ratio:1000/560; display:block; overflow:visible; position:relative}
+@media(max-width:700px){ #projChart{aspect-ratio:1000/760} }
+.proj-topo{font-family:var(--font-mono); font-size:15px; fill:rgba(255,255,255,.85)}
+.proj-ano{font-family:var(--font-mono); font-size:16px; fill:rgba(255,255,255,.5)}
+.proj-liq{fill:none; stroke:#00FFFF; stroke-width:2.5; stroke-linecap:round; stroke-linejoin="round"}
+.proj-liq-val{font-family:var(--font-mono); font-size:14px; fill:#00FFFF}
+.proj-legenda{
+  display:flex; flex-wrap:wrap; gap:var(--s-4) var(--s-6); margin-top:var(--s-6);
+  position:relative; font-size:13px; color:rgba(255,255,255,.6);
+}
+.proj-legenda b{display:inline-flex; align-items:center; gap:var(--s-2); font-weight:500}
+.proj-legenda i{width:12px; height:12px; border-radius:3px; display:inline-block}
+.proj-nota{
+  margin-top:var(--s-6); position:relative; font-size:12px;
+  color:rgba(255,255,255,.45); max-width:70ch; line-height:1.6;
+}
+
 /* ==========================  360  ==========================
    Familia de layout propria: tres pilares em faixa horizontal e os
    diferenciais em duas colunas separadas por filete. Nao repete o grid de
@@ -558,6 +592,28 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
     </div>
   </section>
 
+
+
+  <!-- ============ PROJECAO TARIFARIA (pagina 9 do material B2W Invest) ============ -->
+  <section id="projSection" hidden>
+    <div class="wrap">
+      <div class="reveal">
+        <h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">Para onde vai a tarifa</h2>
+        <p style="color:var(--ink-2); max-width:62ch; margin-top:var(--s-4)" id="projIntro"></p>
+      </div>
+
+      <div class="proj-panel reveal">
+        <svg id="projChart" role="img" aria-labelledby="projTitle"></svg>
+        <title id="projTitle">Projeção da composição da tarifa por ano, em reais por kWh</title>
+
+        <div class="proj-legenda" id="projLegenda"></div>
+        <p class="proj-nota" id="projNota"></p>
+
+        <button class="table-toggle" data-target="projTabela" aria-expanded="false">Ver como tabela</button>
+        <div id="projTabela" hidden></div>
+      </div>
+    </div>
+  </section>
 
   <!-- ============ INVESTIMENTO 360 (pagina 10 do material B2W Invest) ============ -->
   <section class="s360">
@@ -990,6 +1046,189 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
         <div class="cost-k">${k}</div>
         <div class="cost-v">${brl.format(Number(serv[k]))}</div>
       </div>`).join('');
+  }
+
+
+  /* ---------- 8b. Projecao tarifaria 2026-2035 ---------------------------
+     Reproduz a pagina 9 do material. A tarifa cheia cresce pela inflacao; o
+     Fio B cresce pela inflacao MAIS um reajuste real, ate' o ano em que o
+     subsidio termina de ser retirado. Depois disso volta a so' inflacao.
+     Impostos so' existem em Geracao Compartilhada.                        */
+  const INFLACAO  = 0.089;   // 8,9% ao ano
+  const FIOB_REAL = 0.15;    // reajuste real adicional do Fio B
+  const FIOB_ATE  = 2028;    // ultimo ano com reajuste real
+  const ANO_BASE  = 2026, ANO_FIM = 2035;
+
+  const COR = {
+    liquida:  '#00FFFF',
+    gestao:   '#0E9F6E',
+    impostos: '#6481BF',
+    fiob:     '#D45D00',
+    desconto: '#A855F7'
+  };
+
+  const semCifrao = v => brl4.format(v).replace(/^R\$\s*/, '');
+
+  function projetar(){
+    if(tarifa === null || descP === null || fioBv === null || gestP === null) return null;
+    const linhas = [];
+    for(let ano = ANO_BASE; ano <= ANO_FIM; ano++){
+      const n = ano - ANO_BASE;
+      const infl = Math.pow(1 + INFLACAO, n);
+      const tarifaAno = tarifa * infl;
+
+      // O reajuste real so' acumula nos anos ate' FIOB_ATE.
+      const anosReais = Math.max(0, Math.min(ano, FIOB_ATE) - ANO_BASE);
+      const fiobCheio = fioBv * infl * Math.pow(1 + FIOB_REAL, anosReais);
+      const fiobAno   = isGD1 ? 0 : fiobCheio;
+
+      const descAno = tarifaAno * (descP / 100);
+
+      let icmsAno = 0, pisCofAno = 0;
+      if(isCompartilhada && temAliquotas){
+        // Base tributavel exclui o Fio B cheio, que ja' vem com impostos.
+        const baseT = tarifaAno - fiobCheio;
+        icmsAno   = baseT * (icmsP / 100);
+        pisCofAno = (baseT - icmsAno) * ((pisP + cofP) / 100);
+      }
+      const tribAno     = icmsAno + pisCofAno;
+      const baseGestAno = tarifaAno - descAno - fiobAno - tribAno;
+      const gestAno     = baseGestAno * (gestP / 100);
+
+      linhas.push({
+        ano, tarifa: tarifaAno, desconto: descAno, fiob: fiobAno,
+        impostos: tribAno, gestao: gestAno, liquida: baseGestAno - gestAno,
+        pagoAssinante: tarifaAno - descAno
+      });
+    }
+    return linhas;
+  }
+
+  const proj = (isCompartilhada && !temAliquotas) ? null : projetar();
+
+  if(proj){
+    document.getElementById('projSection').hidden = false;
+    const pIni = proj[0], pFim = proj[proj.length - 1];
+
+    document.getElementById('projIntro').textContent =
+      'Projeção de ' + ANO_BASE + ' a ' + ANO_FIM + ' com inflação de '
+      + nf.format(INFLACAO * 100) + '% ao ano. A tarifa da concessionária sai de '
+      + brl4.format(pIni.tarifa) + ' e chega a ' + brl4.format(pFim.tarifa)
+      + ' por kWh; o que sobra para o investidor vai de '
+      + brl4.format(pIni.liquida) + ' a ' + brl4.format(pFim.liquida) + '.';
+
+    document.getElementById('projNota').textContent = isGD1
+      ? 'Esta usina é GD1 e não paga Fio B. Os demais componentes seguem a inflação de '
+        + nf.format(INFLACAO * 100) + '% ao ano.'
+      : 'O Fio B recebe, além da inflação, um reajuste real de '
+        + nf.format(FIOB_REAL * 100) + '% ao ano até ' + FIOB_ATE
+        + ', que é a retirada gradual do subsídio. A partir de ' + (FIOB_ATE + 1)
+        + ' volta a acompanhar apenas a inflação.';
+
+    const PW = 1000, PH = 560, PB = 46, PT = 44;
+    const svgP = document.getElementById('projChart');
+    svgP.setAttribute('viewBox', '0 0 ' + PW + ' ' + PH);
+
+    const maxT  = Math.max.apply(null, proj.map(function(p){ return p.tarifa; }));
+    const stepP = PW / proj.length;
+    const bwP   = Math.min(56, stepP * 0.5);
+    const cxP   = function(i){ return i * stepP + stepP / 2; };
+    const yP    = function(v){ return PH - PB - (v / maxT) * (PH - PB - PT); };
+
+    // De baixo para cima: o investidor primeiro, o desconto por ultimo. O topo
+    // da barra e' a tarifa cheia da concessionaria.
+    const camadas = [
+      ['liquida',  COR.liquida],
+      ['gestao',   COR.gestao],
+      ['impostos', COR.impostos],
+      ['fiob',     COR.fiob],
+      ['desconto', COR.desconto]
+    ];
+
+    let outP = '<defs>';
+    camadas.forEach(function(c){
+      outP += '<linearGradient id="g_' + c[0] + '" x1="0" y1="1" x2="0" y2="0">'
+            + '<stop offset="0%" stop-color="' + c[1] + '" stop-opacity=".45"/>'
+            + '<stop offset="100%" stop-color="' + c[1] + '" stop-opacity="1"/>'
+            + '</linearGradient>';
+    });
+    outP += '</defs>';
+
+    proj.forEach(function(p, i){
+      let acc = 0;
+      camadas.forEach(function(c){
+        const v = p[c[0]];
+        if(!v) return;
+        const y0 = yP(acc), y1 = yP(acc + v);
+        // 2px de folga entre segmentos: a fronteira nao pode depender so' da cor.
+        const h = Math.max(0, (y0 - y1) - 2);
+        outP += '<rect class="proj-seg" x="' + (cxP(i) - bwP / 2) + '" y="' + y1
+              + '" width="' + bwP + '" height="' + h + '" rx="2" fill="url(#g_' + c[0] + ')"/>';
+        acc += v;
+      });
+      outP += '<text class="proj-topo" x="' + cxP(i) + '" y="' + (yP(p.tarifa) - 10)
+            + '" text-anchor="middle">' + semCifrao(p.tarifa) + '</text>';
+      outP += '<text class="proj-ano" x="' + cxP(i) + '" y="' + (PH - 14)
+            + '" text-anchor="middle">' + p.ano + '</text>';
+    });
+
+    // A linha da liquida por cima de tudo: e' o numero que interessa ao investidor.
+    const dLiq = proj.map(function(p, i){
+      return (i ? 'L' : 'M') + cxP(i).toFixed(1) + ' ' + yP(p.liquida).toFixed(1);
+    }).join(' ');
+    outP += '<path class="proj-liq" d="' + dLiq + '" pathLength="1"/>';
+    proj.forEach(function(p, i){
+      outP += '<circle cx="' + cxP(i) + '" cy="' + yP(p.liquida) + '" r="3.5" fill="' + COR.liquida + '"/>';
+    });
+    outP += '<text class="proj-liq-val" x="' + cxP(0) + '" y="' + (yP(pIni.liquida) + 26)
+          + '" text-anchor="middle">' + semCifrao(pIni.liquida) + '</text>';
+    outP += '<text class="proj-liq-val" x="' + cxP(proj.length - 1) + '" y="' + (yP(pFim.liquida) - 14)
+          + '" text-anchor="middle">' + semCifrao(pFim.liquida) + '</text>';
+
+    svgP.innerHTML = outP;
+
+    const rotulos = [
+      ['desconto', 'Desconto ao assinante'],
+      ['fiob',     'Fio B'],
+      ['impostos', 'ICMS, PIS e COFINS'],
+      ['gestao',   'Gestão'],
+      ['liquida',  'Tarifa líquida do investidor']
+    ].filter(function(r){
+      if(r[0] === 'impostos') return isCompartilhada;
+      if(r[0] === 'fiob') return !isGD1;
+      return true;
+    });
+
+    document.getElementById('projLegenda').innerHTML = rotulos.map(function(r){
+      return '<b><i style="background:' + COR[r[0]] + '"></i> ' + r[1] + '</b>';
+    }).join('');
+
+    document.querySelector('[data-target="projTabela"]').addEventListener('click', function(){
+      const box = document.getElementById('projTabela');
+      const abrir = box.hidden;
+      if(abrir && !box.innerHTML){
+        box.innerHTML = '<table><thead><tr><th>Ano</th>'
+          + '<th style="text-align:right">Concessionária</th>'
+          + '<th style="text-align:right">Pago pelo assinante</th>'
+          + '<th style="text-align:right">Fio B</th>'
+          + (isCompartilhada ? '<th style="text-align:right">Tributos</th>' : '')
+          + '<th style="text-align:right">Gestão</th>'
+          + '<th style="text-align:right">Líquida</th></tr></thead><tbody>'
+          + proj.map(function(p){
+              return '<tr><td>' + p.ano + '</td>'
+                + '<td class="num">' + brl4.format(p.tarifa) + '</td>'
+                + '<td class="num">' + brl4.format(p.pagoAssinante) + '</td>'
+                + '<td class="num">' + brl4.format(p.fiob) + '</td>'
+                + (isCompartilhada ? '<td class="num">' + brl4.format(p.impostos) + '</td>' : '')
+                + '<td class="num">' + brl4.format(p.gestao) + '</td>'
+                + '<td class="num">' + brl4.format(p.liquida) + '</td></tr>';
+            }).join('')
+          + '</tbody></table>';
+      }
+      box.hidden = !abrir;
+      this.setAttribute('aria-expanded', String(abrir));
+      this.textContent = abrir ? 'Ocultar tabela' : 'Ver como tabela';
+    });
   }
 
   /* ---------- 9. Investimento -------------------------------------------- */
