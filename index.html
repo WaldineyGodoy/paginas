@@ -299,15 +299,77 @@ section{padding:var(--s-20) 0; position:relative}
 .pilar:nth-child(3) .pilar-papel{color:var(--navy-300)}
 .pilar p{color:var(--ink-2); font-size:.92rem; margin-top:var(--s-3)}
 
-.difs{
-  display:grid; grid-template-columns:1fr 1fr; gap:0 var(--s-12);
-  margin-top:var(--s-16); position:relative;
+/* Anel 360: os seis diferenciais em volta de um centro. O traco do circulo
+   se fecha quando a secao entra na tela, o que e' o proprio argumento da
+   secao: a operacao fecha todas as pontas. Abaixo de 860px o anel deixa de
+   fazer sentido em coluna unica e vira lista. */
+.anel{position:relative; width:min(720px,100%); aspect-ratio:1; margin:var(--s-16) auto 0}
+.anel-svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible}
+.anel-trilho{fill:none; stroke:var(--border); stroke-width:1}
+.anel-traco{
+  fill:none; stroke:url(#anelGrad); stroke-width:2; stroke-linecap:round;
+  stroke-dasharray:1; stroke-dashoffset:1;
+  transition:stroke-dashoffset 2s var(--ease) .2s;
 }
-@media(max-width:860px){ .difs{grid-template-columns:1fr; gap:0} }
-.dif{display:grid; grid-template-columns:auto 1fr; gap:var(--s-4); padding:var(--s-6) 0; border-top:1px solid var(--border)}
-.dif i{font-size:24px; color:var(--gold); line-height:1}
-.dif h4{font-family:var(--font-display); font-size:1.02rem; font-weight:700; margin:0}
-.dif p{color:var(--ink-2); font-size:.9rem; margin-top:var(--s-2)}
+.anel.in .anel-traco{stroke-dashoffset:0}
+
+.anel-centro{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:30%; aspect-ratio:1; border-radius:var(--r-full);
+  background:radial-gradient(circle at 50% 30%, rgba(212,175,55,.16), transparent 70%), var(--surface);
+  border:1px solid var(--border);
+  display:grid; place-items:center; text-align:center; padding:var(--s-4);
+}
+.anel-centro .s360-num{font-size:clamp(2.2rem,7vw,3.4rem)}
+.anel-centro span{
+  display:block; font-family:var(--font-mono); font-size:10px;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin-top:var(--s-2);
+}
+
+.no{
+  position:absolute; width:31%; transform:translate(-50%,-50%); text-align:center;
+  opacity:0; transition:opacity .6s var(--ease), transform .6s var(--ease);
+}
+.anel.in .no{opacity:1}
+.anel .no{transform:translate(-50%,-50%) scale(.92)}
+.anel.in .no{transform:translate(-50%,-50%) scale(1)}
+.anel.in .no:nth-of-type(1){transition-delay:.35s}
+.anel.in .no:nth-of-type(2){transition-delay:.60s}
+.anel.in .no:nth-of-type(3){transition-delay:.85s}
+.anel.in .no:nth-of-type(4){transition-delay:1.10s}
+.anel.in .no:nth-of-type(5){transition-delay:1.35s}
+.anel.in .no:nth-of-type(6){transition-delay:1.60s}
+@media(max-width:860px){
+  .anel .no, .anel.in .no{transform:none}
+}
+.no i{
+  display:grid; place-items:center; width:46px; height:46px; margin:0 auto var(--s-2);
+  border-radius:var(--r-full); font-size:22px; color:var(--gold);
+  background:var(--gold-soft); border:1px solid rgba(212,175,55,.35);
+}
+.no h4{font-family:var(--font-display); font-size:.95rem; font-weight:700; margin:0}
+.no p{color:var(--ink-2); font-size:.8rem; margin-top:var(--s-1); line-height:1.45}
+
+/* seis posicoes a 60 graus, raio 38% do container */
+.no:nth-of-type(1){left:50%; top:10%}
+.no:nth-of-type(2){left:84.6%; top:30%}
+.no:nth-of-type(3){left:84.6%; top:70%}
+.no:nth-of-type(4){left:50%; top:90%}
+.no:nth-of-type(5){left:15.4%; top:70%}
+.no:nth-of-type(6){left:15.4%; top:30%}
+
+@media(max-width:860px){
+  .anel{aspect-ratio:auto; width:100%; margin-top:var(--s-12); display:grid; gap:var(--s-2)}
+  .anel-svg, .anel-centro{display:none}
+  .no{
+    position:static; width:100%; transform:none; text-align:left;
+    display:grid; grid-template-columns:auto 1fr; gap:var(--s-4);
+    padding:var(--s-5) 0; border-top:1px solid var(--border);
+  }
+  .no i{margin:0}
+  .no p{font-size:.88rem}
+}
+
 
 /* ==========================  FOOTER / ESTADOS  ========================== */
 footer{border-top:1px solid var(--border); padding:var(--s-12) 0; color:var(--ink-3); font-size:13px}
@@ -529,49 +591,68 @@ td.num{font-family:var(--font-mono); color:var(--ink-1); text-align:right}
         </article>
       </div>
 
-      <div class="difs">
-        <div class="dif reveal">
+      <div class="anel reveal" id="anel">
+        <svg class="anel-svg" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <linearGradient id="anelGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="var(--gold)"/>
+              <stop offset="100%" stop-color="var(--brand)"/>
+            </linearGradient>
+          </defs>
+          <circle class="anel-trilho" cx="50" cy="50" r="30"/>
+          <circle class="anel-traco"  cx="50" cy="50" r="30" pathLength="1"
+                  transform="rotate(-90 50 50)"/>
+        </svg>
+
+        <div class="anel-centro">
+          <div>
+            <div class="s360-num">360<sup>°</sup></div>
+            <span>Ponta a ponta</span>
+          </div>
+        </div>
+
+        <article class="no">
           <i class="ph ph-trend-up" aria-hidden="true"></i>
           <div>
             <h4>Máxima rentabilidade</h4>
-            <p>Solução completa ao investidor. Somada à força da marca, sustenta uma carteira de empreendimentos entre as mais valorizadas do mercado.</p>
+            <p>Solução completa e carteira entre as mais valorizadas do mercado.</p>
           </div>
-        </div>
-        <div class="dif reveal">
+        </article>
+        <article class="no">
           <i class="ph ph-map-trifold" aria-hidden="true"></i>
           <div>
             <h4>Localização privilegiada</h4>
-            <p>Usinas implantadas onde a irradiação rende mais por metro quadrado, o que aumenta a geração sem aumentar a área.</p>
+            <p>Usinas onde a irradiação rende mais por metro quadrado.</p>
           </div>
-        </div>
-        <div class="dif reveal">
+        </article>
+        <article class="no">
           <i class="ph ph-users-three" aria-hidden="true"></i>
           <div>
             <h4>Gestão de assinantes</h4>
-            <p>Prospecção e gestão da carteira pela nossa comercializadora. O investidor não precisa procurar quem consome a energia da usina.</p>
+            <p>Nossa comercializadora prospecta e administra quem consome.</p>
           </div>
-        </div>
-        <div class="dif reveal">
+        </article>
+        <article class="no">
           <i class="ph ph-wrench" aria-hidden="true"></i>
           <div>
-            <h4>Gestão total do empreendimento</h4>
-            <p>Da construção à administração. Operação, manutenção, faturamento e prestação de contas ficam conosco.</p>
+            <h4>Gestão total</h4>
+            <p>Da construção à administração, operação e prestação de contas.</p>
           </div>
-        </div>
-        <div class="dif reveal">
+        </article>
+        <article class="no">
           <i class="ph ph-lightning" aria-hidden="true"></i>
           <div>
             <h4>Déficit energético</h4>
-            <p>A eletrificação da frota puxa a demanda para cima nos próximos anos, ampliando o espaço para geração distribuída.</p>
+            <p>A eletrificação da frota amplia o espaço para geração distribuída.</p>
           </div>
-        </div>
-        <div class="dif reveal">
+        </article>
+        <article class="no">
           <i class="ph ph-buildings" aria-hidden="true"></i>
           <div>
-            <h4>Valorização do empreendimento</h4>
-            <p>Conforme o sistema de distribuição se aproxima do limite de capacidade, as usinas já homologadas tendem a valer mais.</p>
+            <h4>Valorização</h4>
+            <p>Rede perto do limite valoriza as usinas já homologadas.</p>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   </section>
