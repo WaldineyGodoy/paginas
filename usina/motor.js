@@ -449,6 +449,32 @@
      Ficam aqui porque as três precisam delas iguais. Copiadas em cada página,
      divergiriam no primeiro ajuste. */
 
+  /* WhatsApp do vendedor quando o caso nao informa outro. Todo botao de
+     conversao (Falar com Especialista, Participar, Garantir, Alocar) cai nele. */
+  var WHATSAPP_PADRAO = '5584996134234';
+
+  function linkWhatsApp(c) {
+    var tel = String((c.data && c.data.contato) || WHATSAPP_PADRAO).trim();
+    if (/^https?:/i.test(tel)) return tel;
+    var texto = 'Olá! Vi a página ' + (c.nome ? 'da ' + c.nome + ' ' : '') +
+      'e quero saber mais sobre o investimento.';
+    return 'https://wa.me/' + tel.replace(/\D/g, '') + '?text=' + encodeURIComponent(texto);
+  }
+
+  /* Etapa da usina, escolhida no visualizador. Decide o que a pagina afirma:
+     a linha do tempo, o selo do topo e o status sobre a foto. */
+  var ESTAGIOS = {
+    homologacao: { i: 0, cabecalho: 'Em homologação', selo: 'Em homologação', hud: 'EM HOMOLOGAÇÃO',
+                   icone: 'fact_check', cor: 'tertiary', frase: 'em homologação' },
+    construcao:  { i: 1, cabecalho: 'Em construção', selo: 'Em construção', hud: 'EM CONSTRUÇÃO',
+                   icone: 'construction', cor: 'secondary', frase: 'em construção' },
+    conexao:     { i: 2, cabecalho: 'Em conexão', selo: 'Em conexão', hud: 'EM CONEXÃO E COMISSIONAMENTO',
+                   icone: 'electrical_services', cor: 'primary-container', frase: 'em conexão e comissionamento' },
+    geracao:     { i: 3, cabecalho: 'Online / Conectada', selo: 'Operação Ativa', hud: 'CONECTADA E GERANDO',
+                   icone: 'bolt', cor: 'status-verified', frase: 'gerando energia limpa' }
+  };
+  function estagioDe(c) { return (c && c.data && ESTAGIOS[c.data.estagio]) || null; }
+
   // A pagina da usina e' o index do branch: o link publico fica /usina/?slug.
   var DESTINOS = { 'usina-fotovoltaica': ['./', 'usina'],
                    'eletroposto':        ['eletroposto.html', 'eletroposto'],
@@ -476,12 +502,28 @@
           if (ehAtual) a.setAttribute('aria-current', 'page');
           else a.removeAttribute('aria-current');
         }
-      } else if (pth === 'falar-com-especialista' && c.data.contato) {
-        var tel = String(c.data.contato).trim();
-        a.href = /^https?:/i.test(tel) ? tel : 'https://wa.me/' + tel.replace(/\D/g, '');
+      } else if (pth === 'falar-com-especialista') {
+        a.href = linkWhatsApp(c);
         a.target = '_blank';
         a.rel = 'noopener';
       }
+    }
+
+    // Os CTAs do eletroposto sao <button>, nao <a>: abrem o mesmo WhatsApp.
+    var botoes = document.querySelectorAll('[data-path="falar-com-especialista"]:not(a)');
+    for (var b = 0; b < botoes.length; b++) {
+      botoes[b].addEventListener('click', function () {
+        window.open(linkWhatsApp(c), '_blank', 'noopener');
+      });
+    }
+
+    // Selo do cabecalho ("Online / Conectada") segue a etapa da usina.
+    var est = estagioDe(c);
+    var chips = document.querySelectorAll('[data-f="statusHeader"]');
+    for (var k = 0; k < chips.length; k++) {
+      var chip = chips[k].closest('.rounded-full') || chips[k];
+      if (!est) { chip.style.display = 'none'; continue; }
+      chips[k].textContent = est.cabecalho;
     }
   }
 
@@ -547,6 +589,7 @@
   glob.B2W = {
     ler: ler, montar: montar, decodeSlug: decodeSlug, encodeSlug: encodeSlug,
     linkDoModo: linkDoModo, navegar: navegar, trocarNomes: trocarNomes,
+    linkWhatsApp: linkWhatsApp, estagioDe: estagioDe,
     esconderImagensQuebradas: esconderImagensQuebradas,
     fmt: {
       nf: nf, nf1: nf1, brl: brl, brl4: brl4,

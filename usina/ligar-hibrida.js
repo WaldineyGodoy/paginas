@@ -308,5 +308,14 @@
      os três estão no motor, iguais para as três páginas. */
   B2W.trocarNomes(c);
   B2W.esconderImagensQuebradas();
+  /* "Simular Cenário Integrado" leva à comparação dos três cenários, que é a
+     simulação que a página tem. */
+  var simular = document.getElementById('btnSimularHib');
+  var cenarios = document.querySelector('[data-f="cenHibCapex"]');
+  if (simular && cenarios) {
+    simular.addEventListener('click', function () {
+      (cenarios.closest('section') || cenarios).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
   B2W.navegar(c, 'hibrida');
 })();
