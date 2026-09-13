@@ -629,6 +629,36 @@
     }
   })();
 
+  /* ================================ DOCUMENTAÇÃO DOS BLOCOS DA MANDALA ==== */
+  /* Os cinco blocos ao lado da mandala ganham "Visualizar documentação" com o
+     link informado no visualizador. Bloco sem link não ganha botão: botão que
+     não leva a lugar nenhum é pior que nenhum. Só https, para o slug não virar
+     porta de javascript: ou de outro esquema. */
+  (function documentacaoMandala() {
+    var docs = c.data.docs || {};
+    var CHAVES = ['prospeccao', 'construcao', 'juridico', 'manutencao', 'contratos'];
+    var COR = ['tertiary', 'primary-container', 'secondary', 'status-verified', 'navy-accent'];
+    var logo = document.querySelector('img[src="logo-b2w-invest.png"]');
+    var secao = logo && logo.closest('section');
+    if (!secao) return;
+    var titulos = secao.querySelectorAll('h4');
+    for (var i = 0; i < titulos.length && i < CHAVES.length; i++) {
+      var url = String(docs[CHAVES[i]] || '').trim();
+      if (!/^https:\/\/[^\s"'<>]+$/i.test(url)) continue;
+      var coluna = titulos[i].closest('.flex-col');
+      if (!coluna) continue;
+      var a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'mt-2 self-start inline-flex items-center gap-1 px-2.5 py-1 rounded-md border ' +
+        'border-' + COR[i] + '/40 text-' + COR[i] + ' hover:bg-' + COR[i] + '/10 ' +
+        'font-label-mono text-[11px] font-bold transition-colors';
+      a.innerHTML = '<span class="material-symbols-outlined text-[14px]">description</span>Visualizar documentação';
+      coluna.appendChild(a);
+    }
+  })();
+
   /* nomes do caso fictício, imagens mortas e a barra das três páginas —
      os três estão no motor, iguais para as três páginas. */
   B2W.trocarNomes(c);
