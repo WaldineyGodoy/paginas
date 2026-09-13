@@ -473,7 +473,56 @@
     geracao:     { i: 3, cabecalho: 'Online / Conectada', selo: 'Operação Ativa', hud: 'CONECTADA E GERANDO',
                    icone: 'bolt', cor: 'status-verified', frase: 'gerando energia limpa' }
   };
-  function estagioDe(c) { return (c && c.data && ESTAGIOS[c.data.estagio]) || null; }
+  /* Situação de cada uma das quatro etapas, escolhida no visualizador:
+       ok          concluída
+       i30 i50 i70 iniciada, com o percentual executado
+       p30 ... p120 provisionada: começa em N dias
+     A etapa "atual" é a primeira que ainda não está concluída; com as quatro
+     concluídas, a usina está gerando. */
+  var ORDEM_ETAPAS = ['homologacao', 'construcao', 'conexao', 'geracao'];
+  var NOME_ETAPA = ['Homologação', 'Construção', 'Conexão', 'Geração'];
+
+  function lerSituacao(v) {
+    var m = /^(?:(ok)|i(\d{1,3})|p(\d{1,3}))$/.exec(String(v || ''));
+    if (!m) return null;
+    if (m[1]) return { tipo: 'ok' };
+    if (m[2]) return { tipo: 'iniciado', pct: Number(m[2]) };
+    return { tipo: 'previsto', dias: Number(m[3]) };
+  }
+
+  function etapasDe(c) {
+    var d = (c && c.data) || {};
+    if (d.etapas) {
+      var lista = ORDEM_ETAPAS.map(function (k) { return lerSituacao(d.etapas[k]); });
+      return lista.every(Boolean) ? lista : null;
+    }
+    // Links gerados antes da situação por etapa trazem só `estagio`.
+    var antigo = ESTAGIOS[d.estagio];
+    if (!antigo) return null;
+    return ORDEM_ETAPAS.map(function (k, i) {
+      if (i < antigo.i || (antigo.i === 3 && i === 3)) return { tipo: 'ok' };
+      if (i === antigo.i) return { tipo: 'iniciado', pct: null };
+      return { tipo: 'previsto', dias: null };
+    });
+  }
+
+  function estagioDe(c) {
+    var etapas = etapasDe(c);
+    if (!etapas) return null;
+    var atual = 0;
+    while (atual < 3 && etapas[atual].tipo === 'ok') atual++;
+    var base = ESTAGIOS[ORDEM_ETAPAS[atual]], s = etapas[atual], r = {};
+    for (var k in base) r[k] = base[k];
+    r.situacao = s;
+    if (s.tipo === 'iniciado' && s.pct) r.hud = base.hud + ' · ' + s.pct + '%';
+    if (s.tipo === 'previsto') {
+      var nome = NOME_ETAPA[atual], quando = s.dias ? ' em ' + s.dias + ' dias' : '';
+      r.selo = r.cabecalho = nome + ' prevista' + quando;
+      r.hud = (nome + ' prevista' + quando).toUpperCase();
+      r.frase = 'aguardando o início da ' + nome.toLowerCase() + quando;
+    }
+    return r;
+  }
 
   // A pagina da usina e' o index do branch: o link publico fica /usina/?slug.
   var DESTINOS = { 'usina-fotovoltaica': ['./', 'usina'],
@@ -589,7 +638,7 @@
   glob.B2W = {
     ler: ler, montar: montar, decodeSlug: decodeSlug, encodeSlug: encodeSlug,
     linkDoModo: linkDoModo, navegar: navegar, trocarNomes: trocarNomes,
-    linkWhatsApp: linkWhatsApp, estagioDe: estagioDe,
+    linkWhatsApp: linkWhatsApp, estagioDe: estagioDe, etapasDe: etapasDe,
     esconderImagensQuebradas: esconderImagensQuebradas,
     fmt: {
       nf: nf, nf1: nf1, brl: brl, brl4: brl4,

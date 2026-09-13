@@ -538,72 +538,93 @@
       }
     }
 
-    põe('ctaTexto', est && est.i === 3
+    põe('ctaTexto', est && est.i === 3 && est.situacao.tipo === 'ok'
       ? 'Ativo real homologado, gerando energia limpa com receita mensal previsível e governança ponta a ponta B2W Invest.'
       : 'Ativo real' + (est ? ' ' + est.frase : '') +
         ', com receita mensal prevista a partir do início da geração e governança ponta a ponta B2W Invest.');
 
-    /* Linha do tempo: as quatro etapas ficam; o que muda é qual está feita,
-       qual está em andamento e quais ainda vêm. */
+    /* Linha do tempo: as quatro etapas ficam; cada uma mostra a situação
+       escolhida no visualizador — concluída, iniciada (com o percentual, que
+       também preenche a barra do topo do cartão) ou provisionada (começa em
+       N dias). */
     var grid = document.getElementById('estagiosGrid');
     if (!grid) return;
+    var etapas = B2W.etapasDe(c);
     var atual = est ? est.i : -1;
     var COR = ['tertiary', 'secondary', 'primary-container', 'status-verified'];
     var CATEGORIA = ['REGULATÓRIO', 'OBRAS CIVIS', 'TESTES E VISTORIA', 'OPERAÇÃO'];
+    var PONTO = function (cor) {
+      return '<span class="inline-block w-1.5 h-1.5 rounded-full bg-' + cor + ' animate-pulse mr-1"></span>';
+    };
 
     for (var i = 0; i < grid.children.length && i < 4; i++) {
       var card = grid.children[i];
-      var estado = atual < 0 ? 'indefinido' : i < atual ? 'feito' : i === atual ? 'ativo' : 'futuro';
+      var s = etapas ? etapas[i] : null;
+      var tipo = s ? s.tipo : 'indefinido';
+      var gerando = i === 3 && tipo === 'ok';
 
+      // Destaque (anel) só na etapa em curso; provisionada e sem dado ficam apagadas.
       card.classList.remove('ring-1', 'ring-status-verified/30', 'border-status-verified/50', 'opacity-60');
       card.classList.add('border-border-subtle/60');
-      if (estado === 'ativo') {
+      if ((i === atual && tipo === 'iniciado') || gerando) {
         card.classList.remove('border-border-subtle/60');
         card.classList.add('ring-1', 'ring-' + COR[i] + '/30', 'border-' + COR[i] + '/50');
       }
-      if (estado === 'futuro' || estado === 'indefinido') card.classList.add('opacity-60');
+      if (tipo === 'previsto' || tipo === 'indefinido') card.classList.add('opacity-60');
+
+      var barra = card.firstElementChild;
+      if (barra && barra.classList.contains('absolute')) {
+        barra.style.width = tipo === 'ok' ? '100%'
+          : tipo === 'iniciado' ? (s.pct ? s.pct + '%' : '100%') : '0%';
+      }
 
       var etiqueta = card.querySelector('.uppercase.tracking-wider');
       if (etiqueta) {
-        etiqueta.innerHTML = estado === 'ativo'
-          ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-' + COR[i] + ' animate-pulse mr-1"></span>ATIVA AGORA'
+        etiqueta.innerHTML = gerando ? PONTO(COR[i]) + 'ATIVA AGORA'
+          : tipo === 'iniciado' ? PONTO(COR[i]) + (s.pct ? 'EM ANDAMENTO' : 'ATIVA AGORA')
           : CATEGORIA[i];
       }
 
       var sub = card.querySelector('h3 + span');
-      if (sub && estado !== 'feito') sub.textContent = sub.textContent.replace(/\s*Concluíd[oa]s?$/, '');
+      if (sub && tipo !== 'ok') sub.textContent = sub.textContent.replace(/\s*Concluíd[oa]s?$/, '');
 
       var lista = card.querySelector('.border-t.gap-space-2');
       var itens = lista ? lista.children : [];
-      for (var j = 0; j < itens.length; j++) {
+      for (var j = 0; j < itens.length && tipo !== 'ok'; j++) {
         var icone = itens[j].children[0], texto = itens[j].children[1];
         if (!icone || !texto) continue;
-        if (estado === 'feito' || (estado === 'ativo' && i === 3)) continue;   // o mockup já diz isso
-        if (estado === 'ativo' && /Concluída$/.test(texto.textContent)) continue; // etapa anterior
+        // Numa etapa iniciada, o que se refere a etapa anterior ("... Concluída") segue feito.
+        if (tipo === 'iniciado' && /Concluída$/.test(texto.textContent)) continue;
         icone.className = 'material-symbols-outlined text-[18px] ' +
-          (estado === 'ativo' ? 'text-' + COR[i] : 'text-ink-muted');
-        icone.textContent = estado === 'ativo' ? 'schedule' : 'radio_button_unchecked';
-        texto.className = estado === 'ativo' ? 'text-ink-primary font-medium' : 'text-ink-secondary font-medium';
+          (tipo === 'iniciado' ? 'text-' + COR[i] : 'text-ink-muted');
+        icone.textContent = tipo === 'iniciado' ? 'schedule' : 'radio_button_unchecked';
+        texto.className = tipo === 'iniciado' ? 'text-ink-primary font-medium' : 'text-ink-secondary font-medium';
       }
 
       var rodape = card.lastElementChild;
       var rotulo = rodape && rodape.children[0], valor = rodape && rodape.children[1];
       if (!rotulo || !valor) continue;
       var base = 'font-label-mono text-body-sm font-bold flex items-center gap-1.5 ';
-      if (estado === 'feito') {
+      if (gerando) {
+        rotulo.textContent = 'Status atual';
+        valor.className = base + 'text-status-verified';
+        valor.innerHTML = '<span class="w-2 h-2 rounded-full bg-status-verified animate-ping"></span>Gerando e Faturando';
+      } else if (tipo === 'ok') {
         rotulo.textContent = 'Fase do Ativo';
         valor.className = base + 'text-status-verified';
         valor.textContent = '100% Concluído';
-      } else if (estado === 'ativo') {
-        rotulo.textContent = 'Status atual';
+      } else if (tipo === 'iniciado') {
+        rotulo.textContent = 'Fase do Ativo';
         valor.className = base + 'text-' + COR[i];
-        valor.innerHTML = i === 3
-          ? '<span class="w-2 h-2 rounded-full bg-status-verified animate-ping"></span>Gerando e Faturando'
-          : 'Em andamento';
+        valor.textContent = s.pct ? 'Iniciado · ' + s.pct + '%' : 'Em andamento';
+      } else if (tipo === 'previsto') {
+        rotulo.textContent = 'Previsão';
+        valor.className = base + 'text-ink-muted';
+        valor.textContent = s.dias ? 'Início em ' + s.dias + ' dias' : 'Aguardando';
       } else {
         rotulo.textContent = 'Fase do Ativo';
         valor.className = base + 'text-ink-muted';
-        valor.textContent = estado === 'futuro' ? 'Aguardando' : '—';
+        valor.textContent = '—';
       }
     }
   })();
