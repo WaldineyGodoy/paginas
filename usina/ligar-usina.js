@@ -630,10 +630,11 @@
   })();
 
   /* ================================ DOCUMENTAÇÃO DOS BLOCOS DA MANDALA ==== */
-  /* Os cinco blocos ao lado da mandala ganham "Visualizar documentação" com o
-     link informado no visualizador. Bloco sem link não ganha botão: botão que
-     não leva a lugar nenhum é pior que nenhum. Só https, para o slug não virar
-     porta de javascript: ou de outro esquema. */
+  /* Os cinco blocos ao lado da mandala têm sempre o botão de documentação.
+     Com link (configurado no visualizador) ele abre o documento; sem link ele
+     aparece desativado como "Documentação em breve" — o bloco não some nem
+     finge ter um documento. Só https: o slug não pode virar porta de
+     javascript: ou de outro esquema. Link sem esquema ganha https://. */
   (function documentacaoMandala() {
     var docs = c.data.docs || {};
     var CHAVES = ['prospeccao', 'construcao', 'juridico', 'manutencao', 'contratos'];
@@ -641,21 +642,35 @@
     var logo = document.querySelector('img[src="logo-b2w-invest.png"]');
     var secao = logo && logo.closest('section');
     if (!secao) return;
+
+    function linkValido(v) {
+      var url = String(v || '').trim();
+      if (/^(www\.)?[\w-]+(\.[\w-]+)+(\/\S*)?$/i.test(url)) url = 'https://' + url;
+      return /^https:\/\/[^\s"'<>]+$/i.test(url) ? url : null;
+    }
+
     var titulos = secao.querySelectorAll('h4');
     for (var i = 0; i < titulos.length && i < CHAVES.length; i++) {
-      var url = String(docs[CHAVES[i]] || '').trim();
-      if (!/^https:\/\/[^\s"'<>]+$/i.test(url)) continue;
       var coluna = titulos[i].closest('.flex-col');
-      if (!coluna) continue;
-      var a = document.createElement('a');
-      a.href = url;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.className = 'mt-2 self-start inline-flex items-center gap-1 px-2.5 py-1 rounded-md border ' +
-        'border-' + COR[i] + '/40 text-' + COR[i] + ' hover:bg-' + COR[i] + '/10 ' +
-        'font-label-mono text-[11px] font-bold transition-colors';
-      a.innerHTML = '<span class="material-symbols-outlined text-[14px]">description</span>Visualizar documentação';
-      coluna.appendChild(a);
+      if (!coluna || coluna.querySelector('[data-doc]')) continue;
+      var url = linkValido(docs[CHAVES[i]]);
+      var el = document.createElement(url ? 'a' : 'span');
+      el.setAttribute('data-doc', CHAVES[i]);
+      var base = 'mt-2 self-start inline-flex items-center gap-1 px-2.5 py-1 rounded-md border ' +
+        'font-label-mono text-[11px] font-bold transition-colors ';
+      if (url) {
+        el.href = url;
+        el.target = '_blank';
+        el.rel = 'noopener';
+        el.className = base + 'border-' + COR[i] + '/40 text-' + COR[i] + ' hover:bg-' + COR[i] + '/10';
+        el.innerHTML = '<span class="material-symbols-outlined text-[14px]">description</span>Visualizar documentação';
+      } else {
+        el.className = base + 'border-border-subtle/60 text-ink-muted opacity-70 cursor-not-allowed';
+        el.setAttribute('aria-disabled', 'true');
+        el.title = 'Documento ainda não disponível';
+        el.innerHTML = '<span class="material-symbols-outlined text-[14px]">schedule</span>Documentação em breve';
+      }
+      coluna.appendChild(el);
     }
   })();
 
