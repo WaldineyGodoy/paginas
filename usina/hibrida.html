@@ -1,0 +1,572 @@
+<!DOCTYPE html><html class="dark" lang="pt-BR" style=""><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-fixed":"#ffe088","on-secondary":"#3c2f00","primary-fixed":"#ffdbca","navy-accent":"#6481BF","bg-subtle":"#0E1230","tertiary-fixed":"#00fbfb","brand-orange-light":"#FF9B52","surface-default":"#14183A","brand-orange-hover":"#FF7B20","on-primary":"#552100","inverse-primary":"#9d4300","on-primary-container":"#4e1e00","on-primary-fixed":"#341100","on-error":"#690005","on-tertiary-fixed":"#002020","tertiary-container":"#00a4a4","surface":"#0f1226","surface-dim":"#0f1226","on-tertiary":"#003737","status-calculated":"#6FE9F0","on-tertiary-fixed-variant":"#004f4f","tertiary-fixed-dim":"#00dddd","on-surface":"#dfe0fd","border-strong":"#404562","background":"#0f1226","surface-container-high":"#25293e","on-background":"#dfe0fd","ink-muted":"#5F6480","on-primary-fixed-variant":"#783200","on-error-container":"#ffdad6","chart-obsidian":"#050505","primary-container":"#f26b00","surface-bright":"#35384e","status-verified":"#0E9F6E","surface-container-low":"#171a2f","secondary":"#e9c349","inverse-surface":"#dfe0fd","surface-container":"#1b1e33","on-tertiary-container":"#003232","chart-discount":"#A855F7","surface-raised":"#1C2248","border-subtle":"#282D4A","tertiary":"#00dddd","secondary-fixed-dim":"#e9c349","status-provisional":"#E25454","error-container":"#93000a","secondary-container":"#af8d11","ink-primary":"#F8F9FB","outline":"#a88b7d","surface-container-lowest":"#090d21","brand-orange-depth":"#D45D00","outline-variant":"#594236","navy-deep":"#031952","ink-secondary":"#B8BCCE","on-secondary-fixed-variant":"#574500","on-secondary-fixed":"#241a00","primary-fixed-dim":"#ffb690","on-secondary-container":"#342800","inverse-on-surface":"#2c2f45","error":"#ffb4ab","on-surface-variant":"#e1c0b0","surface-variant":"#303349","surface-tint":"#ffb690","surface-container-highest":"#303349","primary":"#ffb690"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-3":"12px","layout-max-width":"1180px","gutter-mobile":"16px","space-8":"32px","space-2":"8px","space-20":"80px","space-1":"4px","space-6":"24px","space-12":"48px","gutter-desktop":"24px","space-4":"16px","space-16":"64px"},fontFamily:{"body-lg":["Inter"],"label-mono":["JetBrains Mono"],"display-hero-mobile":["Manrope"],"body-sm":["Inter"],"metric-card":["JetBrains Mono"],"body-default":["Inter"],"eyebrow-caps":["JetBrains Mono"],"headline-lg":["Manrope"],"display-hero":["Manrope"],"headline-md":["Manrope"],"headline-sm":["Manrope"],"headline-lg-mobile":["Manrope"],"metric-display":["JetBrains Mono"]},fontSize:{"body-lg":["17px",{lineHeight:"1.6",fontWeight:"400"}],"label-mono":["12px",{lineHeight:"1.0",letterSpacing:"0.06em",fontWeight:"500"}],"display-hero-mobile":["38px",{lineHeight:"1.1",letterSpacing:"-0.03em",fontWeight:"800"}],"body-sm":["13px",{lineHeight:"1.5",fontWeight:"400"}],"metric-card":["24px",{lineHeight:"1.1",letterSpacing:"-0.01em",fontWeight:"500"}],"body-default":["15px",{lineHeight:"1.55",fontWeight:"400"}],"eyebrow-caps":["11px",{lineHeight:"1.0",letterSpacing:"0.18em",fontWeight:"600"}],"headline-lg":["36px",{lineHeight:"1.1",letterSpacing:"-0.02em",fontWeight:"800"}],"display-hero":["64px",{lineHeight:"1.0",letterSpacing:"-0.04em",fontWeight:"800"}],"headline-md":["24px",{lineHeight:"1.2",letterSpacing:"-0.015em",fontWeight:"700"}],"headline-sm":["18px",{lineHeight:"1.3",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-lg-mobile":["26px",{lineHeight:"1.2",letterSpacing:"-0.02em",fontWeight:"700"}],"metric-display":["36px",{lineHeight:"1.0",letterSpacing:"-0.02em",fontWeight:"600"}]}}}}</script><style>
+  /* Valor real e' mais largo que o do mockup e vazava da caixa: encolhe ate'
+     caber, sem mexer na estrutura da secao. */
+  #bannerSinergia > div{min-width:0; padding:12px}
+  #bannerSinergia .text-eyebrow-caps{font-size:9px; letter-spacing:.1em; line-height:1.3}
+  #bannerSinergia .text-metric-card{
+    font-size:clamp(12px,1vw,15px); line-height:1.25; letter-spacing:-.02em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  #bannerSinergia .text-label-mono{font-size:10px; line-height:1.35}
+</style>
+</head><body class="bg-background font-body-default text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-20 max-w-layout-max-width mx-auto px-space-4 lg:px-space-6 flex items-center justify-between gap-space-4"><div class="flex items-center gap-space-6"><a class="flex items-center gap-space-3" data-path="usina-fotovoltaica" href="#"><img alt="Logo B2W Invest nova.jpeg" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vj41BGaDdZHYP4g19jC4SmJf1JuBTIMb9AzL-RH1G-Qsn5rK60Nvx0qOsuTR6gz1w2Pv4K403OuqlbKWazC7gv08mccTWB6TQScHv3c9FS88u5qLJfcqsp0CcMhyftONpeZTbWxKWr7vQvKooEigVavf2dYusNtz5pIUku4uhxYITa6p4S2Mhl-NAP7ZQBZkCfZjC6A7wR_qRNUTkLL1o91JPxuvs5hRsLu8s5HCZPDJZOLHyexwr5Ca_aY36hMoQw6eEvbBz7"><span class="font-headline-sm text-headline-sm text-ink-primary tracking-tight">B2W <span class="text-primary-container font-extrabold">Invest</span></span></a><div class="hidden xl:flex items-center gap-space-2 px-space-3 py-space-1 rounded-full bg-surface-raised"><span class="w-2 h-2 rounded-full bg-status-verified animate-pulse"></span><span class="font-eyebrow-caps text-eyebrow-caps uppercase text-status-verified">Online / Conectada</span></div></div><nav class="hidden md:flex items-center gap-space-1 p-space-1 rounded-lg bg-surface-container-low" data-active-classes="bg-surface-raised text-primary-fixed font-headline-sm"><a aria-current="page" class="px-space-4 py-space-2 rounded-lg transition-all bg-surface-raised text-primary-fixed font-headline-sm" data-path="usina-fotovoltaica" href="#">Usina Fotovoltaica</a><a class="px-space-4 py-space-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="eletroposto" href="#">Eletroposto</a><a class="px-space-4 py-space-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="operacao-hibrida" href="#">Operação Híbrida</a></nav><div class="flex items-center gap-space-4"><a class="hidden sm:inline-flex items-center justify-center px-space-4 py-space-2 rounded-lg bg-primary-container hover:bg-brand-orange-hover text-on-primary-container font-headline-sm text-headline-sm transition-colors shadow-lg" data-path="falar-com-especialista" href="#">Falar com Especialista</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Operational Breadcrumb & Context Header Bar -->
+<section class="w-full bg-surface-container-lowest/80 border-b border-border-subtle py-space-4">
+<div class="max-w-layout-max-width mx-auto px-space-4 lg:px-space-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-space-4">
+<div class="flex flex-wrap items-center gap-space-3">
+<span class="inline-flex items-center gap-space-2 px-space-3 py-1 rounded-full bg-surface-default font-eyebrow-caps text-eyebrow-caps text-status-calculated">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+          SISTEMA INTEGRADO UFV + ELETROPOSTO DC
+        </span>
+<div class="inline-flex items-center gap-space-2 px-space-3 py-1 rounded-full bg-status-verified/10 text-status-verified font-eyebrow-caps text-eyebrow-caps">
+<span class="w-2 h-2 rounded-full bg-status-verified"></span>
+          OPERAÇÃO EM SINERGIA ATIVA
+        </div>
+<span class="hidden xl:inline-block text-ink-muted text-body-sm font-label-mono">|</span>
+<span class="inline-flex items-center px-space-3 py-1 rounded-full bg-surface-container font-label-mono text-label-mono text-ink-secondary">
+          <span data-f="chipModalidade">GD1 Autoconsumo Remoto + Carga Local</span>
+        </span>
+<span class="inline-flex items-center px-space-3 py-1 rounded-full bg-surface-container font-label-mono text-label-mono text-secondary">
+          Arbitragem de Margem Integrada
+        </span>
+</div>
+<div class="flex items-center gap-space-3 w-full md:w-auto justify-end">
+<button class="px-space-4 py-2 rounded-lg bg-surface-raised hover:bg-surface-bright text-ink-primary font-body-sm text-body-sm transition-colors shadow-sm flex items-center gap-space-2" type="button">
+<span class="material-symbols-outlined text-tertiary text-[18px]">calculate</span>
+          Simular Cenário Integrado
+        </button>
+<a class="px-space-4 py-2 rounded-lg bg-primary-container hover:bg-brand-orange-hover text-on-primary-container font-headline-sm text-headline-sm transition-all shadow-md flex items-center gap-space-2" data-path="falar-com-especialista" href="#">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+          Alocar Capital na Operação Híbrida
+        </a>
+</div>
+</div>
+</section>
+<!-- Section 1: Hero de Sinergia Híbrida & Showcase dos Dois Ativos -->
+<section class="w-full py-space-12 bg-gradient-to-b from-bg-subtle via-background to-surface-container-lowest relative overflow-hidden">
+<div class="absolute -top-40 -left-40 w-96 h-96 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-1/2 -right-40 w-96 h-96 bg-tertiary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-layout-max-width mx-auto px-space-4 lg:px-space-6 flex flex-col gap-space-8 relative z-10">
+<div class="flex flex-col gap-space-3 max-w-4xl">
+<div class="inline-flex items-center gap-space-2 text-primary-fixed font-eyebrow-caps text-eyebrow-caps">
+<span class="material-symbols-outlined text-primary-container text-[16px]">hub</span>
+          CIRCUITO FECHADO DE ALTO RENDIMENTO ENERGÉTICO
+        </div>
+<h1 class="font-headline-lg text-headline-lg text-ink-primary tracking-tight">
+          Operação Híbrida Integrada: Usina Solar &amp; Eletroposto Fast Charge
+        </h1>
+<p class="font-body-default text-body-default text-ink-secondary leading-relaxed">
+          Sinergia estratégica em modelo de circuito fechado: a Usina Solar Santa Maria I compensa diretamente a demanda energética do Hub de Mobilidade Ultrarrápida a preço de custo operacional (<span class="text-secondary font-label-mono font-bold"><span data-f="chipPrecoUsina">R$ 0,7976/kWh</span></span>), enquanto o eletroposto comercializa cada kWh na ponta de recarga veicular (<span class="text-tertiary font-label-mono font-bold"><span data-f="chipPrecoVenda">R$ 2,50/kWh</span></span>). O excedente de geração é canalizado e vendido no mercado de assinaturas livres, maximizando o EBITDA e eliminando o risco da tarifa de bandeiras da distribuidora.
+        </p>
+</div>
+<!-- Showcase Dual Card Confronto de Ativos -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-6">
+<!-- Card Ativo 1: Usina Solar Santa Maria I -->
+<div class="bg-surface-default rounded-xl p-space-6 flex flex-col justify-between shadow-xl relative overflow-hidden group hover:bg-surface-raised transition-all">
+<div class="absolute top-0 left-0 w-full h-[3px] bg-primary-container"></div>
+<div>
+<div class="flex items-center justify-between gap-space-4 mb-space-4">
+<div class="flex items-center gap-space-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined">solar_power</span>
+</div>
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted"><span data-f="chipGeracaoGD">GERAÇÃO DEDICADA GD1</span></span>
+<h3 class="font-headline-sm text-headline-sm text-ink-primary">Usina Solar Santa Maria I</h3>
+</div>
+</div>
+<span class="px-space-3 py-1 rounded-full bg-status-verified/15 text-status-verified font-label-mono text-label-mono">100% OPERACIONAL</span>
+</div>
+<!-- Imagem Usina Aérea Placeholder com prompt detalhado -->
+<div class="w-full h-48 rounded-lg overflow-hidden relative mb-space-4 bg-chart-obsidian">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High quality drone photograph of a ground mounted photovoltaic solar farm under golden hour illumination with neat rows of dark blue bifacial panels, inverter substations and lush green grass field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGpPWvCHNR_3wfdyzvCn_LUSWL8ipRHhm-ol3_eX27yyX3kQhA30qqdJEK5n8t7b03UsHMpmyqU1qv-ppu5hQ-3DEdMF7ZAtp5GhdptPF9cD3HBgfqvxaAIKKpFc6W8hoYAwy5aXGQxVmdtGMTlqG6mWiGwQj8Uadj14slyHySXLhKTumUWlO28ABCW2GhpkU4V442n3scfZVr7nvJRTtimqpe7AEKe67a7xHLXy8Amkjnln64bBL4">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-default via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-space-3 left-space-3 right-space-3 flex items-center justify-between">
+<span class="px-space-2 py-1 rounded bg-surface-container-lowest/80 backdrop-blur font-label-mono text-label-mono text-ink-primary">Área: 1.800 m²</span>
+<span class="px-space-2 py-1 rounded bg-surface-container-lowest/80 backdrop-blur font-label-mono text-label-mono text-status-calculated"><span data-f="usinaIrradiancia">Irradiância: 5,45 kWh/m²/dia</span></span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-2 pt-space-2">
+<div class="bg-surface-container-low p-space-3 rounded-lg">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block mb-1">CAPACIDADE TOTAL</span>
+<span class="font-metric-card text-metric-card text-ink-primary"><span data-f="usinaKwp">112,5</span> <span class="text-body-sm font-label-mono text-ink-secondary">kWp</span></span>
+<span class="font-label-mono text-label-mono text-ink-muted block mt-1"><span data-f="usinaCA">75 kW CA Homologado</span></span>
+</div>
+<div class="bg-surface-container-low p-space-3 rounded-lg">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block mb-1">GERAÇÃO MÉDIA</span>
+<span class="font-metric-card text-metric-card text-tertiary"><span data-f="usinaMes">15.350</span> <span class="text-body-sm font-label-mono text-ink-secondary">kWh/m</span></span>
+<span class="font-label-mono text-label-mono text-ink-muted block mt-1"><span data-f="usinaAno">184.200 kWh / ano</span></span>
+</div>
+<div class="bg-surface-container-low p-space-3 rounded-lg">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block mb-1">CUSTO DE PRODUÇÃO</span>
+<span class="font-metric-card text-metric-card text-secondary">R$ 0,79<span class="text-body-sm font-label-mono text-ink-secondary">/kWh</span></span>
+<span class="font-label-mono text-label-mono text-ink-muted block mt-1">Fio B + O&amp;M Rateado</span>
+</div>
+</div>
+</div>
+<div class="mt-space-4 pt-space-3 flex items-center justify-between font-label-mono text-label-mono text-ink-secondary">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-status-verified"></span> Auditoria CCEE Integrada</span>
+<span class="text-primary-fixed"><span data-f="usinaModulos">160 Módulos N-Type Bifaciais</span></span>
+</div>
+</div>
+<!-- Card Ativo 2: Eletroposto Fast Charge Hub -->
+<div class="bg-surface-default rounded-xl p-space-6 flex flex-col justify-between shadow-xl relative overflow-hidden group hover:bg-surface-raised transition-all">
+<div class="absolute top-0 left-0 w-full h-[3px] bg-tertiary"></div>
+<div>
+<div class="flex items-center justify-between gap-space-4 mb-space-4">
+<div class="flex items-center gap-space-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">ev_station</span>
+</div>
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted">HUB DE MOBILIDADE ELÉTRICA</span>
+<h3 class="font-headline-sm text-headline-sm text-ink-primary"><span data-f="epNome">Eletroposto Fast Charge DC 80kW</span></h3>
+</div>
+</div>
+<span class="px-space-3 py-1 rounded-full bg-tertiary/15 text-tertiary font-label-mono text-label-mono">ALTA DEMANDA</span>
+</div>
+<!-- Imagem Totem Eletroposto Placeholder com prompt detalhado -->
+<div class="w-full h-48 rounded-lg overflow-hidden relative mb-space-4 bg-chart-obsidian">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Futuristic modern EV fast charging station totem with digital DOOH screen displaying fluid cyan artwork, dark metallic canopy structure, electric luxury SUV charging via CCS2 plug in a modern commercial parking hub" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdjrEHmFprvpasvXO_TNyFJJGehy7akO_vN5KQZxi8tA-Lqp16ZCa0JoCMXsVN0E6aV_t2HwPU0qFWyPM6w9QfgMzdCbAfQBqNnX-knCnMBbsraTKp_130EPLnHGgLA2asstFmhJv9Ix0QE_siCLdue7bxVMqeUH1H5jL22Uyu0QAHK8yvEWZLUKKPV-lTAg6uCaMSeIzAMH-fjXDTrEVOkHC8sYxyaKdbbQarkYwZgfO6OrsWIyN8">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-default via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-space-3 left-space-3 right-space-3 flex items-center justify-between">
+<span class="px-space-2 py-1 rounded bg-surface-container-lowest/80 backdrop-blur font-label-mono text-label-mono text-ink-primary"><span data-f="epPistolas">2 Pistolas CCS2 Simultâneas</span></span>
+<span class="px-space-2 py-1 rounded bg-surface-container-lowest/80 backdrop-blur font-label-mono text-label-mono text-tertiary">OCPP 1.6J Smart Billing</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-2 pt-space-2">
+<div class="bg-surface-container-low p-space-3 rounded-lg">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block mb-1">DEMANDA EV MÉDIA</span>
+<span class="font-metric-card text-metric-card text-ink-primary"><span data-f="epMes">14.880</span> <span class="text-body-sm font-label-mono text-ink-secondary">kWh/m</span></span>
+<span class="font-label-mono text-label-mono text-ink-muted block mt-1"><span data-f="epRecargas">12 Recargas / Dia</span></span>
+</div>
+<div class="bg-surface-container-low p-space-3 rounded-lg">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block mb-1">TARIFA DE VENDA</span>
+<span class="font-metric-card text-metric-card text-tertiary"><span data-f="epPreco">R$ 2,50</span><span class="text-body-sm font-label-mono text-ink-secondary">/kWh</span></span>
+<span class="font-label-mono text-label-mono text-ink-muted block mt-1">+ R$ 2,00 Conectividade</span>
+</div>
+<div class="bg-surface-container-low p-space-3 rounded-lg">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block mb-1">RECEITA RECARGA</span>
+<span class="font-metric-card text-metric-card text-status-verified">R$ 37.200<span class="text-body-sm font-label-mono text-ink-secondary">/m</span></span>
+<span class="font-label-mono text-label-mono text-ink-muted block mt-1">Volume Veicular Bruto</span>
+</div>
+</div>
+</div>
+<div class="mt-space-4 pt-space-3 flex items-center justify-between font-label-mono text-label-mono text-ink-secondary">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-status-verified"></span> Tela LED DOOH 43' Ativa</span>
+<span class="text-tertiary">100% Energia Solar Compensada</span>
+</div>
+</div>
+</div>
+<!-- Hero KPI Banner: Card Central de Destaque Financeiro Unificado -->
+<div class="bg-surface-container-low rounded-xl p-space-6 shadow-2xl relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-primary-container/10 via-transparent to-tertiary/10 pointer-events-none"></div>
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-6 relative z-10">
+<div class="flex items-center gap-space-4">
+<div class="w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container shadow-lg">
+<span class="material-symbols-outlined text-[32px]">sync_alt</span>
+</div>
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-secondary uppercase tracking-wider">CONSOLIDAÇÃO EXECUTIVA DA SINERGIA</span>
+<h2 class="font-headline-md text-headline-md text-ink-primary">Arbitragem Energética de Ponta a Ponta</h2>
+</div>
+</div>
+<div id="bannerSinergia" class="grid grid-cols-2 sm:grid-cols-4 gap-space-4 flex-1 lg:max-w-3xl">
+<div class="bg-surface-default/80 backdrop-blur p-space-4 rounded-lg flex flex-col justify-between">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted">FATURAMENTO TOTAL</span>
+<span class="font-metric-card text-metric-card text-ink-primary"><span data-f="sinergiaReceita">R$ 44.520</span></span>
+<span class="font-label-mono text-label-mono text-status-verified"><span data-f="sinergiaGanho">+18,4% vs. Isolados</span></span>
+</div>
+<div class="bg-surface-default/80 backdrop-blur p-space-4 rounded-lg flex flex-col justify-between">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted">EBITDA MENSAL LÍQUIDO</span>
+<span class="font-metric-card text-metric-card text-tertiary"><span data-f="sinergiaResultado">R$ 27.239</span></span>
+<span class="font-label-mono text-label-mono text-tertiary"><span data-f="sinergiaMargem">Margem 61,2% Líq.</span></span>
+</div>
+<div class="bg-surface-default/80 backdrop-blur p-space-4 rounded-lg flex flex-col justify-between">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted">SPREAD ARBITRAGEM</span>
+<span class="font-metric-card text-metric-card text-secondary"><span data-f="sinergiaMargemKwh">R$ 1,7024</span></span>
+<span class="font-label-mono text-label-mono text-ink-secondary">Por kWh na Recarga</span>
+</div>
+<div class="bg-surface-default/80 backdrop-blur p-space-4 rounded-lg flex flex-col justify-between">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted">YIELD MENSAL MÉDIO</span>
+<span class="font-metric-card text-metric-card text-primary-container"><span data-f="sinergiaYield">1,98%</span></span>
+<span class="font-label-mono text-label-mono text-primary-fixed">a.m. Líquido Isento</span>
+</div>
+</div>
+</div>
+</div><div class="flex flex-col md:flex-row md:items-end justify-between gap-space-4 mt-space-8">
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-tertiary uppercase">GARANTIA DE FORNECIMENTO COM RESERVA DE MERCADO</span>
+<h2 class="font-headline-lg text-headline-lg text-ink-primary tracking-tight mt-1">Balanço energético entre geração e consumo</h2>
+<p class="font-body-default text-body-default text-ink-secondary max-w-2xl mt-1">
+Consolidação anual e confronto mês a mês da geração fotovoltaica com a demanda operacional constante do hub veicular. O excedente gera créditos bancados ou venda direta B2B.
+</p>
+</div>
+<div class="flex flex-wrap items-center gap-space-4 bg-surface-container-low p-space-3 rounded-lg">
+<div class="flex items-center gap-space-2">
+<span class="w-3 h-3 rounded bg-tertiary"></span>
+<span class="font-label-mono text-label-mono text-ink-primary">Geração Solar Usina (kWh)</span>
+</div>
+<div class="flex items-center gap-space-2">
+<span class="w-3 h-3 rounded bg-navy-accent"></span>
+<span class="font-label-mono text-label-mono text-ink-primary">Demanda Eletroposto (kWh)</span>
+</div>
+<div class="flex items-center gap-space-2">
+<span class="w-3 h-3 rounded bg-secondary"></span>
+<span class="font-label-mono text-label-mono text-ink-primary">Superávit Comercializado</span>
+</div>
+</div>
+</div><div class="grid grid-cols-1 md:grid-cols-3 gap-space-6 mt-space-4"><div class="bg-surface-default/90 border border-tertiary/20 rounded-xl p-space-6 shadow-xl relative overflow-hidden flex flex-col justify-between group hover:border-tertiary/40 transition-all"><div class="absolute top-0 left-0 w-full h-1 bg-tertiary"></div><div><div class="flex items-center justify-between mb-space-3"><span class="font-eyebrow-caps text-eyebrow-caps text-tertiary uppercase flex items-center gap-1.5"><span class="material-symbols-outlined text-[15px]">solar_power</span> GERAÇÃO ANUAL DA USINA</span><span class="px-space-2 py-0.5 rounded bg-tertiary/10 font-label-mono text-[10px] text-tertiary font-semibold"><span data-f="balKwp">112,5 kWp</span></span></div><div class="flex items-baseline gap-2 mb-space-2"><span class="font-metric-display text-metric-display text-ink-primary font-bold tracking-tight"><span data-f="balGeracao">184.200</span></span><span class="font-label-mono text-body-sm text-tertiary font-bold">kWh / ano</span></div><p class="font-body-sm text-body-sm text-ink-secondary leading-relaxed">Produção fotovoltaica limpa gerada pela Usina Santa Maria I (15.350 kWh/mês rateados).</p></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle/60 flex items-center justify-between font-label-mono text-label-mono text-ink-muted"><span class="text-[11px] text-ink-secondary">Autoprodução 100% Verde</span><span class="text-tertiary font-semibold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Matriz Própria</span></div></div><div class="bg-surface-default/90 border border-navy-accent/30 rounded-xl p-space-6 shadow-xl relative overflow-hidden flex flex-col justify-between group hover:border-navy-accent/50 transition-all"><div class="absolute top-0 left-0 w-full h-1 bg-navy-accent"></div><div><div class="flex items-center justify-between mb-space-3"><span class="font-eyebrow-caps text-eyebrow-caps text-navy-accent uppercase flex items-center gap-1.5"><span class="material-symbols-outlined text-[15px]">ev_station</span> RECARGAS ANUAL DO ELETROPOSTO</span><span class="px-space-2 py-0.5 rounded bg-navy-accent/20 font-label-mono text-[10px] text-navy-accent font-semibold">DC 80kW</span></div><div class="flex items-baseline gap-2 mb-space-2"><span class="font-metric-display text-metric-display text-ink-primary font-bold tracking-tight"><span data-f="balConsumo">178.560</span></span><span class="font-label-mono text-body-sm text-navy-accent font-bold">kWh / ano</span></div><p class="font-body-sm text-body-sm text-ink-secondary leading-relaxed">Demanda anual consumida no hub de recarga ultrarrápida DC 80kW (14.880 kWh/mês constantes).</p></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle/60 flex items-center justify-between font-label-mono text-label-mono text-ink-muted"><span class="text-[11px] text-ink-secondary"><span data-f="balSessoes">12 Sessões Diárias</span></span><span class="text-navy-accent font-semibold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-navy-accent"></span> Carga Veicular</span></div></div><div class="bg-surface-raised border-2 border-status-verified/40 rounded-xl p-space-6 shadow-2xl relative overflow-hidden flex flex-col justify-between group hover:border-status-verified transition-all"><div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-status-verified via-tertiary to-status-verified"></div><div><div class="flex items-center justify-between mb-space-3"><span class="font-eyebrow-caps text-eyebrow-caps text-status-verified uppercase font-bold flex items-center gap-1.5"><span class="material-symbols-outlined text-[15px]">balance</span> DÉFICIT / SUPERÁVIT</span><span class="px-space-2.5 py-0.5 rounded-full bg-status-verified/15 text-status-verified font-label-mono text-[10px] font-bold shadow-sm flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-status-verified animate-pulse"></span> <span data-f="balAutossuficiencia">103,1% AUTOSSUFICIENTE</span></span></div><div class="flex items-baseline gap-2 mb-space-2"><span class="font-metric-display text-metric-display text-status-verified font-extrabold tracking-tight"><span data-f="balSaldo">+5.640</span></span><span class="font-label-mono text-body-sm text-status-verified font-bold">kWh (Superávit)</span></div><p class="font-body-sm text-body-sm text-ink-secondary leading-relaxed">Saldo excedente de energia limpa injetado na rede e monetizado para assinantes parceiros sem custo de concessionária.</p></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle/60 flex items-center justify-between font-label-mono text-label-mono"><span class="text-status-verified font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">verified</span> Circuito Fechado</span><span class="text-secondary font-bold text-[11px]">Risco Zero Bandeira Tarifária</span></div></div></div>
+</div>
+</section>
+<!-- Section 2: Balanço Energético Mês a Mês (Geração Solar vs. Consumo do Eletroposto) -->
+<section class="w-full py-space-16 bg-surface-dim">
+<div class="max-w-layout-max-width mx-auto px-space-4 lg:px-space-6 flex flex-col gap-space-8">
+
+<!-- Chart Viewport (Sunken Darkroom) -->
+<div class="bg-chart-obsidian rounded-2xl p-space-6 shadow-2xl relative overflow-hidden flex flex-col gap-space-6">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,221,221,0.06)_0%,transparent_70%)] pointer-events-none"></div>
+<div class="flex items-center justify-between border-b border-surface-container-high/40 pb-space-3">
+<div class="flex items-center gap-space-3">
+<span class="font-label-mono text-label-mono text-status-calculated"><span data-f="chipRegistro">CCEE ID: #B2W-7749-GD1</span></span>
+<span class="text-ink-muted">·</span>
+<span class="font-label-mono text-label-mono text-ink-muted"><span data-f="chipCiclo">Ciclo Horário: 24/7 com compensação GD1</span></span>
+</div>
+<div class="flex items-center gap-space-2 font-label-mono text-label-mono text-ink-secondary">
+<span class="text-status-verified font-bold"><span data-f="chipAutossuficiente">100% Autossuficiente</span></span> via banco anual de créditos ONS
+          </div>
+</div>
+<!-- SVG Gráfico de Barras Lado a Lado (12 Meses) -->
+<div class="w-full overflow-x-auto">
+<div class="min-w-[700px] h-72 flex flex-col justify-end relative pt-8">
+<!-- Grid Lines Horizontais -->
+<div class="absolute inset-x-0 top-8 flex items-center justify-between text-ink-muted font-label-mono text-[10px] pointer-events-none opacity-40">
+<span class="">20.000 kWh</span>
+<div class="w-full h-px bg-surface-container-high mx-2"></div>
+</div>
+<div class="absolute inset-x-0 top-24 flex items-center justify-between text-ink-muted font-label-mono text-[10px] pointer-events-none opacity-40">
+<span class="">15.000 kWh</span>
+<div class="w-full h-px bg-surface-container-high mx-2"></div>
+</div>
+<div class="absolute inset-x-0 top-40 flex items-center justify-between text-ink-muted font-label-mono text-[10px] pointer-events-none opacity-40">
+<span class="">10.000 kWh</span>
+<div class="w-full h-px bg-surface-container-high mx-2"></div>
+</div>
+<!-- Colunas dos 12 Meses -->
+<div id="balancoMeses" class="w-full h-full flex items-end justify-between gap-1 sm:gap-2 px-2 z-10"></div>
+</div>
+</div>
+<!-- 3 Badges de Balanço Acumulado -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-6"><div class="bg-surface-default p-space-6 rounded-xl shadow-lg border border-border-subtle/50 flex flex-col justify-between relative"><div class="flex flex-col gap-space-4"><div><div class="flex items-center justify-between"><span class="font-eyebrow-caps text-eyebrow-caps text-tertiary uppercase">ATIVO BASE 1</span><span class="px-space-2 py-0.5 rounded bg-tertiary/10 font-label-mono text-[10px] text-tertiary"><span data-f="cenUsinaCapexChip">420k CAPEX</span></span></div><h3 class="font-headline-sm text-headline-sm text-ink-primary mt-1">Usina Solar Isolada</h3><p class="font-body-sm text-body-sm text-ink-muted mt-1"><span data-f="cenUsinaTexto">Geração fotovoltaica dedicada comercializando créditos sem hub de carga local.</span></p></div><div class="grid grid-cols-2 gap-space-3 pt-space-2 border-t border-border-subtle"><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">CAPEX INICIAL</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenUsinaCapex">R$ 420.000</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">100% Equity</span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">RETORNO 10 ANOS</span><span class="font-label-mono text-body-default text-tertiary font-bold mt-1 block"><span data-f="cenUsinaRetorno">R$ 1.165.249</span></span><span class="font-label-mono text-[10px] text-status-verified block mt-0.5"><span data-f="cenUsinaRoi">ROI 177%</span></span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">TIR ANUAL</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenUsinaTir">17,8%</span> <span class="text-[10px] font-normal text-ink-secondary">a.a.</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">IPCA + 12,4%</span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">PAYBACK</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenUsinaPayback">4,7</span> <span class="text-[10px] font-normal text-ink-secondary">anos</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5"><span data-f="cenUsinaPaybackDesc">Desc: 5,5 anos</span></span></div></div></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle flex items-center justify-between font-label-mono text-label-mono text-ink-muted"><span class="">Risco Regulatório Moderado</span><span class="text-tertiary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Curva Ciano</span></div></div><div class="bg-surface-default p-space-6 rounded-xl shadow-lg border border-border-subtle/50 flex flex-col justify-between relative"><div class="flex flex-col gap-space-4"><div><div class="flex items-center justify-between"><span class="font-eyebrow-caps text-eyebrow-caps text-navy-accent uppercase">ATIVO BASE 2</span><span class="px-space-2 py-0.5 rounded bg-navy-accent/20 font-label-mono text-[10px] text-navy-accent"><span data-f="cenEpCapexChip">240k CAPEX</span></span></div><h3 class="font-headline-sm text-headline-sm text-ink-primary mt-1">Eletroposto Isolado</h3><p class="font-body-sm text-body-sm text-ink-muted mt-1">Hub de recarga DC 80kW operando com energia adquirida integralmente na rede da distribuidora local.</p></div><div class="grid grid-cols-2 gap-space-3 pt-space-2 border-t border-border-subtle"><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">CAPEX INICIAL</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenEpCapex">R$ 240.000</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">Totem + Infra</span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">RETORNO 10 ANOS</span><span class="font-label-mono text-body-default text-navy-accent font-bold mt-1 block"><span data-f="cenEpRetorno">R$ 787.200</span></span><span class="font-label-mono text-[10px] text-status-verified block mt-0.5"><span data-f="cenEpRoi">ROI 228%</span></span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">TIR ANUAL</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenEpTir">31,4%</span> <span class="text-[10px] font-normal text-ink-secondary">a.a.</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">IPCA + 26,0%</span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">PAYBACK</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenEpPayback">2,1</span> <span class="text-[10px] font-normal text-ink-secondary">anos</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5"><span data-f="cenEpPaybackDesc">Desc: 2,8 anos</span></span></div></div></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle flex items-center justify-between font-label-mono text-label-mono text-ink-muted"><span class="">Exposição a Tarifas Concessionária</span><span class="text-navy-accent flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-navy-accent"></span> Curva Azul Petróleo</span></div></div><div class="bg-surface-raised p-space-6 rounded-xl shadow-2xl border-2 border-primary-container/60 flex flex-col justify-between relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-container via-secondary to-primary"></div><div class="flex flex-col gap-space-4"><div><div class="flex items-center justify-between"><span class="font-eyebrow-caps text-eyebrow-caps text-primary-container uppercase font-bold">SINERGIA UNIFICADA B2W</span><span class="px-space-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-mono text-[10px] font-bold shadow-sm">ALOCAÇÃO INTEGRADA</span></div><h3 class="font-headline-sm text-headline-sm text-ink-primary mt-1 flex items-center gap-2">Operação Híbrida Unificada <span class="w-2 h-2 rounded-full bg-status-verified animate-pulse"></span></h3><p class="font-body-sm text-body-sm text-ink-secondary mt-1">Abastecimento em circuito fechado eliminando spread de concessionária e monetizando excedente solar.</p></div><div class="grid grid-cols-2 gap-space-3 pt-space-2 border-t border-border-subtle"><div class="bg-surface-container-high p-space-3 rounded-lg border border-primary-container/20"><span class="font-eyebrow-caps text-[10px] text-primary-fixed block">CAPEX TOTAL</span><span class="font-metric-card text-[20px] text-ink-primary font-bold mt-1 block"><span data-f="cenHibCapex">R$ 660.000</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">Usina + Hub Integrados</span></div><div class="bg-surface-container-high p-space-3 rounded-lg border border-status-verified/20"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">RETORNO 10 ANOS</span><span class="font-metric-card text-[20px] text-status-verified font-bold mt-1 block"><span data-f="cenHibRetorno">R$ 2.450.000</span></span><span class="font-label-mono text-[10px] text-status-verified font-bold block mt-0.5"><span data-f="cenHibRoi">ROI 271% Consolidado</span></span></div><div class="bg-surface-container-high p-space-3 rounded-lg border border-secondary/20"><span class="font-eyebrow-caps text-[10px] text-secondary block">TIR REAL</span><span class="font-metric-card text-[20px] text-secondary font-bold mt-1 block"><span data-f="cenHibTir">25,8%</span> <span class="text-[10px] font-normal text-ink-secondary">a.a.</span></span><span class="font-label-mono text-[10px] text-secondary block mt-0.5">IPCA + 20,4% Líquido</span></div><div class="bg-surface-container-high p-space-3 rounded-lg border border-primary-container/20"><span class="font-eyebrow-caps text-[10px] text-tertiary block">PAYBACK UNIFICADO</span><span class="font-metric-card text-[20px] text-tertiary font-bold mt-1 block"><span data-f="cenHibPayback">2,7</span> <span class="text-[10px] font-normal text-ink-secondary">anos</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5"><span data-f="cenHibPaybackDesc">Desc: 3,4 anos (32m)</span></span></div></div></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle flex items-center justify-between font-label-mono text-label-mono"><span class="text-status-verified font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">verified</span> Máxima Eficiência</span><span class="text-primary-container font-bold flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> Curva Laranja B2W</span></div></div></div>
+</div><!-- Section 2B: Segundo Gráfico - Balanço Financeiro Mensal & Fornecimento Solar -->
+<div class="bg-chart-obsidian rounded-2xl p-space-6 shadow-2xl relative overflow-hidden flex flex-col gap-space-6 mt-space-6">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,221,221,0.06)_0%,transparent_70%)] pointer-events-none"></div>
+<!-- Header & Legendas do 2º Gráfico -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-4 border-b border-surface-container-high/40 pb-space-3 relative z-10">
+<div>
+<div class="flex items-center gap-space-2">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-eyebrow-caps text-eyebrow-caps text-secondary uppercase">CORRELAÇÃO FINANCEIRA &amp; ENERGÉTICA</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-ink-primary tracking-tight mt-1">Balanço Financeiro Mensal &amp; Fornecimento</h3>
+<p class="font-body-sm text-body-sm text-ink-secondary mt-0.5">Faturamento bruto vs. custo operacional compensado com curva sobreposta de fornecimento fotovoltaico.</p>
+</div>
+<div class="flex flex-wrap items-center gap-space-3 bg-surface-container-low/80 p-space-2 rounded-lg border border-border-subtle">
+<div class="flex items-center gap-space-2 px-2 py-1">
+<span class="w-3 h-3 rounded bg-status-verified"></span>
+<span class="font-label-mono text-label-mono text-ink-primary">Faturamento Recargas (R$)</span>
+</div>
+<div class="flex items-center gap-space-2 px-2 py-1">
+<span class="w-3 h-3 rounded bg-primary-container"></span>
+<span class="font-label-mono text-label-mono text-ink-primary">Custo Energia Solar (R$)</span>
+</div>
+<div class="flex items-center gap-space-2 px-2 py-1">
+<span class="w-3 h-0.5 bg-tertiary inline-block relative"><span class="w-2 h-2 rounded-full bg-tertiary absolute -top-[3px] left-0.5 ring-2 ring-chart-obsidian"></span></span>
+<span class="font-label-mono text-label-mono text-tertiary font-semibold">Fornecimento Solar (kWh)</span>
+</div>
+<div class="flex items-center gap-space-2 px-2 py-1"><span class="w-3 h-0.5 bg-secondary inline-block relative"><span class="w-2 h-2 rounded-full bg-secondary absolute -top-[3px] left-0.5 ring-2 ring-chart-obsidian"></span></span><span class="font-label-mono text-label-mono text-secondary font-semibold">Recarga / Demanda EV (kWh)</span></div></div>
+</div>
+<!-- Grid & Plot Container Misto (Barras + SVG Line Overlay) -->
+<div class="w-full overflow-x-auto relative z-10"><div class="min-w-[760px] h-88 flex flex-col justify-end relative pt-12 pb-6"><div class="absolute inset-x-0 top-6 flex items-center justify-between text-ink-muted font-label-mono text-[10px] pointer-events-none opacity-40"><span class="w-16 text-left">R$ 45k</span><div class="w-full h-px bg-surface-container-high mx-2"></div><span class="w-20 text-right text-tertiary">18.000 kWh</span></div><div class="absolute inset-x-0 top-20 flex items-center justify-between text-ink-muted font-label-mono text-[10px] pointer-events-none opacity-40"><span class="w-16 text-left">R$ 30k</span><div class="w-full h-px bg-surface-container-high mx-2"></div><span class="w-20 text-right text-tertiary">15.000 kWh</span></div><div class="absolute inset-x-0 top-36 flex items-center justify-between text-ink-muted font-label-mono text-[10px] pointer-events-none opacity-40"><span class="w-16 text-left">R$ 15k</span><div class="w-full h-px bg-surface-container-high mx-2"></div><span class="w-20 text-right text-tertiary">12.000 kWh</span></div><svg class="absolute inset-x-0 top-6 w-full h-56 overflow-visible pointer-events-none z-20" preserveAspectRatio="none" viewBox="0 0 1200 210"><g id="grafFinanceiro"></g></svg><div class="w-full h-full flex items-end justify-between gap-1 sm:gap-2 px-2 z-10"><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 84%;" title="Receita: R$ 41.200"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 41.2k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-primary font-semibold">JAN</span><span class="font-label-mono text-[9px] text-secondary font-bold">16.1k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 82%;" title="Receita: R$ 39.800"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 39.8k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">FEV</span><span class="font-label-mono text-[9px] text-secondary font-bold">15.5k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 80%;" title="Receita: R$ 38.600"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 38.6k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">MAR</span><span class="font-label-mono text-[9px] text-secondary font-bold">15.1k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 77%;" title="Receita: R$ 37.200"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 37.2k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">ABR</span><span class="font-label-mono text-[9px] text-secondary font-bold">14.5k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 77%;" title="Receita: R$ 37.200"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 37.2k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">MAI</span><span class="font-label-mono text-[9px] text-secondary font-bold">14.5k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 78%;" title="Receita: R$ 37.500"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 37.5k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-secondary font-bold">JUN</span><span class="font-label-mono text-[9px] text-secondary font-bold">14.7k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 79%;" title="Receita: R$ 38.100"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 38.1k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">JUL</span><span class="font-label-mono text-[9px] text-secondary font-bold">14.9k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 84%;" title="Receita: R$ 40.800"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 40.8k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">AGO</span><span class="font-label-mono text-[9px] text-secondary font-bold">16.0k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 87%;" title="Receita: R$ 42.400"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 42.4k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">SET</span><span class="font-label-mono text-[9px] text-secondary font-bold">16.6k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 92%;" title="Receita: R$ 44.520"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 44.5k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-secondary font-bold">OUT</span><span class="font-label-mono text-[9px] text-secondary font-bold">17.4k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 88%;" title="Receita: R$ 42.600"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 42.6k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">NOV</span><span class="font-label-mono text-[9px] text-secondary font-bold">16.7k EV</span></div></div><div class="flex-1 flex flex-col items-center gap-1.5 group"><div class="w-full flex items-end justify-center gap-1 h-48 pb-1"><div class="w-3.5 bg-status-verified rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 85%;" title="Receita: R$ 41.800"><span class="font-label-mono text-[9px] text-status-verified font-bold -top-4 absolute whitespace-nowrap">R$ 41.8k</span></div><div class="w-3.5 bg-primary-container rounded-t transition-all group-hover:brightness-125 relative flex justify-center" style="height: 27%;" title="Custo: R$ 11.868"><span class="font-label-mono text-[8px] text-primary-fixed -top-3.5 absolute whitespace-nowrap opacity-75">R$ 11.9k</span></div></div><div class="flex flex-col items-center"><span class="font-label-mono text-[11px] text-ink-muted font-semibold">DEZ</span><span class="font-label-mono text-[9px] text-secondary font-bold">16.3k EV</span></div></div></div></div></div>
+<!-- Rodapé do Card com Métricas Consolidadas -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-4 pt-space-2 border-t border-surface-container-high/40">
+<div class="bg-surface-container-high/60 p-space-3 rounded-lg flex items-center justify-between">
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block">RECEITA ANUAL ACUMULADA</span>
+<span class="font-metric-card text-metric-card text-status-verified">R$ 484.720</span>
+</div>
+<span class="material-symbols-outlined text-status-verified text-[24px]">trending_up</span>
+</div>
+<div class="bg-surface-container-high/60 p-space-3 rounded-lg flex items-center justify-between">
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block">CUSTO OPERACIONAL SOLAR ANUAL</span>
+<span class="font-metric-card text-metric-card text-primary-container">R$ 142.419</span>
+</div>
+<span class="material-symbols-outlined text-primary-container text-[24px]">price_check</span>
+</div>
+<div class="bg-surface-container-high/60 p-space-3 rounded-lg flex items-center justify-between">
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted block">MARGEM LÍQUIDA MÉDIA</span>
+<span class="font-metric-card text-metric-card text-tertiary">70,6% <span class="text-body-sm font-label-mono text-ink-secondary">Bruta</span></span>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[24px]">pie_chart</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Engenharia do Sistema e Hardware Conectado -->
+<section class="w-full py-space-16 bg-background">
+<div class="max-w-layout-max-width mx-auto px-space-4 lg:px-space-6 flex flex-col gap-space-8">
+<div class="flex flex-col gap-space-2">
+<span class="font-eyebrow-caps text-eyebrow-caps text-primary-container uppercase">EQUIPAMENTOS TIER 1 &amp; PADRÕES INDUSTRIAIS</span>
+<h2 class="font-headline-lg text-headline-lg text-ink-primary tracking-tight">Engenharia de Hardware Integrada</h2>
+<p class="font-body-default text-body-default text-ink-secondary max-w-3xl">
+          Especificações de componentes homologados com certificação internacional IEC, TÜV Rheinland e Inmetro, garantindo 25 anos de eficiência para os módulos e 99,2% de disponibilidade operacional no hub de recarga.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-6">
+<!-- Lado A: Geração Solar (Módulo + Inversor) -->
+<div class="bg-surface-default rounded-xl p-space-6 flex flex-col justify-between shadow-xl">
+<div>
+<div class="flex items-center justify-between mb-space-4">
+<div class="flex items-center gap-space-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-ink-primary">Engenharia Fotovoltaica (Lado A)</h3>
+</div>
+<span class="font-label-mono text-label-mono text-ink-secondary">Usina Santa Maria I</span>
+</div>
+<!-- Imagens dos Hardware Solar -->
+<div class="grid grid-cols-2 gap-space-4 mb-space-6">
+<div class="bg-chart-obsidian rounded-lg p-space-3 flex flex-col items-center text-center">
+<img alt="Módulo Solar HJT Bifacial" class="h-32 object-contain mb-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFWW8l-Ad4wuQ23GHmXmEIjiET2qAIUatBfkPKQnjcziGyf1jYM6Z1XghNA6czd38mdaXhqnemeR2yLKkcQVCjmbnUrBhHcejKLptwHzt4oSGRR4byjzyfpM27qRqRwNIZjUWDZBpm1OIjZJ0yYr4fQk94ttFk3wu11lFK_GEqumU6vK8eMwT86B0K4D7uXeinJPH3TrwvUb_Zpi75IwVR6Vd95IIILaMraY5Z1D13q5m7I_U2L3Y4BsRnhhAPZPtfjQ">
+<span class="font-label-mono text-label-mono text-ink-primary">Módulo HJT Bifacial 700W</span>
+<span class="font-label-mono text-[10px] text-ink-muted">Eficiência 22,5% · N-Type</span>
+</div>
+<div class="bg-chart-obsidian rounded-lg p-space-3 flex flex-col items-center text-center">
+<img alt="Inversor SAJ 75K-C6" class="h-32 object-contain mb-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiZy1uZDCYjLiMqGYK5vj1RLZhb6cl0KOesZ8zTmgCqbhoohRKlSm-9eATELsP0GI6LZyeAnX75GFcqFgDFbb1c3hKXxPFezw0mBmFgqs1vwi7zrTb9S8_LOz5GtXdS1kZJ3IDJYP2Y5i16jdGQzydmz16OxWepIJcdTgQsCzbxHm9p8QultoZ_th043n9lWZmxOnFlS3jm9CJKgkfBq1uGSqFTluYpq_F4KWuzVo7ejiLgvNNqnfY_OJWrIOlATlknw">
+<span class="font-label-mono text-label-mono text-ink-primary">Inversor SAJ 75K-C6</span>
+<span class="font-label-mono text-[10px] text-ink-muted">12 MPPTs · Proteção AFCI</span>
+</div>
+</div>
+<!-- Tabela de Especificações Lado A -->
+<div class="space-y-space-2 font-body-sm text-body-sm">
+<div class="flex justify-between py-2 border-b border-border-subtle">
+<span class="text-ink-secondary">Potência de Pico Módulos</span>
+<span class="font-label-mono text-ink-primary font-bold">112,5 kWp (160 un. 700W)</span>
+</div>
+<div class="flex justify-between py-2 border-b border-border-subtle">
+<span class="text-ink-secondary">Inversor Central Homologado</span>
+<span class="font-label-mono text-ink-primary font-bold">75 kW CA Trifásico 380V</span>
+</div>
+<div class="flex justify-between py-2 border-b border-border-subtle">
+<span class="text-ink-secondary">Overload Suportado</span>
+<span class="font-label-mono text-status-verified font-bold">Até 150% (Sobredimensionamento)</span>
+</div>
+<div class="flex justify-between py-2 border-b border-border-subtle">
+<span class="text-ink-secondary">Garantia Linear de Performance</span>
+<span class="font-label-mono text-ink-primary font-bold">30 Anos (87,4% de rendimento)</span>
+</div>
+<div class="flex justify-between py-2">
+<span class="text-ink-secondary">Telemetria &amp; Sensoriamento</span>
+<span class="font-label-mono text-tertiary font-bold">Sensor de Irradiância + Estação Met.</span>
+</div>
+</div>
+</div>
+<div class="mt-space-6 pt-space-4 border-t border-border-subtle flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-ink-muted"><span data-f="chipNorma">Norma ANEEL GD1</span></span>
+<span class="font-label-mono text-label-mono text-status-verified flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+              Conexão Homologada na Rede
+            </span>
+</div>
+</div>
+<!-- Lado B: Hub de Mobilidade (Totem DC 80kW) -->
+<div class="bg-surface-default rounded-xl p-space-6 flex flex-col justify-between shadow-xl">
+<div>
+<div class="flex items-center justify-between mb-space-4">
+<div class="flex items-center gap-space-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<h3 class="font-headline-sm text-headline-sm text-ink-primary">Hub de Mobilidade EV (Lado B)</h3>
+</div>
+<span class="font-label-mono text-label-mono text-ink-secondary">Totem DC Ultra Rápido</span>
+</div>
+<!-- Imagem do Totem DC com Prompt de Render -->
+<div class="bg-chart-obsidian rounded-lg p-space-4 mb-space-6 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-default/80 via-transparent to-transparent"></div>
+<img class="h-44 object-contain relative z-10" data-alt="High tech commercial dual CCS2 80kW DC fast charger totem studio shot on isolated dark platform with built-in high resolution 43 inch DOOH digital advertising display screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWqWvq6o4wIYdTf881im_WcNteM-UUOGGZTEgTqBp2gQUvrRa5CxN1b517KTfOU7hauMuOAhqP_h7_ResRkZUlpJIVlD2CXwhYpZd2GHith-VdShL30Nc58v0WF9GOm5ezz5J3Ez9MqXBiG0QM7wdr-86S1OJAgMaMCBgYX0MQuBYHkd4l_Ycfe7zNnXLpOLId8yr8huQb80lhDQbF-IrPAXoizP-KkB4xL8pPQbL2_-XusZoHGGaP">
+<div class="absolute bottom-2 right-3 font-label-mono text-label-mono text-tertiary z-20">
+                DOOH 4K Publicidade Integrada
+              </div>
+</div>
+<!-- Tabela de Especificações Lado B -->
+<div class="space-y-space-2 font-body-sm text-body-sm">
+<div class="flex justify-between py-2 border-b border-border-subtle">
+<span class="text-ink-secondary">Potência DC Máxima</span>
+<span class="font-label-mono text-ink-primary font-bold">80 kW DC Dinâmico (2x 40kW ou 1x 80kW)</span>
+</div>
+<div class="flex justify-between py-2 border-b border-border-subtle">
+<span class="text-ink-secondary">Conectores de Recarga</span>
+<span class="font-label-mono text-ink-primary font-bold">2 Pistolas CCS2 Cabo Refrigerado</span>
+</div>
+<div class="flex justify-between py-2 border-b border-border-subtle">
+<span class="text-ink-secondary">Monetização de Mídia (DOOH)</span>
+<span class="font-label-mono text-secondary font-bold">Display 43' High-Brightness 2.500 nits</span>
+</div>
+<div class="flex justify-between py-2 border-b border-border-subtle">
+<span class="text-ink-secondary">Protocolo de Comunicação</span>
+<span class="font-label-mono text-ink-primary font-bold">OCPP 1.6J / 2.0.1 Ready com 4G/Ethernet</span>
+</div>
+<div class="flex justify-between py-2">
+<span class="text-ink-secondary">Tolerância Térmica</span>
+<span class="font-label-mono text-status-verified font-bold">Operação sem derating até 55°C</span>
+</div>
+</div>
+</div>
+<div class="mt-space-6 pt-space-4 border-t border-border-subtle flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-ink-muted">Uptime Contratual: 99,2%</span>
+<span class="font-label-mono text-label-mono text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">credit_card</span>
+              Pagamento Touchless PIX &amp; Cartão
+            </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: DRE Consolidado da Operação Híbrida -->
+<section class="w-full py-space-16 bg-surface-dim">
+<div class="max-w-layout-max-width mx-auto px-space-4 lg:px-space-6 flex flex-col gap-space-8">
+
+<!-- Tabela Financeira DRE -->
+<div class="bg-surface-default rounded-2xl shadow-xl overflow-hidden"><div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-4 pb-space-3 border-b border-border-subtle"><div class="flex items-center gap-space-3"><div class="w-3 h-3 rounded-full bg-primary-container animate-pulse"></div><div><h4 class="font-headline-sm text-headline-sm text-ink-primary">Curva Comparativa de Amortização &amp; Fluxo de Caixa Líquido (10 Anos)</h4><p class="font-body-sm text-body-sm text-ink-secondary mt-0.5">Trajetória acumulada de retorno de capital considerando reinvestimento e remuneração mensal.</p></div></div><div class="flex flex-wrap items-center gap-space-3 bg-surface-container-low/80 p-space-2 rounded-lg border border-border-subtle"><div class="flex items-center gap-space-2 px-2 py-1"><span class="w-3.5 h-0.5 bg-tertiary inline-block relative"><span class="w-2 h-2 rounded-full bg-tertiary absolute -top-[3px] left-0.5 ring-2 ring-chart-obsidian"></span></span><span class="font-label-mono text-label-mono text-tertiary font-semibold">Usina Solar (-420k | +1.16M)</span></div><div class="flex items-center gap-space-2 px-2 py-1"><span class="w-3.5 h-0.5 bg-navy-accent inline-block relative"><span class="w-2 h-2 rounded-full bg-navy-accent absolute -top-[3px] left-0.5 ring-2 ring-chart-obsidian"></span></span><span class="font-label-mono text-label-mono text-navy-accent font-semibold">Eletroposto (-240k | +787k)</span></div><div class="flex items-center gap-space-2 px-2 py-1 bg-primary-container/15 rounded"><span class="w-4 h-1 bg-primary-container inline-block relative"><span class="w-2.5 h-2.5 rounded-full bg-primary-container absolute -top-[3px] left-0.5 ring-2 ring-chart-obsidian"></span></span><span class="font-label-mono text-label-mono text-primary-fixed font-bold">Operação Híbrida (-660k | +2.45M)</span></div></div></div><div class="w-full h-80 relative bg-chart-obsidian rounded-xl p-space-4 overflow-hidden flex flex-col justify-between"><div class="absolute inset-0 bg-gradient-to-t from-status-verified/5 via-transparent to-transparent pointer-events-none"></div><div class="absolute top-[62%] inset-x-0 h-px bg-border-strong border-dashed opacity-60 flex items-center justify-between px-4 pointer-events-none z-10"><span class="font-label-mono text-[10px] text-ink-muted bg-chart-obsidian px-1.5 py-0.5 rounded">Ponto de Equilíbrio (Break-Even R$ 0,00)</span><span class="font-label-mono text-[10px] text-ink-muted bg-chart-obsidian px-1.5 py-0.5 rounded">Capital 100% Amortizado</span></div><div class="absolute inset-x-0 top-6 flex items-center justify-between text-ink-muted font-label-mono text-[9px] pointer-events-none opacity-40 px-2"><span class="">+R$ 2.500k</span><div class="w-full h-px bg-surface-container-high mx-2"></div></div><div class="absolute inset-x-0 top-24 flex items-center justify-between text-ink-muted font-label-mono text-[9px] pointer-events-none opacity-40 px-2"><span class="">+R$ 1.200k</span><div class="w-full h-px bg-surface-container-high mx-2"></div></div><div class="absolute inset-x-0 bottom-12 flex items-center justify-between text-ink-muted font-label-mono text-[9px] pointer-events-none opacity-40 px-2"><span class="">-R$ 660k</span><div class="w-full h-px bg-surface-container-high mx-2"></div></div><svg class="w-full h-full overflow-visible relative z-20" preserveAspectRatio="none" viewBox="0 0 1000 240"><g id="amortHib1"></g></svg><div class="flex justify-between items-center text-ink-muted font-label-mono text-[11px] pt-2 z-10 border-t border-surface-container-high/40"><span class="">Ano 0 (Aporte)</span><span class="">Ano 1</span><span class="text-navy-accent font-semibold">Ano 2 (BEP EV)</span><span class="text-primary-container font-bold">Ano 2.7 (BEP Híbrido)</span><span class="text-tertiary font-semibold">Ano 4.7 (BEP Solar)</span><span class="">Ano 6</span><span class="">Ano 8</span><span class="text-status-verified font-bold">Ano 10 (+2.45M Híbrido)</span></div></div></div>
+<!-- Comparativo de Eficiência: Sinergia vs. Isolado -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-6">
+<div class="bg-surface-container-low p-space-6 rounded-xl flex flex-col justify-between">
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted">CENÁRIO CONVENCIONAL (SEM UFV)</span>
+<h4 class="font-headline-sm text-headline-sm text-ink-primary mt-1">Eletroposto Isolado</h4>
+<p class="font-body-sm text-body-sm text-ink-secondary mt-2">
+              Comprando energia integralmente da concessionária na tarifa cheia (~R$ 1,02/kWh + ICMS/Bandeira).
+            </p>
+</div>
+<div class="mt-space-4 pt-space-3 border-t border-border-subtle">
+<span class="font-label-mono text-label-mono text-ink-muted block">EBITDA Mensal</span>
+<span class="font-metric-card text-metric-card text-ink-primary">R$ 22.800<span class="text-body-sm font-label-mono text-ink-secondary">/mês</span></span>
+</div>
+</div>
+<div class="bg-surface-raised p-space-6 rounded-xl flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[3px] bg-tertiary"></div>
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-tertiary">CENÁRIO SINERGIA B2W</span>
+<h4 class="font-headline-sm text-headline-sm text-ink-primary mt-1">Operação Híbrida Integrada</h4>
+<p class="font-body-sm text-body-sm text-ink-secondary mt-2">
+              Abastecido pela Usina Solar Própria a R$ 0,79/kWh + venda das sobras para assinantes parceiros.
+            </p>
+</div>
+<div class="mt-space-4 pt-space-3 border-t border-border-subtle">
+<span class="font-label-mono text-label-mono text-ink-muted block">EBITDA Mensal Consolidado</span>
+<span class="font-metric-card text-metric-card text-tertiary"><span data-f="sinergiaResultado">R$ 27.239</span><span class="text-body-sm font-label-mono text-ink-secondary">/mês</span></span>
+</div>
+</div>
+<div class="bg-primary-container/10 p-space-6 rounded-xl flex flex-col justify-between">
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-primary-container">GANHO PURO DE ARBITRAGEM</span>
+<h4 class="font-headline-sm text-headline-sm text-ink-primary mt-1">Diferencial de Retorno</h4>
+<p class="font-body-sm text-body-sm text-ink-secondary mt-2">
+              Lucro extra gerado pela eliminação do custo de concessionária e monetização de excedentes solares.
+            </p>
+</div>
+<div class="mt-space-4 pt-space-3 border-t border-border-subtle">
+<span class="font-label-mono text-label-mono text-primary-fixed block">Lucro Adicional Acumulado</span>
+<span class="font-metric-card text-metric-card text-primary-container">+R$ 53.268<span class="text-body-sm font-label-mono text-ink-secondary">/ano</span></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Viabilidade Financeira e Retorno de Longo Prazo (10 Anos) -->
+<section class="w-full py-space-16 bg-background">
+<div class="max-w-layout-max-width mx-auto px-space-4 lg:px-space-6 flex flex-col gap-space-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-4">
+<div>
+<span class="font-eyebrow-caps text-eyebrow-caps text-primary-container uppercase">PROJEÇÃO DE CAPITAL &amp; PAYBACK</span>
+<h2 class="font-headline-lg text-headline-lg text-ink-primary tracking-tight mt-1">Viabilidade Financeira Consolidada</h2>
+<p class="font-body-default text-body-default text-ink-secondary max-w-2xl mt-1">
+            Métricas de retorno calculadas sobre o CAPEX integral dos dois ativos, com amortização acelerada e geração sustentável de dividendos por mais de duas décadas.
+          </p>
+</div>
+<div class="flex items-center gap-space-3">
+<span class="font-label-mono text-label-mono text-ink-secondary bg-surface-container-low px-space-3 py-1.5 rounded-lg">
+            Modelo: Desalavancado 100% Equity
+          </span>
+</div>
+</div>
+<!-- 4 Cards de Viabilidade Executiva -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-6"><div class="bg-surface-default p-space-6 rounded-xl shadow-lg border border-border-subtle/50 flex flex-col justify-between relative"><div class="flex flex-col gap-space-4"><div><div class="flex items-center justify-between"><span class="font-eyebrow-caps text-eyebrow-caps text-tertiary uppercase">ATIVO BASE 1</span><span class="px-space-2 py-0.5 rounded bg-tertiary/10 font-label-mono text-[10px] text-tertiary"><span data-f="cenUsinaCapexChip">420k CAPEX</span></span></div><h3 class="font-headline-sm text-headline-sm text-ink-primary mt-1">Usina Solar Isolada</h3><p class="font-body-sm text-body-sm text-ink-muted mt-1"><span data-f="cenUsinaTexto">Geração fotovoltaica dedicada comercializando créditos sem hub de carga local.</span></p></div><div class="grid grid-cols-2 gap-space-3 pt-space-2 border-t border-border-subtle"><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">CAPEX INICIAL</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenUsinaCapex">R$ 420.000</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">100% Equity</span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">RETORNO 10 ANOS</span><span class="font-label-mono text-body-default text-tertiary font-bold mt-1 block"><span data-f="cenUsinaRetorno">R$ 1.165.249</span></span><span class="font-label-mono text-[10px] text-status-verified block mt-0.5"><span data-f="cenUsinaRoi">ROI 177%</span></span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">TIR ANUAL</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenUsinaTir">17,8%</span> <span class="text-[10px] font-normal text-ink-secondary">a.a.</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">IPCA + 12,4%</span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">PAYBACK</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenUsinaPayback">4,7</span> <span class="text-[10px] font-normal text-ink-secondary">anos</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5"><span data-f="cenUsinaPaybackDesc">Desc: 5,5 anos</span></span></div></div></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle flex items-center justify-between font-label-mono text-label-mono text-ink-muted"><span class="">Risco Regulatório Moderado</span><span class="text-tertiary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Curva Ciano</span></div></div><div class="bg-surface-default p-space-6 rounded-xl shadow-lg border border-border-subtle/50 flex flex-col justify-between relative"><div class="flex flex-col gap-space-4"><div><div class="flex items-center justify-between"><span class="font-eyebrow-caps text-eyebrow-caps text-navy-accent uppercase">ATIVO BASE 2</span><span class="px-space-2 py-0.5 rounded bg-navy-accent/20 font-label-mono text-[10px] text-navy-accent"><span data-f="cenEpCapexChip">240k CAPEX</span></span></div><h3 class="font-headline-sm text-headline-sm text-ink-primary mt-1">Eletroposto Isolado</h3><p class="font-body-sm text-body-sm text-ink-muted mt-1">Hub de recarga DC 80kW operando com energia adquirida integralmente na rede da distribuidora local.</p></div><div class="grid grid-cols-2 gap-space-3 pt-space-2 border-t border-border-subtle"><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">CAPEX INICIAL</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenEpCapex">R$ 240.000</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">Totem + Infra</span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">RETORNO 10 ANOS</span><span class="font-label-mono text-body-default text-navy-accent font-bold mt-1 block"><span data-f="cenEpRetorno">R$ 787.200</span></span><span class="font-label-mono text-[10px] text-status-verified block mt-0.5"><span data-f="cenEpRoi">ROI 228%</span></span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">TIR ANUAL</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenEpTir">31,4%</span> <span class="text-[10px] font-normal text-ink-secondary">a.a.</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">IPCA + 26,0%</span></div><div class="bg-surface-container-low p-space-3 rounded-lg"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">PAYBACK</span><span class="font-label-mono text-body-default text-ink-primary font-bold mt-1 block"><span data-f="cenEpPayback">2,1</span> <span class="text-[10px] font-normal text-ink-secondary">anos</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5"><span data-f="cenEpPaybackDesc">Desc: 2,8 anos</span></span></div></div></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle flex items-center justify-between font-label-mono text-label-mono text-ink-muted"><span class="">Exposição a Tarifas Concessionária</span><span class="text-navy-accent flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-navy-accent"></span> Curva Azul Petróleo</span></div></div><div class="bg-surface-raised p-space-6 rounded-xl shadow-2xl border-2 border-primary-container/60 flex flex-col justify-between relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-container via-secondary to-primary"></div><div class="flex flex-col gap-space-4"><div><div class="flex items-center justify-between"><span class="font-eyebrow-caps text-eyebrow-caps text-primary-container uppercase font-bold">SINERGIA UNIFICADA B2W</span><span class="px-space-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-mono text-[10px] font-bold shadow-sm">ALOCAÇÃO INTEGRADA</span></div><h3 class="font-headline-sm text-headline-sm text-ink-primary mt-1 flex items-center gap-2">Operação Híbrida Unificada <span class="w-2 h-2 rounded-full bg-status-verified animate-pulse"></span></h3><p class="font-body-sm text-body-sm text-ink-secondary mt-1">Abastecimento em circuito fechado eliminando spread de concessionária e monetizando excedente solar.</p></div><div class="grid grid-cols-2 gap-space-3 pt-space-2 border-t border-border-subtle"><div class="bg-surface-container-high p-space-3 rounded-lg border border-primary-container/20"><span class="font-eyebrow-caps text-[10px] text-primary-fixed block">CAPEX TOTAL</span><span class="font-metric-card text-[20px] text-ink-primary font-bold mt-1 block"><span data-f="cenHibCapex">R$ 660.000</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5">Usina + Hub Integrados</span></div><div class="bg-surface-container-high p-space-3 rounded-lg border border-status-verified/20"><span class="font-eyebrow-caps text-[10px] text-ink-muted block">RETORNO 10 ANOS</span><span class="font-metric-card text-[20px] text-status-verified font-bold mt-1 block"><span data-f="cenHibRetorno">R$ 2.450.000</span></span><span class="font-label-mono text-[10px] text-status-verified font-bold block mt-0.5"><span data-f="cenHibRoi">ROI 271% Consolidado</span></span></div><div class="bg-surface-container-high p-space-3 rounded-lg border border-secondary/20"><span class="font-eyebrow-caps text-[10px] text-secondary block">TIR REAL</span><span class="font-metric-card text-[20px] text-secondary font-bold mt-1 block"><span data-f="cenHibTir">25,8%</span> <span class="text-[10px] font-normal text-ink-secondary">a.a.</span></span><span class="font-label-mono text-[10px] text-secondary block mt-0.5">IPCA + 20,4% Líquido</span></div><div class="bg-surface-container-high p-space-3 rounded-lg border border-primary-container/20"><span class="font-eyebrow-caps text-[10px] text-tertiary block">PAYBACK UNIFICADO</span><span class="font-metric-card text-[20px] text-tertiary font-bold mt-1 block"><span data-f="cenHibPayback">2,7</span> <span class="text-[10px] font-normal text-ink-secondary">anos</span></span><span class="font-label-mono text-[10px] text-ink-muted block mt-0.5"><span data-f="cenHibPaybackDesc">Desc: 3,4 anos (32m)</span></span></div></div></div><div class="mt-space-4 pt-space-3 border-t border-border-subtle flex items-center justify-between font-label-mono text-label-mono"><span class="text-status-verified font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">verified</span> Máxima Eficiência</span><span class="text-primary-container font-bold flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> Curva Laranja B2W</span></div></div></div>
+<!-- Gráfico de Curva de Amortização & Fluxo de Caixa (10 Anos) -->
+<div class="bg-surface-default rounded-2xl p-space-6 shadow-xl flex flex-col gap-space-6 border border-border-subtle/60"><div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-4 pb-space-3 border-b border-border-subtle"><div class="flex items-center gap-space-3"><div class="w-3.5 h-3.5 rounded-full bg-tertiary animate-pulse"></div><div><h4 class="font-headline-sm text-headline-sm text-ink-primary">Curva Comparativa de Amortização &amp; Fluxo de Caixa Líquido (10 Anos)</h4><p class="font-body-sm text-body-sm text-ink-secondary mt-0.5">Evolução patrimonial cumulativa real confrontando os três arranjos de investimento e pontos de equilíbrio (Break-even).</p></div></div><div class="flex flex-wrap items-center gap-space-3 bg-surface-container-low/90 p-space-2 rounded-lg border border-border-subtle"><div class="flex items-center gap-space-2 px-2.5 py-1 rounded bg-surface-container"><span class="w-4 h-1 bg-tertiary inline-block relative rounded-full"><span class="w-2 h-2 rounded-full bg-tertiary absolute -top-[2px] left-1 ring-2 ring-chart-obsidian"></span></span><div class="flex flex-col"><span class="font-label-mono text-label-mono text-tertiary font-bold leading-none">Operação Híbrida</span><span class="font-label-mono text-[9px] text-ink-muted leading-tight mt-0.5">TIR 24,8% · BEP 3,7a · +R$ 2.450k</span></div></div><div class="flex items-center gap-space-2 px-2.5 py-1 rounded bg-surface-container"><span class="w-4 h-1 bg-navy-accent inline-block relative rounded-full"><span class="w-2 h-2 rounded-full bg-navy-accent absolute -top-[2px] left-1 ring-2 ring-chart-obsidian"></span></span><div class="flex flex-col"><span class="font-label-mono text-label-mono text-navy-accent font-semibold leading-none">Usina Solar</span><span class="font-label-mono text-[9px] text-ink-muted leading-tight mt-0.5">TIR 17,8% · BEP 4,7a · +R$ 1.165k</span></div></div><div class="flex items-center gap-space-2 px-2.5 py-1 rounded bg-surface-container"><span class="w-4 h-1 bg-secondary inline-block relative rounded-full"><span class="w-2 h-2 rounded-full bg-secondary absolute -top-[2px] left-1 ring-2 ring-chart-obsidian"></span></span><div class="flex flex-col"><span class="font-label-mono text-label-mono text-secondary font-semibold leading-none">Eletroposto</span><span class="font-label-mono text-[9px] text-ink-muted leading-tight mt-0.5">TIR 43,8% · BEP 2,1a · +R$ 785k</span></div></div></div></div><div class="w-full h-88 relative bg-chart-obsidian rounded-xl p-space-4 overflow-hidden flex flex-col justify-between"><div class="absolute inset-0 bg-gradient-to-t from-tertiary/5 via-transparent to-transparent pointer-events-none"></div><div class="absolute top-[60%] inset-x-0 h-px bg-border-strong border-dashed opacity-60 flex items-center justify-between px-4 pointer-events-none z-10"><span class="font-label-mono text-[10px] text-ink-muted bg-chart-obsidian px-1.5 py-0.5 rounded">Linha Base: Ponto de Equilíbrio R$ 0,00</span><span class="font-label-mono text-[10px] text-ink-muted bg-chart-obsidian px-1.5 py-0.5 rounded">Capital Integralmente Amortizado</span></div><div class="absolute inset-x-0 top-6 flex items-center justify-between text-ink-muted font-label-mono text-[9px] pointer-events-none opacity-40 px-2"><span class="">+R$ 2.500k</span><div class="w-full h-px bg-surface-container-high mx-2"></div></div><div class="absolute inset-x-0 top-24 flex items-center justify-between text-ink-muted font-label-mono text-[9px] pointer-events-none opacity-40 px-2"><span class="">+R$ 1.200k</span><div class="w-full h-px bg-surface-container-high mx-2"></div></div><div class="absolute inset-x-0 bottom-12 flex items-center justify-between text-ink-muted font-label-mono text-[9px] pointer-events-none opacity-40 px-2"><span class="">-R$ 660k</span><div class="w-full h-px bg-surface-container-high mx-2"></div></div><svg class="w-full h-full overflow-visible relative z-20" preserveAspectRatio="none" viewBox="0 0 1000 240"><g id="amortHib2"></g></svg><div class="flex justify-between items-center text-ink-muted font-label-mono text-[11px] pt-2 z-10 border-t border-surface-container-high/40"><span class="text-tertiary font-bold">Ano 0 (Aporte)</span><span class="">Ano 1</span><span class="text-secondary font-semibold">Ano 2.1 (BEP Posto)</span><span class="">Ano 3</span><span class="text-tertiary font-bold">Ano 3.7 (BEP Híbrida)</span><span class="text-navy-accent font-semibold">Ano 4.7 (BEP Solar)</span><span class="">Ano 6</span><span class="">Ano 8</span><span class="text-tertiary font-extrabold">Ano 10 (+R$ 2.45M)</span></div></div></div>
+</div>
+</section>
+<!-- Section 6: Pilares da Gestão 360° B2W -->
+
+<!-- Section 7: Rodada de Alocação & CTA Final -->
+<section class="w-full py-space-16 bg-gradient-to-t from-surface-default via-bg-subtle to-background relative overflow-hidden">
+<div class="max-w-layout-max-width mx-auto px-space-4 lg:px-space-6 relative z-10">
+<div class="bg-surface-container-low rounded-2xl p-space-8 md:p-space-12 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-space-8 relative overflow-hidden">
+<div class="absolute -right-20 -bottom-20 w-80 h-80 bg-primary-container/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col gap-space-4 max-w-xl">
+<div class="inline-flex items-center gap-space-2 px-space-3 py-1 rounded-full bg-primary-container/20 text-primary-fixed font-eyebrow-caps text-eyebrow-caps w-fit">
+            RODADA DE PARTICIPAÇÃO EXECUTIVA
+          </div>
+<h2 class="font-headline-lg text-headline-lg text-ink-primary tracking-tight">
+            Garanta sua Cota na Próxima Operação Híbrida B2W
+          </h2>
+<p class="font-body-default text-body-default text-ink-secondary">
+            <span data-f="rodadaTexto">Participações limitadas com liquidez mensal, yields de até 1,98% a.m. e proteção real por ativos físicos homologados na matriz energética brasileira.</span>
+          </p>
+<div class="flex flex-wrap items-center gap-space-4 pt-space-2">
+<div class="flex items-center gap-space-2 text-ink-primary font-label-mono text-label-mono">
+<span class="material-symbols-outlined text-status-verified text-[20px]">verified_user</span>
+              Contratos Registrados
+            </div>
+<div class="flex items-center gap-space-2 text-ink-primary font-label-mono text-label-mono">
+<span class="material-symbols-outlined text-secondary text-[20px]">payments</span>
+              Distribuição Mensal no Dia 15
+            </div>
+</div>
+</div>
+<!-- Box de Simulação Rápida / Ação Direta -->
+<div class="bg-surface-default p-space-6 rounded-xl shadow-xl w-full lg:w-96 flex flex-col gap-space-4">
+<div class="flex justify-between items-center">
+<span class="font-eyebrow-caps text-eyebrow-caps text-ink-muted">TICKET MÍNIMO QUALIFICADO</span>
+<span class="font-label-mono text-label-mono text-status-calculated"><span data-f="cotasDisponiveis">10 COTAS DISPONÍVEIS</span></span>
+</div>
+<div>
+<span class="font-metric-card text-metric-card text-ink-primary block"><span data-f="valorCota">R$ 50.000,00</span></span>
+<span class="font-label-mono text-label-mono text-secondary"><span data-f="projecaoCota">Projeção de R$ 990,00/mês líquido isento</span></span>
+</div>
+<div class="space-y-space-2 pt-space-2 border-t border-border-subtle">
+<div class="flex justify-between text-body-sm font-label-mono text-ink-secondary">
+<span class="">Yield Estimado</span>
+<span class="text-ink-primary font-bold"><span data-f="yieldCota">1,98% a.m.</span></span>
+</div>
+<div class="flex justify-between text-body-sm font-label-mono text-ink-secondary">
+<span class="">Amortização</span>
+<span class="text-ink-primary font-bold"><span data-f="amortizacaoCota">32 Meses</span></span>
+</div>
+</div>
+<a class="w-full py-space-3 px-space-4 rounded-lg bg-primary-container hover:bg-brand-orange-hover text-on-primary-container font-headline-sm text-headline-sm text-center transition-all shadow-lg flex items-center justify-center gap-space-2" data-path="falar-com-especialista" href="#">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+            Garantir Cota na Operação Híbrida
+          </a>
+</div>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-container-lowest py-space-16 shadow-[0_-1px_8px_rgba(0,0,0,0.5)]"><div class="max-w-layout-max-width mx-auto px-space-4 lg:px-space-6"><div class="grid grid-cols-1 md:grid-cols-4 gap-space-8 mb-space-12"><div class="md:col-span-2 flex flex-col gap-space-4"><div class="flex items-center gap-space-3"><img alt="Logo B2W Invest nova.jpeg" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vj41BGaDdZHYP4g19jC4SmJf1JuBTIMb9AzL-RH1G-Qsn5rK60Nvx0qOsuTR6gz1w2Pv4K403OuqlbKWazC7gv08mccTWB6TQScHv3c9FS88u5qLJfcqsp0CcMhyftONpeZTbWxKWr7vQvKooEigVavf2dYusNtz5pIUku4uhxYITa6p4S2Mhl-NAP7ZQBZkCfZjC6A7wR_qRNUTkLL1o91JPxuvs5hRsLu8s5HCZPDJZOLHyexwr5Ca_aY36hMoQw6eEvbBz7"><span class="font-headline-sm text-headline-sm text-ink-primary">B2W Invest</span></div><p class="font-body-default text-body-default text-ink-secondary max-w-md">Estruturação de ativos de infraestrutura de energia limpa, engenharia fotovoltaica de alto rendimento e hubs de recarga ultrarrápida com governança institucional.</p><div class="flex items-center gap-space-3 pt-space-2"><span class="px-space-3 py-space-1 rounded-full bg-surface-default font-eyebrow-caps text-eyebrow-caps text-status-calculated">EMPRESA LISTADA NA ONU</span><span class="px-space-3 py-space-1 rounded-full bg-surface-default font-eyebrow-caps text-eyebrow-caps text-secondary">MEMBRO DA FPGD</span></div></div><div class="flex flex-col gap-space-3"><h4 class="font-eyebrow-caps text-eyebrow-caps text-ink-muted uppercase">Ativos &amp; Soluções</h4><ul class="flex flex-col gap-space-2 font-body-sm text-body-sm"><li class="text-ink-secondary hover:text-on-surface transition-colors"><a data-path="usina-fotovoltaica" href="#" class="">Usina Fotovoltaica</a></li><li class="text-ink-secondary hover:text-on-surface transition-colors"><a data-path="eletroposto" href="#" class="">Eletroposto de Alta Tensão</a></li><li class="text-ink-secondary hover:text-on-surface transition-colors"><a data-path="operacao-hibrida" href="#" class="">Operação Híbrida &amp; BESS</a></li><li class="text-ink-secondary hover:text-on-surface transition-colors"><a data-path="simulador-de-rendimento" href="#" class="">Simulador de Rendimento</a></li></ul></div><div class="flex flex-col gap-space-3"><h4 class="font-eyebrow-caps text-eyebrow-caps text-ink-muted uppercase">Governança &amp; Relações</h4><ul class="flex flex-col gap-space-2 font-body-sm text-body-sm"><li class="text-ink-secondary hover:text-on-surface transition-colors"><a data-path="falar-com-especialista" href="#" class="">Comitê de Investimento</a></li><li class="text-ink-secondary hover:text-on-surface transition-colors"><a data-path="termos-de-alocacao" href="#" class="">Compliance &amp; Due Diligence</a></li><li class="text-ink-secondary hover:text-on-surface transition-colors"><a data-path="portal-do-cotista" href="#" class="">Portal do Investidor</a></li><li class="text-ink-secondary hover:text-on-surface transition-colors"><a data-path="status-da-rede" href="#" class="">Rede Integrada ONS</a></li></ul></div></div><div class="pt-space-8 flex flex-col sm:flex-row items-center justify-between gap-space-4"><p class="font-label-mono text-label-mono text-ink-muted">© 2024 B2W Invest Gestão de Recursos &amp; Infraestrutura Energética S.A. Todos os direitos reservados.</p><div class="flex items-center gap-space-6 font-label-mono text-label-mono text-ink-muted"><a class="hover:text-on-surface transition-colors" data-path="politica-de-privacidade" href="#">Privacidade</a><a class="hover:text-on-surface transition-colors" data-path="termos-de-alocacao" href="#">Termos Institucionais</a><a class="hover:text-on-surface transition-colors" data-path="falar-com-especialista" href="#">Canal do Regulador</a></div></div></div></footer>
+
+<script src="motor.js"></script>
+<script src="ligar-hibrida.js"></script>
+</body></html>
