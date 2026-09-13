@@ -493,6 +493,121 @@
     g.innerHTML = out;
   })();
 
+  /* ======================================= FOTO, STATUS E ESTÁGIOS ====== */
+  (function fotoStatusEstagios() {
+    var est = B2W.estagioDe(c);
+    var CORES = ['text-status-verified', 'text-tertiary', 'text-secondary', 'text-primary-container',
+                 'text-ink-muted', 'text-ink-primary', 'text-ink-secondary'];
+    function pinta(el, cor) {
+      if (!el) return;
+      CORES.forEach(function (k) { el.classList.remove(k); });
+      el.classList.add(cor);
+    }
+
+    /* Foto do topo: o visualizador diz de onde ela vem — link https ou arquivo
+       nesta pasta (ex.: fotos/santa-maria.jpg). Qualquer outra coisa mantém a
+       foto padrão, para o slug não virar porta de conteúdo arbitrário. */
+    var foto = document.querySelector('img[src="usina-hero.jpg"]');
+    var src = String(c.data.foto || '').trim();
+    if (foto && src && (/^https:\/\/[^\s"'<>]+$/i.test(src) || /^[\w\-\/]+\.(jpe?g|png|webp|avif)$/i.test(src))) {
+      foto.src = src;
+    }
+
+    /* Status sobre a foto e selo ao lado do código: sem etapa informada a
+       página não afirma fase nenhuma. */
+    var hudValor = document.getElementById('hudValor');
+    var caixaHud = hudValor ? hudValor.parentElement.parentElement : null;
+    var selo = document.querySelector('[data-f="badgeOperacao"]');
+    var caixaSelo = selo ? selo.parentElement : null;
+    if (!est) {
+      if (caixaHud) caixaHud.style.display = 'none';
+      if (caixaSelo) caixaSelo.style.display = 'none';
+    } else {
+      if (hudValor) {
+        document.getElementById('hudRotulo').textContent = 'status da usina';
+        hudValor.textContent = est.hud;
+        pinta(hudValor, 'text-' + est.cor);
+        var ico = document.getElementById('hudIcone');
+        if (ico) { ico.textContent = est.icone; pinta(ico, 'text-' + est.cor); }
+      }
+      if (selo) {
+        selo.textContent = est.selo;
+        caixaSelo.classList.remove('bg-status-verified/15');
+        caixaSelo.classList.add('bg-' + est.cor + '/15');
+        pinta(caixaSelo, 'text-' + est.cor);
+      }
+    }
+
+    põe('ctaTexto', est && est.i === 3
+      ? 'Ativo real homologado, gerando energia limpa com receita mensal previsível e governança ponta a ponta B2W Invest.'
+      : 'Ativo real' + (est ? ' ' + est.frase : '') +
+        ', com receita mensal prevista a partir do início da geração e governança ponta a ponta B2W Invest.');
+
+    /* Linha do tempo: as quatro etapas ficam; o que muda é qual está feita,
+       qual está em andamento e quais ainda vêm. */
+    var grid = document.getElementById('estagiosGrid');
+    if (!grid) return;
+    var atual = est ? est.i : -1;
+    var COR = ['tertiary', 'secondary', 'primary-container', 'status-verified'];
+    var CATEGORIA = ['REGULATÓRIO', 'OBRAS CIVIS', 'TESTES E VISTORIA', 'OPERAÇÃO'];
+
+    for (var i = 0; i < grid.children.length && i < 4; i++) {
+      var card = grid.children[i];
+      var estado = atual < 0 ? 'indefinido' : i < atual ? 'feito' : i === atual ? 'ativo' : 'futuro';
+
+      card.classList.remove('ring-1', 'ring-status-verified/30', 'border-status-verified/50', 'opacity-60');
+      card.classList.add('border-border-subtle/60');
+      if (estado === 'ativo') {
+        card.classList.remove('border-border-subtle/60');
+        card.classList.add('ring-1', 'ring-' + COR[i] + '/30', 'border-' + COR[i] + '/50');
+      }
+      if (estado === 'futuro' || estado === 'indefinido') card.classList.add('opacity-60');
+
+      var etiqueta = card.querySelector('.uppercase.tracking-wider');
+      if (etiqueta) {
+        etiqueta.innerHTML = estado === 'ativo'
+          ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-' + COR[i] + ' animate-pulse mr-1"></span>ATIVA AGORA'
+          : CATEGORIA[i];
+      }
+
+      var sub = card.querySelector('h3 + span');
+      if (sub && estado !== 'feito') sub.textContent = sub.textContent.replace(/\s*Concluíd[oa]s?$/, '');
+
+      var lista = card.querySelector('.border-t.gap-space-2');
+      var itens = lista ? lista.children : [];
+      for (var j = 0; j < itens.length; j++) {
+        var icone = itens[j].children[0], texto = itens[j].children[1];
+        if (!icone || !texto) continue;
+        if (estado === 'feito' || (estado === 'ativo' && i === 3)) continue;   // o mockup já diz isso
+        if (estado === 'ativo' && /Concluída$/.test(texto.textContent)) continue; // etapa anterior
+        icone.className = 'material-symbols-outlined text-[18px] ' +
+          (estado === 'ativo' ? 'text-' + COR[i] : 'text-ink-muted');
+        icone.textContent = estado === 'ativo' ? 'schedule' : 'radio_button_unchecked';
+        texto.className = estado === 'ativo' ? 'text-ink-primary font-medium' : 'text-ink-secondary font-medium';
+      }
+
+      var rodape = card.lastElementChild;
+      var rotulo = rodape && rodape.children[0], valor = rodape && rodape.children[1];
+      if (!rotulo || !valor) continue;
+      var base = 'font-label-mono text-body-sm font-bold flex items-center gap-1.5 ';
+      if (estado === 'feito') {
+        rotulo.textContent = 'Fase do Ativo';
+        valor.className = base + 'text-status-verified';
+        valor.textContent = '100% Concluído';
+      } else if (estado === 'ativo') {
+        rotulo.textContent = 'Status atual';
+        valor.className = base + 'text-' + COR[i];
+        valor.innerHTML = i === 3
+          ? '<span class="w-2 h-2 rounded-full bg-status-verified animate-ping"></span>Gerando e Faturando'
+          : 'Em andamento';
+      } else {
+        rotulo.textContent = 'Fase do Ativo';
+        valor.className = base + 'text-ink-muted';
+        valor.textContent = estado === 'futuro' ? 'Aguardando' : '—';
+      }
+    }
+  })();
+
   /* nomes do caso fictício, imagens mortas e a barra das três páginas —
      os três estão no motor, iguais para as três páginas. */
   B2W.trocarNomes(c);
