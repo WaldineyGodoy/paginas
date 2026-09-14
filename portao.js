@@ -77,7 +77,7 @@
 
     var caminho = location.pathname;
     var doQue = /eletroposto/.test(caminho) ? 'deste eletroposto'
-      : /hibrida/.test(caminho) ? 'desta operação híbrida' : 'desta usina';
+      : /hibrid/.test(caminho) ? 'desta operação híbrida' : 'desta usina';
 
     var el = document.createElement('div');
     el.id = 'portao';

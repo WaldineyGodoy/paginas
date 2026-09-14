@@ -524,10 +524,19 @@
     return r;
   }
 
-  // A pagina da usina e' o index do branch: o link publico fica /usina/?slug.
-  var DESTINOS = { 'usina-fotovoltaica': ['./', 'usina'],
-                   'eletroposto':        ['eletroposto.html', 'eletroposto'],
-                   'operacao-hibrida':   ['hibrida.html', 'hibrida'] };
+  /* Links entre as tres paginas. Dois layouts convivem durante a migracao:
+       - b2winvest.com.br/paginas/<branch>/ : uma pagina por branch, cada uma
+         e' o index.html da propria pasta (usinasroi, eletropostoroi, hibridoroi);
+       - b2wenergia.com.br/edu/usina/ e o TempRepo local: as tres na mesma pasta.
+     O caminho em que a pagina esta rodando decide qual vale. */
+  var PASTA_ROI = /\/(usinasroi|eletropostoroi|hibridoroi)\/?/;
+  var DESTINOS = PASTA_ROI.test(location.pathname)
+    ? { 'usina-fotovoltaica': ['../usinasroi/', 'usina'],
+        'eletroposto':        ['../eletropostoroi/', 'eletroposto'],
+        'operacao-hibrida':   ['../hibridoroi/', 'hibrida'] }
+    : { 'usina-fotovoltaica': ['./', 'usina'],
+        'eletroposto':        ['eletroposto.html', 'eletroposto'],
+        'operacao-hibrida':   ['hibrida.html', 'hibrida'] };
 
   /* O Stitch exportou os três arquivos com "Usina Fotovoltaica" marcada como
      página atual. Cada página marca a sua, e todos os links levam o caso. */
