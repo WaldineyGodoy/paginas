@@ -99,6 +99,16 @@ fbq('track', 'PageView');
 </script>
 <!-- End Meta Pixel Code -->
 
+<!-- Google tag (Google Ads AW-782971769) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-782971769"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'AW-782971769');
+</script>
+<!-- End Google tag -->
+
 <script>document.documentElement.classList.replace('no-js','js');</script>
 <style>
 :root{
@@ -920,17 +930,26 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
       help.innerHTML = `Ops, não conseguimos registrar agora. <a href="https://wa.me/${WA}" target="_blank" rel="noopener" style="text-decoration:underline">Continue pelo WhatsApp</a> que a gente resolve.`;
       return;
     }
-    if (window.fbq) fbq('track', 'Lead');
+    if (window.fbq) fbq('track', 'Lead', {}, { eventID: leadId });
     const p = new URLSearchParams({ name: nome, email, phone, cep: cep.value, consumo: String(c.kwh), lead_id: leadId,
       concessionaria: o.Concessionaria, rua: a.rua || '', bairro: a.bairro || '', cidade: a.cidade || '', uf: a.uf || '',
       discount_percent: String(Math.round(c.d * 100)), savings_annual: c.anual.toFixed(2) });
     if (originatorId) p.set('originator_id', originatorId);
     btn.textContent = 'Abrindo sua adesão…';
-    location.href = `${CRM_CONTRATO}?${p}`;
+    // a pagina sai logo em seguida: espera a conversao do Google ser enviada (no maximo 1,2 s)
+    let saiu = false;
+    const ir = () => { if (!saiu) { saiu = true; location.href = `${CRM_CONTRATO}?${p}`; } };
+    if (window.gtag) gtag('event', 'conversion', { send_to: 'AW-782971769/1m8LCKbrq4AdEPnmrPUC', transaction_id: leadId, event_callback: ir, event_timeout: 1200 });
+    setTimeout(ir, 1500);
   });
 
-  // conta cliques de WhatsApp no Pixel
-  document.addEventListener('click', e => { const w = e.target.closest('[data-wa]'); if (w && window.fbq) fbq('track', 'Contact', { origem: w.dataset.wa }); });
+  // conta cliques de WhatsApp no Pixel da Meta e no Google Ads (inclui os links montados pelo simulador)
+  document.addEventListener('click', e => {
+    const w = e.target.closest('a[href*="wa.me/"]');
+    if (!w) return;
+    if (window.fbq) fbq('track', 'Contact', { origem: w.dataset.wa || 'outro' });
+    if (window.gtag) gtag('event', 'conversion', { send_to: 'AW-782971769/gGK6CKnrq4AdEPnmrPUC' });
+  });
 })();
 </script>
 
