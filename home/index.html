@@ -6,24 +6,24 @@
 <title>B2W Energia Solar por Assinatura | Economize na Conta de Luz</title>
 <meta name="description" content="Economize até 30% na sua conta de luz com a B2W Energia Solar por Assinatura. Sem obras, sem investimento e sem fidelidade. Atendemos MG, SP, RJ e mais.">
 <meta name="keywords" content="energia solar por assinatura, desconto conta de luz, economia de energia, energia limpa, b2w energia, assinatura energia solar">
-<link rel="canonical" href="https://b2wenergia.com.br/assine/">
+<link rel="canonical" href="https://b2wenergia.com.br/home/">
 <meta name="theme-color" content="#0D0D0D">
 <link rel="icon" type="image/png" href="assets/logos/b2w-energia-icone.png">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://b2wenergia.com.br/assine/">
+<meta property="og:url" content="https://b2wenergia.com.br/home/">
 <meta property="og:title" content="B2W Energia Solar por Assinatura | Economia Garantida">
 <meta property="og:description" content="Reduza seus custos com energia elétrica em até 30% mensalmente através da nossa assinatura de energia solar. Simples, digital e sustentável.">
-<meta property="og:image" content="https://b2wenergia.com.br/assine/assets/posters/c0-timelapse.jpg">
+<meta property="og:image" content="https://b2wenergia.com.br/home/assets/posters/c0-timelapse.jpg">
 <meta property="og:locale" content="pt_BR">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://b2wenergia.com.br/assine/">
+<meta property="twitter:url" content="https://b2wenergia.com.br/home/">
 <meta property="twitter:title" content="B2W Energia Solar por Assinatura | Economia Garantida">
 <meta property="twitter:description" content="Reduza seus custos com energia elétrica em até 30% mensalmente através da nossa assinatura de energia solar.">
-<meta property="twitter:image" content="https://b2wenergia.com.br/assine/assets/posters/c0-timelapse.jpg">
+<meta property="twitter:image" content="https://b2wenergia.com.br/home/assets/posters/c0-timelapse.jpg">
 
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
@@ -98,6 +98,16 @@ fbq('init', '863202196065942');
 fbq('track', 'PageView');
 </script>
 <!-- End Meta Pixel Code -->
+
+<!-- Google tag (Google Ads AW-782971769) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-782971769"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'AW-782971769');
+</script>
+<!-- End Google tag -->
 
 <script>document.documentElement.classList.replace('no-js','js');</script>
 <style>
@@ -920,17 +930,26 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
       help.innerHTML = `Ops, não conseguimos registrar agora. <a href="https://wa.me/${WA}" target="_blank" rel="noopener" style="text-decoration:underline">Continue pelo WhatsApp</a> que a gente resolve.`;
       return;
     }
-    if (window.fbq) fbq('track', 'Lead');
+    if (window.fbq) fbq('track', 'Lead', {}, { eventID: leadId });
     const p = new URLSearchParams({ name: nome, email, phone, cep: cep.value, consumo: String(c.kwh), lead_id: leadId,
       concessionaria: o.Concessionaria, rua: a.rua || '', bairro: a.bairro || '', cidade: a.cidade || '', uf: a.uf || '',
       discount_percent: String(Math.round(c.d * 100)), savings_annual: c.anual.toFixed(2) });
     if (originatorId) p.set('originator_id', originatorId);
     btn.textContent = 'Abrindo sua adesão…';
-    location.href = `${CRM_CONTRATO}?${p}`;
+    // a pagina sai logo em seguida: espera a conversao do Google ser enviada (no maximo 1,2 s)
+    let saiu = false;
+    const ir = () => { if (!saiu) { saiu = true; location.href = `${CRM_CONTRATO}?${p}`; } };
+    if (window.gtag) gtag('event', 'conversion', { send_to: 'AW-782971769/1m8LCKbrq4AdEPnmrPUC', transaction_id: leadId, event_callback: ir, event_timeout: 1200 });
+    setTimeout(ir, 1500);
   });
 
-  // conta cliques de WhatsApp no Pixel
-  document.addEventListener('click', e => { const w = e.target.closest('[data-wa]'); if (w && window.fbq) fbq('track', 'Contact', { origem: w.dataset.wa }); });
+  // conta cliques de WhatsApp no Pixel da Meta e no Google Ads (inclui os links montados pelo simulador)
+  document.addEventListener('click', e => {
+    const w = e.target.closest('a[href*="wa.me/"]');
+    if (!w) return;
+    if (window.fbq) fbq('track', 'Contact', { origem: w.dataset.wa || 'outro' });
+    if (window.gtag) gtag('event', 'conversion', { send_to: 'AW-782971769/gGK6CKnrq4AdEPnmrPUC' });
+  });
 })();
 </script>
 
