@@ -1,0 +1,22 @@
+{
+  "name": "b2w-contrato-onboarding",
+  "version": "1.0.0",
+  "description": "Interface de onboarding para contrato B2W Energia",
+  "main": "index.tsx",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lucide-react": "^0.563.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.4",
+    "serve": "^14.2.3",
+    "terser": "^5.46.0",
+    "vite": "^7.3.1"
+  }
+}
