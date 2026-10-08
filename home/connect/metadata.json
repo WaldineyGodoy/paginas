@@ -1,0 +1,9 @@
+{
+  "name": "B2W Energia Solar por Assinatura | Economia Garantida",
+  "description": "Reduza sua conta de luz em até 30% com energia solar por assinatura. Sem obras, sem investimento e 100% sustentável.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
