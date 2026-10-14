@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TOKENS — B2W ENERGIA DESIGN SYSTEM v1.0 (REBRAND 2026)
+   ============================================================ */
+:root {
+  /* Primary — Laranja-Vermelho "Ignição" (exclusiva B2W Energia) */
+  --flame-50:  #FEF2EE;
+  --flame-100: #FDDFD3;
+  --flame-200: #FBBCA3;
+  --flame-300: #F79571;
+  --flame-400: #F26F45;
+  --flame-500: #EE4A22;
+  --flame-600: #D33A15;
+  --flame-700: #A62D10;
+  --flame-800: #7A210C;
+  --flame-900: #4D1407;
+
+  /* Secondary — Verde Sustentabilidade */
+  --green-50:  #ECFDF5;
+  --green-100: #D1FAE5;
+  --green-200: #A7F3D0;
+  --green-300: #6EE7B7;
+  --green-400: #34D399;
+  --green-500: #10B981;
+  --green-600: #059669;
+  --green-700: #047857;
+
+  /* Accent — Azul Energia */
+  --blue-50:  #EFF6FF;
+  --blue-100: #DBEAFE;
+  --blue-300: #93C5FD;
+  --blue-500: #3B82F6;
+  --blue-600: #2563EB;
+
+  /* Neutral — Ink (preto compartilhado do ecossistema B2W) */
+  --ink-0:   #FFFFFF;
+  --ink-50:  #F5F5F4;
+  --ink-100: #E8E7E5;
+  --ink-200: #D1CFCB;
+  --ink-300: #A8A49D;
+  --ink-400: #6E6A62;
+  --ink-500: #47433C;
+  --ink-600: #2E2B26;
+  --ink-700: #1E1C18;
+  --ink-800: #141310;
+  --ink-900: #0D0D0D;
+
+  /* Brand Semantic Variables */
+  --color-brand:         #EE4A22;
+  --color-brand-hover:   #D33A15;
+  --color-brand-active:  #A62D10;
+  --color-brand-soft:    rgba(238, 74, 34, 0.12);
+  --color-secondary:     #10B981;
+  --color-secondary-soft:rgba(16, 185, 129, 0.12);
+  --color-accent:        #3B82F6;
+
+  /* Backgrounds & Surfaces (Default Dark - B2W Ecosystem Shared Black) */
+  --color-bg-base:       #0D0D0D;
+  --color-bg-subtle:     #141310;
+  --color-surface:       #141310;
+  --color-border:        #1E1C18;
+  --color-border-strong: #2E2B26;
+  --color-ink-primary:   #F5F5F4;
+  --color-ink-secondary: #A8A49D;
+  --color-ink-muted:     #6E6A62;
+
+  /* Typography */
+  --font-display: 'Manrope', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* Shadows */
+  --shadow-brand: 0 4px 16px rgba(238, 74, 34, 0.28);
+  --shadow-green: 0 4px 16px rgba(16, 185, 129, 0.24);
+
+  /* Primary color integration */
+  --primary: #EE4A22;
+  --primary-hover: #D33A15;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-base);
+  color: var(--color-ink-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Solar Card — B2W Energia */
+.card-solar {
+  background: linear-gradient(135deg, #141310 0%, #1E1C18 100%);
+  border: 1px solid #1E1C18;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-solar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #EE4A22, #F79571);
+}
+
+/* Savings Card — B2W Energia */
+.card-savings {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.02) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+}
+
+/* Botões da Marca */
+.btn-brand-primary {
+  background-color: #EE4A22;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(238, 74, 34, 0.28);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-brand-primary:hover {
+  background-color: #D33A15;
+  box-shadow: 0 6px 20px rgba(238, 74, 34, 0.36);
+  transform: translateY(-1px);
+}
+.btn-brand-primary:active {
+  background-color: #A62D10;
+  transform: translateY(0);
+}
+
+.btn-brand-secondary {
+  background-color: #10B981;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.24);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-brand-secondary:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+}
+
+/* Badges */
+.badge-flame {
+  background-color: rgba(238, 74, 34, 0.12);
+  color: #EE4A22;
+  border: 1px solid rgba(238, 74, 34, 0.28);
+}
+
+.badge-green {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.28);
+}
+
+/* Override de Modo Claro */
+html.light-mode {
+  color-scheme: light;
+  --color-bg-base:       #FFFFFF;
+  --color-bg-subtle:     #F5F5F4;
+  --color-surface:       #FFFFFF;
+  --color-border:        #D1CFCB;
+  --color-border-strong: #A8A49D;
+  --color-ink-primary:   #0D0D0D;
+  --color-ink-secondary: #47433C;
+  --color-ink-muted:     #6E6A62;
+}
+
+html.light-mode body {
+  background-color: #FFFFFF !important;
+  color: #0D0D0D !important;
+}
+
+html.light-mode .bg-slate-950,
+html.light-mode .bg-\[\#0D0D0D\],
+html.light-mode .bg-slate-900 {
+  background-color: #F5F5F4 !important;
+  color: #0D0D0D !important;
+}
+
+html.light-mode .text-slate-100,
+html.light-mode .text-white {
+  color: #0D0D0D !important;
+}
+
+html.light-mode .text-slate-400,
+html.light-mode .text-slate-500 {
+  color: #47433C !important;
+}
+
+html.light-mode .border-slate-800,
+html.light-mode .border-\[\#1E1C18\] {
+  border-color: #D1CFCB !important;
+}
+
+html.light-mode input,
+html.light-mode select,
+html.light-mode textarea {
+  background-color: #FFFFFF !important;
+  color: #0D0D0D !important;
+  border-color: #D1CFCB !important;
+}
