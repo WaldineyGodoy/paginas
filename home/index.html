@@ -842,9 +842,16 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
   async function fetchOffer(ibge, uf) {
     if (!db) throw new Error('Simulador indisponível no momento. Fale com a gente no WhatsApp.');
     let { data } = await db.from('Concessionaria').select('*').eq('"Cod. Ibge"', ibge).limit(1);
-    if (data && data[0]) return data[0];
-    ({ data } = await db.from('Concessionaria').select('*').eq('UF', uf).gt('"Desconto Assinante"', 0).limit(1));
-    return data && data[0] ? data[0] : null;
+    if (!(data && data[0])) ({ data } = await db.from('Concessionaria').select('*').eq('UF', uf).gt('"Desconto Assinante"', 0).limit(1));
+    const o = data && data[0] ? data[0] : null;
+    if (!o) return null;
+    // Desconto do plano vigente da distribuidora, o mesmo que a adesão aplica
+    // (decisão do dono, 15/10/2026). Sem plano único ativo, fica o do município.
+    try {
+      const { data: descPlano } = await db.rpc('fn_desconto_plano_vigente', { p_concessionaria: o.Concessionaria || '' });
+      if (descPlano != null) return { ...o, 'Desconto Assinante': Number(descPlano) };
+    } catch (e) { /* segue com o desconto do município */ }
+    return o;
   }
 
   const pct = o => { let d = Number(o?.['Desconto Assinante']) || 0; return d > 1 ? d / 100 : d; };
