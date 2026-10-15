@@ -770,7 +770,7 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
     </nav>
     <small>&copy; <span id="ano">2026</span> B2W Energia. Todos os direitos reservados. Feito com energia limpa ☀️ · Imagens e vídeos da jornada são representações ilustrativas geradas por IA.</small>
     <!-- Versão do site: atualizar a cada publicação (número, data e o que mudou). -->
-    <small class="versao" data-versao="1.1.0">Versão do site 1.1.0 · 15/10/2026 · simulação com o desconto do plano vigente</small>
+    <small class="versao" data-versao="1.1.1">Versão do site 1.1.1 · 15/10/2026 · correção: o cadastro da simulação voltou a funcionar</small>
   </div>
 </footer>
 
@@ -924,16 +924,22 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
     const btn = $('btn-adesao');
     btn.disabled = true; btn.textContent = 'Registrando sua simulação…';
     const a = state.addr, o = state.offer;
-    const leadId = crypto.randomUUID();
-    // mesmo payload do LeadCaptureForm do CRM; o id sai do cliente para não precisar de SELECT
-    const { error } = await db.from('leads').insert({
-      id: leadId, name: nome, email, phone,
-      cep: cep.value, concessionaria: o.Concessionaria, consumo_kwh: c.kwh, calculated_discount: c.desconto,
-      rua: a.rua, numero: '', bairro: a.bairro, cidade: a.cidade, uf: a.uf,
-      tarifa_concessionaria: c.tarifa, desconto_assinante: Number(o['Desconto Assinante']) || 0,
-      status: 'simulacao', originator_id: originatorId
+    // Mesmo caminho do LeadCaptureForm do CRM: o banco não aceita mais insert
+    // anônimo em leads (20261006c, lead único). fn_registrar_lead_publico acha o
+    // lead em aberto do mesmo celular/e-mail e devolve o id da VISITA, que é o
+    // que o /contrato espera em lead_id.
+    const { data: leadId, error } = await db.rpc('fn_registrar_lead_publico', {
+      p_dados: {
+        name: nome, email, phone,
+        cep: cep.value, concessionaria: o.Concessionaria || '', consumo_kwh: String(c.kwh ?? ''), calculated_discount: String(c.desconto ?? ''),
+        rua: a.rua || '', numero: '', bairro: a.bairro || '', cidade: a.cidade || '', uf: a.uf || '',
+        tarifa_concessionaria: String(c.tarifa ?? ''), desconto_assinante: String(Number(o['Desconto Assinante']) || 0),
+        status: 'simulacao', originator_id: originatorId
+      },
+      p_meio: 'link',
+      p_armadilha: null
     });
-    if (error) {
+    if (error || !leadId) {
       console.error('Falha ao registrar lead:', error);
       btn.disabled = false; btn.textContent = 'Continuar para a adesão';
       help.innerHTML = `Ops, não conseguimos registrar agora. <a href="https://wa.me/${WA}" target="_blank" rel="noopener" style="text-decoration:underline">Continue pelo WhatsApp</a> que a gente resolve.`;
