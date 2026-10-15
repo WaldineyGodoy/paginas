@@ -10,7 +10,7 @@ interface ClauseCardProps {
 
 const ClauseCard: React.FC<ClauseCardProps> = ({ clause }) => {
   return (
-    <div className="clause-card group bg-white rounded-3xl shadow-sm border border-gray-100 flex flex-col overflow-hidden hover:shadow-xl transition-all duration-500">
+    <div className="clause-card group bg-brand-surface rounded-3xl shadow-sm border border-brand-line flex flex-col overflow-hidden hover:shadow-xl transition-all duration-500">
       {/* Imagem Ilustrativa */}
       <div className="relative h-48 w-full overflow-hidden">
         <img 

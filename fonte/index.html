@@ -7,12 +7,16 @@
     <title>Guia do Contrato PF - B2W Energia</title>
     <link rel="icon" type="image/png" href="https://b2wenergia.com.br/wp-content/uploads/2025/12/Logo-Laranja-estreito.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
       body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Inter', system-ui, sans-serif;
         scroll-behavior: smooth;
+        background: #0D0D0D;
+        color-scheme: dark;
       }
+      /* Identidade do site b2wenergia.com.br (pedido do dono, 15/10/2026) */
+      h1, h2, h3 { font-family: 'Manrope', system-ui, sans-serif; letter-spacing: -.02em; }
       
       @media print {
         @page {
@@ -33,6 +37,8 @@
           color: black !important;
         }
         
+        /* Impressão sai clara, como antes do tema escuro */
+        .clause-card, .clause-card * { background: white !important; color: black !important; }
         .clause-card {
           break-inside: avoid;
           page-break-inside: avoid;
@@ -66,13 +72,20 @@
       tailwind.config = {
         theme: {
           extend: {
+            // Paleta do site (escuro + chama). Os nomes ficam os mesmos para
+            // as classes do App seguirem valendo.
             colors: {
               brand: {
-                orange: '#FF6600',
-                dark: '#1A1A1A',
-                gray: '#6B7280',
-                bg: '#F9FAFB',
-                blue: '#003366'
+                orange: '#EE4A22',
+                dark: '#F5F5F4',
+                gray: '#C9C6C0',
+                bg: '#141310',
+                blue: '#F79571',
+                page: '#0D0D0D',
+                surface: '#1E1C18',
+                surface2: '#2E2B26',
+                line: '#2A2723',
+                muted: '#8F8A82'
               }
             }
           }

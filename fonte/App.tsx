@@ -15,7 +15,8 @@ import {
 import { CLAUSES } from './constants';
 import ClauseCard from './components/ClauseCard';
 
-const LOGO_URL = "https://b2wenergia.com.br/wp-content/uploads/2025/12/Logo-Laranja-estreito.png";
+// Logo do site atual (a do WordPress antigo dava 404).
+const LOGO_URL = "https://b2wenergia.com.br/assets/logos/b2w-energia-v1.png";
 
 /**
  * Botão de assinatura.
@@ -27,7 +28,7 @@ const LOGO_URL = "https://b2wenergia.com.br/wp-content/uploads/2025/12/Logo-Lara
 const SignatureCTA: React.FC<{ link: string; className?: string }> = ({ link, className = "" }) => {
   if (!link) {
     return (
-      <div className={`bg-gray-100 text-brand-gray px-8 py-4 rounded-2xl font-bold inline-flex items-center gap-3 border border-gray-200 ${className}`}>
+      <div className={`bg-brand-surface2 text-brand-gray px-8 py-4 rounded-2xl font-bold inline-flex items-center gap-3 border border-brand-line ${className}`}>
         <ArrowRight className="w-5 h-5 opacity-40" />
         Seu link de assinatura chega pelo WhatsApp
       </div>
@@ -46,6 +47,28 @@ const SignatureCTA: React.FC<{ link: string; className?: string }> = ({ link, cl
     </a>
   );
 };
+
+/**
+ * Botão flutuante de assinatura: acompanha a rolagem da página (pedido do
+ * dono, 15/10/2026). Só aparece com link, depois que a pessoa começa a ler.
+ */
+const AssinarFlutuante: React.FC<{ link: string; visivel: boolean }> = ({ link, visivel }) => (
+  <div
+    className={`no-print fixed z-50 bottom-4 inset-x-4 md:inset-x-auto md:right-6 md:bottom-6 transition-all duration-300 ${visivel ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'}`}
+    style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+  >
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-full md:w-auto flex items-center justify-center gap-3 px-7 py-4 rounded-2xl font-black text-white shadow-2xl active:scale-95 transition-transform"
+      style={{ background: 'linear-gradient(180deg, #F26F45, #D33A15)', boxShadow: '0 12px 32px -10px rgba(238,74,34,.7)' }}
+    >
+      <ArrowRight className="w-5 h-5" />
+      Assinar contrato de adesão
+    </a>
+  </div>
+);
 
 const App: React.FC = () => {
   const [readProgress, setReadProgress] = useState(0);
@@ -95,13 +118,13 @@ const App: React.FC = () => {
 
 
   return (
-    <div className={`min-h-screen flex flex-col bg-brand-bg ${isFinished ? 'h-screen overflow-hidden' : ''}`}>
+    <div className={`min-h-screen flex flex-col bg-brand-page ${isFinished ? 'h-screen overflow-hidden' : ''}`}>
       {/* Header / Nav */}
-      <nav className="no-print sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100 transition-all">
+      <nav className="no-print sticky top-0 z-50 bg-brand-page/90 backdrop-blur-xl border-b border-brand-line transition-all">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img src={LOGO_URL} alt="B2W Energia" className="h-10 w-auto" />
-            <div className="hidden sm:block border-l pl-4 border-gray-200">
+            <div className="hidden sm:block border-l pl-4 border-brand-line">
               <h1 className="text-sm font-extrabold tracking-tight text-brand-dark uppercase">Onboarding</h1>
               <p className="text-[10px] text-brand-orange font-bold uppercase tracking-widest">Energia por Assinatura</p>
             </div>
@@ -112,7 +135,7 @@ const App: React.FC = () => {
             <div className="text-right hidden sm:block">
               <p className="text-[10px] uppercase tracking-widest text-brand-gray font-bold mb-1">Status da Leitura</p>
               <div className="flex items-center gap-3">
-                <div className="w-48 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div className="w-48 h-1.5 bg-brand-surface2 rounded-full overflow-hidden">
                   <div 
                     className="bg-brand-orange h-full rounded-full transition-all duration-500 ease-out" 
                     style={{ width: `${readProgress}%` }}
@@ -126,7 +149,7 @@ const App: React.FC = () => {
       </nav>
 
       {/* Bloco explicativo: Como Funciona */}
-      <section className="bg-white py-20 no-print border-b border-gray-100">
+      <section className="bg-brand-page py-20 no-print border-b border-brand-line">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-extrabold text-brand-dark mb-6">
@@ -142,7 +165,7 @@ const App: React.FC = () => {
               backend), então o resumo mostra só o que a URL de fato traz:
               titular, distribuidora e desconto. */}
           {temLink && (
-            <div className="max-w-3xl mx-auto mb-16 p-8 rounded-[32px] bg-brand-bg border border-gray-100">
+            <div className="max-w-3xl mx-auto mb-16 p-8 rounded-[32px] bg-brand-surface border border-brand-line">
               <p className="text-[10px] uppercase tracking-widest text-brand-gray font-black mb-6">
                 Confira os dados do seu contrato
               </p>
@@ -177,11 +200,11 @@ const App: React.FC = () => {
               { icon: Eye, title: "07. Transparência", text: "Você recebe o demonstrativo da concessionária e o boleto B2W com desconto." },
               { icon: History, title: "08. Sem Fidelidade", text: "Cancele quando quiser. Pedimos apenas 90 dias para ajuste nos ciclos." },
             ].map((step, idx) => (
-              <div key={idx} className="p-8 rounded-[32px] bg-brand-bg border border-gray-100 hover:border-brand-orange/30 transition-all group relative overflow-hidden">
+              <div key={idx} className="p-8 rounded-[32px] bg-brand-surface border border-brand-line hover:border-brand-orange/30 transition-all group relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-16 h-16 bg-brand-orange/5 rounded-bl-[32px] flex items-center justify-center text-brand-orange/30 font-black text-2xl group-hover:scale-110 transition-transform">
                   {idx + 1}
                 </div>
-                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-orange shadow-sm mb-6">
+                <div className="w-12 h-12 bg-brand-surface2 rounded-2xl flex items-center justify-center text-brand-orange shadow-sm mb-6">
                   <step.icon className="w-6 h-6" />
                 </div>
                 <h4 className="font-bold text-brand-dark mb-3 text-lg leading-tight">{step.title}</h4>
@@ -218,7 +241,7 @@ const App: React.FC = () => {
 
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-24 mt-auto no-print">
+      <footer className="bg-brand-page border-t border-brand-line py-24 mt-auto no-print">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start gap-16">
             <div className="max-w-sm">
@@ -247,15 +270,21 @@ const App: React.FC = () => {
                 </ul>
               </div>
               <div className="col-span-2 sm:col-span-1">
-                <div className="flex items-center gap-3 text-green-600 font-black text-[10px] uppercase tracking-widest">
+                <div className="flex items-center gap-3 text-emerald-400 font-black text-[10px] uppercase tracking-widest">
                   <UserCheck className="w-6 h-6" />
                   Padrão {concessionariaLabel}
                 </div>
               </div>
             </div>
           </div>
+          {/* Versão da página: atualizar a cada publicação (número, data e o que mudou). */}
+          <p className="mt-16 text-xs text-brand-muted" data-versao="1.1.0">
+            Versão da página 1.1.0 · 15/10/2026 · identidade visual do site, logo da B2W e botão de assinar flutuante
+          </p>
         </div>
       </footer>
+
+      {temLink && <AssinarFlutuante link={userData.linkAssinatura} visivel={readProgress > 2} />}
     </div>
   );
 };
