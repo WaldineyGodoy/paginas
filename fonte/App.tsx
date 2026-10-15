@@ -48,28 +48,6 @@ const SignatureCTA: React.FC<{ link: string; className?: string }> = ({ link, cl
   );
 };
 
-/**
- * Botão flutuante de assinatura: acompanha a rolagem da página (pedido do
- * dono, 15/10/2026). Só aparece com link, depois que a pessoa começa a ler.
- */
-const AssinarFlutuante: React.FC<{ link: string; visivel: boolean }> = ({ link, visivel }) => (
-  <div
-    className={`no-print fixed z-50 bottom-4 inset-x-4 md:inset-x-auto md:right-6 md:bottom-6 transition-all duration-300 ${visivel ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'}`}
-    style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
-  >
-    <a
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-full md:w-auto flex items-center justify-center gap-3 px-7 py-4 rounded-2xl font-black text-white shadow-2xl active:scale-95 transition-transform"
-      style={{ background: 'linear-gradient(180deg, #F26F45, #D33A15)', boxShadow: '0 12px 32px -10px rgba(238,74,34,.7)' }}
-    >
-      <ArrowRight className="w-5 h-5" />
-      Assinar contrato de adesão
-    </a>
-  </div>
-);
-
 const App: React.FC = () => {
   const [readProgress, setReadProgress] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
@@ -121,9 +99,9 @@ const App: React.FC = () => {
     <div className={`min-h-screen flex flex-col bg-brand-page ${isFinished ? 'h-screen overflow-hidden' : ''}`}>
       {/* Header / Nav */}
       <nav className="no-print sticky top-0 z-50 bg-brand-page/90 backdrop-blur-xl border-b border-brand-line transition-all">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <img src={LOGO_URL} alt="B2W Energia" className="h-10 w-auto" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-4 shrink-0">
+            <img src={LOGO_URL} alt="B2W Energia" className="h-8 sm:h-10 w-auto" />
             <div className="hidden sm:block border-l pl-4 border-brand-line">
               <h1 className="text-sm font-extrabold tracking-tight text-brand-dark uppercase">Onboarding</h1>
               <p className="text-[10px] text-brand-orange font-bold uppercase tracking-widest">Energia por Assinatura</p>
@@ -132,6 +110,19 @@ const App: React.FC = () => {
           
           <div className="flex items-center gap-6">
             <SignatureCTA link={userData.linkAssinatura} className="hidden md:flex px-6 py-3 text-sm" />
+            {/* Celular: o botão de assinar fica no cabeçalho fixo, que acompanha
+                a rolagem sem cobrir o texto (pedido do dono, 15/10/2026). */}
+            {temLink && (
+              <a
+                href={userData.linkAssinatura}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="md:hidden bg-brand-orange text-white px-4 py-2.5 rounded-xl font-black text-sm inline-flex items-center gap-2 shadow-lg shadow-brand-orange/20 active:scale-95 whitespace-nowrap"
+              >
+                <ArrowRight className="w-4 h-4" />
+                Assinar contrato
+              </a>
+            )}
             <div className="text-right hidden sm:block">
               <p className="text-[10px] uppercase tracking-widest text-brand-gray font-bold mb-1">Status da Leitura</p>
               <div className="flex items-center gap-3">
@@ -279,12 +270,10 @@ const App: React.FC = () => {
           </div>
           {/* Versão da página: atualizar a cada publicação (número, data e o que mudou). */}
           <p className="mt-16 text-xs text-brand-muted" data-versao="1.1.0">
-            Versão da página 1.1.0 · 15/10/2026 · identidade visual do site, logo da B2W e botão de assinar flutuante
+            Versão da página 1.1.0 · 15/10/2026 · identidade visual do site, logo da B2W e botão de assinar no cabeçalho fixo
           </p>
         </div>
       </footer>
-
-      {temLink && <AssinarFlutuante link={userData.linkAssinatura} visivel={readProgress > 2} />}
     </div>
   );
 };
