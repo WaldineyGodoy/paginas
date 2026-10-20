@@ -796,9 +796,25 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
   const brl = v => (Number(v) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   $('ano').textContent = new Date().getFullYear();
 
-  // atribuição do originador: /convite/?name=&id= repassa para cá
+  // atribuição: originador (/convite/?name=&id= repassa para cá) e assinante que
+  // indicou (?indicador=, link do app/QR). Fica na sessão para valer na página
+  // toda e vai como código curto no texto do WhatsApp, que não repassa a URL. A
+  // ponte do CRM lê o código na primeira mensagem (saas:
+  // supabase/migrations/20261020c_bel_recepcao.sql, fn_mensagem_rastreio).
+  const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const qs = new URLSearchParams(location.search);
-  const originatorId = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(qs.get('id') || '') ? qs.get('id') : null;
+  const sessao = (chave, valor) => {
+    try { if (valor) sessionStorage.setItem(chave, valor); return sessionStorage.getItem(chave); }
+    catch { return valor || null; }
+  };
+  const originatorId = sessao('b2w_originador', UUID.test(qs.get('id') || '') ? qs.get('id') : null);
+  const indicadorId = sessao('b2w_indicador', UUID.test(qs.get('indicador') || '') ? qs.get('indicador') : null);
+  const utmSource = sessao('b2w_utm_source', (qs.get('utm_source') || '').trim().toLowerCase() || null);
+  const CAMPANHA = { instagram: 'IG', ig: 'IG', google: 'GG', googleads: 'GG', facebook: 'FB', fb: 'FB', meta: 'FB' };
+  // Indicação vence campanha. IND-<8 primeiros hex do id>, sem nome nem id inteiro.
+  const codigoRastreio = (indicadorId || originatorId)
+    ? `IND-${(indicadorId || originatorId).slice(0, 8).toLowerCase()}`
+    : (CAMPANHA[utmSource] || null);
   const originatorName = qs.get('name') || qs.get('originador');
   if (originatorName) { $('convite').hidden = false; $('convite').textContent = `Convite de ${originatorName}`; }
 
@@ -934,7 +950,7 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
         cep: cep.value, concessionaria: o.Concessionaria || '', consumo_kwh: String(c.kwh ?? ''), calculated_discount: String(c.desconto ?? ''),
         rua: a.rua || '', numero: '', bairro: a.bairro || '', cidade: a.cidade || '', uf: a.uf || '',
         tarifa_concessionaria: String(c.tarifa ?? ''), desconto_assinante: String(Number(o['Desconto Assinante']) || 0),
-        status: 'simulacao', originator_id: originatorId
+        status: 'simulacao', originator_id: originatorId, indicador_assinante_id: indicadorId
       },
       p_meio: 'link',
       p_armadilha: null
@@ -962,6 +978,19 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
   document.addEventListener('click', e => {
     const w = e.target.closest('a[href*="wa.me/"]');
     if (!w) return;
+    // código de rastreio no texto pronto (inclui os links montados pelo simulador)
+    if (codigoRastreio) {
+      try {
+        const u = new URL(w.href);
+        const texto = u.searchParams.get('text') || '';
+        if (!texto.includes('(cód.')) {
+          // encodeURIComponent, e não searchParams.set: este troca espaço por "+",
+          // que o WhatsApp pode mostrar literalmente.
+          const novo = `${texto}${texto ? ' ' : ''}(cód. ${codigoRastreio})`;
+          w.href = `${u.origin}${u.pathname}?text=${encodeURIComponent(novo)}`;
+        }
+      } catch { /* link malformado: segue sem código */ }
+    }
     if (window.fbq) fbq('track', 'Contact', { origem: w.dataset.wa || 'outro' });
     if (window.gtag) gtag('event', 'conversion', { send_to: 'AW-782971769/gGK6CKnrq4AdEPnmrPUC' });
   });
