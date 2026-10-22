@@ -45,9 +45,10 @@
   /* O mockup escreve "Usina Solar Fotovoltaica" + nome. Quando o nome do caso
      ja' comeca com "Usina", o hero saía "Usina Solar Fotovoltaica Usina
      Demonstração". Nesse caso o prefixo some. */
-  var prefixo = /^usina/i.test(c.nome) ? '' : 'Usina Solar Fotovoltaica';
+  var nomeTitulo = c.nome.replace(/^\s*UFV\s*[-–—:]?\s*/i, '').trim() || c.nome;
+  var prefixo = /^usina/i.test(nomeTitulo) ? '' : 'Usina Solar Fotovoltaica';
   põe('tituloPrefixo', prefixo);
-  põe('nome', c.nome);
+  põe('nome', nomeTitulo);
   document.title = c.nome + ' · B2W Invest';
 
   // Sem código de registro inventado: o que identifica o ativo aqui é onde ele
@@ -61,7 +62,8 @@
 
   põe('badgeCA', ou(u.kwCA, function (x) { return F.nf1.format(x) + ' kW CA'; }));
   põe('badgeKwp', ou(u.kwp, function (x) { return F.nf1.format(x) + ' kWp instalados'; }));
-  põe('badgeOverload', ou(u.fdiEfetivo, function (x) {
+  var fdiMostra = u.fdiEfetivo !== null ? u.fdiEfetivo : u.fdiNominal;
+  põe('badgeOverload', ou(fdiMostra, function (x) {
     return 'Overload CC/CA ' + F.nf1.format(x) + 'x';
   }));
 
@@ -101,7 +103,7 @@
   põe('moduloQtd', ou(u.modulos, function (x) { return F.nf.format(x) + ' unidades'; }));
   põe('moduloEfic', u.moduloTec || traco);
   põe('moduloBifacial', ou(u.ganhoBifacial, function (x) { return '+' + F.nf1.format(x) + '% adicional'; }));
-  põe('moduloGarantia', ou(u.albedo, function (x) { return 'Albedo do solo: ' + F.nf1.format(x * 100) + '%'; }));
+  põe('moduloGarantia', ou(u.albedo, function (x) { return F.nf1.format(x * 100) + '%'; }));
   põe('moduloTag', ou(u.kwp, function (x) { return F.nf1.format(x) + ' kWp NO ARRANJO'; }));
 
   põe('inversorNome', u.inversorModelo || (u.kwCA ? 'Inversor de ' + F.nf1.format(u.kwCA) + ' kW' : traco));
@@ -109,7 +111,7 @@
   põe('inversorMppt', ou(u.qtdInv, function (x) { return F.nf.format(x) + (x === 1 ? ' unidade' : ' unidades'); }));
   põe('inversorEfic', ou(u.clipagem, function (x) { return F.nf1.format(x) + '%'; }));
   põe('inversorIp', ou(u.kwCA, function (x) { return F.nf1.format(x) + ' kW CA'; }));
-  põe('inversorFdi', ou(u.fdiEfetivo, function (x) { return 'FDI ' + F.nf1.format(x) + 'x'; }));
+  põe('inversorFdi', ou(fdiMostra, function (x) { return 'FDI ' + F.nf1.format(x) + 'x'; }));
 
   /* ---------- curva do dia ---------- */
   var picoCC = u.kwp ? u.kwp * 0.82 : null;   // meio-dia limpo, não STC
@@ -123,14 +125,15 @@
   põe('curvaEixo25', ou(u.kwp, function (x) { return F.nf.format(Math.round(x * 0.25)) + ' kW'; }));
   põe('curvaPico', ou(picoCC, function (x) { return 'PICO CC: ' + F.nf1.format(x) + ' kW'; }));
   põe('curvaClipTag', ou(u.clipagem, function (x) { return F.nf1.format(x) + ' % (energia cortada)'; }));
-  põe('curvaRatio', ou(u.fdiEfetivo, function (x) { return F.nf1.format(x) + ' : 1'; }));
+  põe('curvaRatio', ou(fdiMostra, function (x) { return F.nf1.format(x) + ' : 1'; }));
+  põe('curvaRatioRotulo', u.fdiEfetivo !== null ? 'FDI / ILR Efetivo' : 'FDI / ILR Nominal');
   põe('curvaRatioNota', (u.kwp && u.kwCA)
     ? F.nf1.format(u.kwp) + ' kWp CC para ' + F.nf1.format(u.kwCA) + ' kW CA' : traco);
   põe('curvaGanho', ou(u.ganhoBifacial, function (x) { return '+' + F.nf1.format(x) + '%'; }));
   põe('curvaClip', ou(u.clipagem, function (x) { return F.nf1.format(x) + '%'; }));
 
   /* ================================================ GRÁFICO 12 MESES ===== */
-  var CW = 1140, BASE = 335, TOPO = 55;
+  var CW = 1140, BASE = 335, TOPO = 128;
   var X0 = 88, PASSO = 85, LARG = 34;
   var cx = function (i) { return X0 + i * PASSO + LARG / 2; };
 
@@ -177,7 +180,7 @@
       var lo = Math.min.apply(null, f), hi = Math.max.apply(null, f), amp = (hi - lo) || 1;
       return function (val) { return yFim - ((val - lo) / amp) * (yFim - yIni); };
     }
-    var yRec = faixa(recs, 45, 150);
+    var yRec = faixa(recs, 54, 104);
     var yRen = faixa(rens, 228, 300);
 
     function curva(serie, yFn, cor, grad, tracejado) {
@@ -310,18 +313,31 @@
     põe('aproveitamento', ou(t.aproveitamento, function (x) { return 'Aproveitamento líquido: ' + F.nf1.format(x) + '%'; }));
     põe('tituloAuditoria', 'Auditoria de preço por kWh' + (c.enquadramento ? ' · ' + c.enquadramento : ''));
 
-    // Tabela de componentes, mesma conta em forma de linha.
+    // Tabela de componentes, mesma conta em forma de linha. Antes as três células
+    // caíam nas colunas "Incidência" e "Regra aplicada" e as duas últimas ficavam vazias.
     var ct = document.getElementById('compTab');
     if (ct) {
-      ct.innerHTML = itens.map(function (it) {
+      var tab = ct.closest('table');
+      if (tab) tab.classList.add('tabela-comp');
+      ct.innerHTML = itens.map(function (it, idx) {
         if (it.v === null || it.v === undefined) return '';
         var pctv = t.tarifa ? (it.v / t.tarifa) * 100 : 0;
-        return '<tr class="border-b border-border-subtle/40">' +
-          '<td class="py-space-3 px-space-4 text-ink-secondary">' + it.rot + '</td>' +
-          '<td class="py-space-3 px-space-4 text-right font-label-mono text-ink-primary">' +
+        var incid = idx === 0 ? 'Base' : it.final ? 'Repasse' : 'Dedução';
+        var rotTab = it.rot.replace(/\s*\(.*\)\s*$/, '');   // o nome da concessionária já está no cabeçalho
+        var regra = idx === 0 ? 'Tarifa vigente'
+          : it.final ? 'Cheia menos deduções'
+          : /^Desconto/.test(it.rot) ? 'Desconto' + (t.descP !== null ? ' de ' + F.nf1.format(t.descP) + '%' : '')
+          : /Fio B/.test(it.rot) ? 'Lei 14.300 (Fio B)'
+          : /ICMS/.test(it.rot) ? 'Alíquotas locais'
+          : 'Gestão' + (t.gestP !== null ? ' de ' + F.nf1.format(t.gestP) + '%' : '');
+        var pctTxt = (it.sinal === '- ' ? '-' : '') + F.nf1.format(pctv) + '%';
+        return '<tr class="border-b border-border-subtle/40' + (it.final ? ' font-bold' : '') + '">' +
+          '<td class="py-space-3 px-space-4 text-ink-secondary">' + rotTab + '</td>' +
+          '<td class="py-space-3 px-space-4 text-ink-muted">' + incid + '</td>' +
+          '<td class="py-space-3 px-space-4 text-ink-secondary">' + regra + '</td>' +
+          '<td class="num py-space-3 px-space-4 text-right text-ink-primary">' +
           it.sinal + F.brl4.format(it.v) + '</td>' +
-          '<td class="py-space-3 px-space-4 text-right font-label-mono text-ink-muted">' +
-          F.nf1.format(pctv) + '%</td></tr>';
+          '<td class="num py-space-3 px-space-4 text-right text-ink-muted">' + pctTxt + '</td></tr>';
       }).join('');
     }
   })();
@@ -372,7 +388,7 @@
   põe('investPorKwp', ou(u.porKwp, function (x) { return F.brl.format(x) + ' / kWp'; }));
 
   if (v) {
-    põe('tir', isNaN(v.tir) ? traco : F.pct1(v.tir * 100) + ' a.a.');
+    põe('tir', isNaN(v.tir) ? traco : F.pct1(v.tir * 100));
     põe('tirNota', ou(u.medRen, function (x) { return F.pctMes(x) + ' a.m. médio'; }));
     põe('payback', F.anos(v.payback, c.horizonte));
     põe('paybackNota', v.payback !== null
@@ -470,8 +486,8 @@
         acima.map(function (h) { return ' L' + xx(h).toFixed(1) + ',' + yy(pot(h)).toFixed(1); }).join('') +
         ' L' + xx(h2).toFixed(1) + ',' + yy(u.kwCA).toFixed(1) + ' Z';
       out += '<path d="' + dc + '" fill="url(#clippingHatch)" stroke="#E25454" stroke-width="1.5"></path>';
-      out += '<text x="' + ((xx(h1) + xx(h2)) / 2).toFixed(1) + '" y="' + (yy(u.kwCA) - 8).toFixed(1) +
-        '" fill="#E25454" font-family="JetBrains Mono" font-size="11" font-weight="700" text-anchor="middle" ' +
+      out += '<text x="' + (xx(h2) + 14).toFixed(1) + '" y="' + (yy(u.kwCA) - 8).toFixed(1) +
+        '" fill="#E25454" font-family="JetBrains Mono" font-size="11" font-weight="700" text-anchor="start" ' +
         'filter="url(#dropShadowCurva)">' +
         (u.clipagem !== null ? F.nf1.format(u.clipagem) + '% cortados no ano' : 'energia cortada') + '</text>';
     }
@@ -672,6 +688,35 @@
       }
       coluna.appendChild(el);
     }
+  })();
+
+  /* ====================================== O QUE FICOU SEM DADO ======== */
+  /* Um traço no meio de uma ficha parece defeito. Linha, selo ou cartão cujo valor
+     o caso não traz some inteiro; a página mostra só o que tem. */
+  (function semDado() {
+    function some(chaves, seletor) {
+      chaves.forEach(function (k) {
+        document.querySelectorAll('[data-f="' + k + '"]').forEach(function (e) {
+          if (/^\s*—\s*$/.test(e.textContent)) {
+            var alvo = e.closest(seletor);
+            if (alvo) alvo.style.display = 'none';
+          }
+        });
+      });
+    }
+    some(['badgeCA', 'badgeOverload'], '.rounded-full');
+    some(['moduloEfic', 'moduloBifacial', 'moduloGarantia', 'inversorMppt', 'inversorEfic', 'inversorIp'],
+         '.flex.justify-between');
+    some(['curvaLegCA', 'curvaLegClip', 'curvaLegOver'], '.rounded-lg');
+    some(['curvaRatio', 'curvaGanho', 'curvaClip'], '.rounded-xl');
+
+    // O selo do módulo ficava por baixo da foto.
+    var chipModulo = document.querySelector('[data-f="moduloChip"]');
+    var caixaChip = chipModulo && chipModulo.closest('.absolute');
+    if (caixaChip) caixaChip.style.zIndex = '20';
+
+    var ano = document.getElementById('anoRodape');
+    if (ano) ano.textContent = String(new Date().getFullYear());
   })();
 
   /* nomes do caso fictício, imagens mortas e a barra das três páginas —

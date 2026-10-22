@@ -124,6 +124,7 @@
     u.wModulo    = num(data.potModulos);
     u.wInversor  = num(data.potInversor);
     u.qtdInv     = num(data.qtdInversores);
+    if (u.qtdInv === null && u.wInversor !== null) u.qtdInv = 1;
     u.kwCA       = (u.wInversor !== null && u.qtdInv !== null) ? u.wInversor * u.qtdInv / 1000 : null;
     u.moduloModelo   = data.moduloModelo || null;
     u.moduloTec      = data.moduloTec || null;
@@ -131,6 +132,7 @@
     u.ganhoBifacial  = num(data.ganhoBifacial);
     u.fdiNominal     = num(data.fdiNominal);
     u.fdiEfetivo     = num(data.fdiEfetivo);
+    if (u.fdiNominal === null && u.kwp && u.kwCA) u.fdiNominal = u.kwp / u.kwCA;
     u.clipagem       = num(data.clipagem);
     u.albedo         = num(data.albedo);
     u.investido      = num(data.valorInvestido);
@@ -529,9 +531,9 @@
          e' o index.html da propria pasta (usinasroi, eletropostoroi, hibridoroi);
        - b2wenergia.com.br/edu/usina/ e o TempRepo local: as tres na mesma pasta.
      O caminho em que a pagina esta rodando decide qual vale. */
-  var PASTA_ROI = /\/(usinasroi|eletropostoroi|hibridoroi)\/?/;
+  var PASTA_ROI = /\/(usinasroiv2|usinasroi|eletropostoroi|hibridoroi)\/?/;
   var DESTINOS = PASTA_ROI.test(location.pathname)
-    ? { 'usina-fotovoltaica': ['../usinasroi/', 'usina'],
+    ? { 'usina-fotovoltaica': ['../usinasroiv2/', 'usina'],
         'eletroposto':        ['../eletropostoroi/', 'eletroposto'],
         'operacao-hibrida':   ['../hibridoroi/', 'hibrida'] }
     : { 'usina-fotovoltaica': ['./', 'usina'],
@@ -560,6 +562,14 @@
           if (ehAtual) a.setAttribute('aria-current', 'page');
           else a.removeAttribute('aria-current');
         }
+      } else if (pth === 'politica-de-privacidade') {
+        a.href = 'https://b2wenergia.com.br/politica-de-privacidade/';
+        a.target = '_blank';
+        a.rel = 'noopener';
+      } else if (pth === 'termos-de-alocacao' && /termos/i.test(a.textContent)) {
+        a.href = 'https://b2wenergia.com.br/termos-de-uso/';
+        a.target = '_blank';
+        a.rel = 'noopener';
       } else if (pth === 'falar-com-especialista') {
         a.href = linkWhatsApp(c);
         a.target = '_blank';
@@ -582,6 +592,9 @@
       var chip = chips[k].closest('.rounded-full') || chips[k];
       if (!est) { chip.style.display = 'none'; continue; }
       chips[k].textContent = est.cabecalho;
+      // Ponto pulsante quer dizer "ao vivo": só a usina gerando pulsa.
+      var ponto = chip.querySelector('.animate-pulse');
+      if (ponto && est.i !== 3) ponto.classList.remove('animate-pulse');
     }
   }
 
@@ -593,10 +606,10 @@
        Maria I", "Santa Maria I", "Santa Maria Hub" e "Santa Maria" sozinho. A
        ordem importa — do mais longo para o mais curto. */
     if (c.nome) {
-      trocas.push([/Usina Solar Santa Maria I/g, c.nome],
-                  [/Santa Maria I/g, c.nome],
-                  [/Santa Maria Hub/g, c.nome],
-                  [/Santa Maria/g, c.nome]);
+      /* Uma passada só, com todas as grafias. Em passadas seguidas, a última
+         ("Santa Maria") achava o nome que a primeira acabara de escrever: o caso
+         "UFV - Santa Maria" saía "UFV - UFV - Santa Maria" no eletroposto e na híbrida. */
+      trocas.push([/(?:Usina(?: Solar)?\s+)?Santa Maria(?:\s+(?:I|Hub))?/g, c.nome]);
     }
     if (c.local) trocas.push([/Mossoró\s*\/\s*RN/g, c.local]);
     if (c.data && c.data.cidade) trocas.push([/Mossoró/g, c.data.cidade]);
