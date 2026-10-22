@@ -97,6 +97,65 @@
     return 'Receita líquida de ' + F.brl.format(x) + '/mês';
   }));
 
+  /* ============================================ TOPO: POTÊNCIA E GERAÇÃO == */
+  /* O cartão da direita do topo mostra o que a usina é e o que gera: potência
+     instalada (CC), potência CA, painéis, geração anual e a geração de cada mês em kWh. */
+  // número grande, unidade pequena ao lado: três tiles em ~460px não comportam "102,24 kWp" inteiro
+  function comUnidade(chave, valor, unidade) {
+    document.querySelectorAll('[data-f="' + chave + '"]').forEach(function (e) {
+      if (valor === null) { e.textContent = traco; return; }
+      e.innerHTML = F.nf1.format(valor) + '<span class="unidade">' + unidade + '</span>';
+    });
+  }
+  comUnidade('potInstalada', u.kwp, 'kWp');
+  comUnidade('potCA', u.kwCA, 'kW');
+  põe('potCANota', u.qtdInv ? (u.qtdInv === 1 ? 'de 1 inversor' : 'de ' + F.nf.format(u.qtdInv) + ' inversores') : 'do inversor');
+  põe('paineisQtd', ou(u.modulos, function (x) { return F.nf.format(x); }));
+  põe('paineisPot', u.wModulo ? F.nf.format(u.wModulo) + ' W cada' : 'módulos instalados');
+
+  (function graficoGeracaoTopo() {
+    var g = document.getElementById('geracaoTopo');
+    if (!g) return;
+    var vals = u.serieGer || [];
+    var com = vals.filter(function (x) { return x !== null && x !== undefined; });
+    if (!com.length) { g.style.display = 'none'; return; }
+
+    var maxV = Math.max.apply(null, com), minV = Math.min.apply(null, com);
+    var topo = Math.max(2000, Math.ceil(maxV / 2000) * 2000);   // metades inteiras em milhares
+    var X0 = 36, X1 = 356, Y0 = 122, Y1 = 14;
+    var n = vals.length || 12, passo = (X1 - X0) / n, larg = Math.min(18, passo * 0.62);
+    var yv = function (v) { return Y0 - (v / topo) * (Y0 - Y1); };
+    var iMax = vals.indexOf(maxV), iMin = vals.indexOf(minV);
+    var nomes = u.rotulos || [];
+
+    var out = '<defs><linearGradient id="barGradTopo" x1="0" x2="0" y1="0" y2="1">' +
+      '<stop offset="0%" stop-color="#00FFFF"/><stop offset="100%" stop-color="#00FFFF" stop-opacity=".35"/>' +
+      '</linearGradient></defs>';
+    [0, 0.5, 1].forEach(function (f) {
+      var y = Y0 - f * (Y0 - Y1);
+      out += '<line x1="' + X0 + '" x2="' + X1 + '" y1="' + y + '" y2="' + y + '" stroke="#1C2248" stroke-dasharray="3,4"/>' +
+        '<text x="' + (X0 - 6) + '" y="' + (y + 3) + '" text-anchor="end" fill="#8D93B0" font-family="JetBrains Mono" font-size="9">' +
+        (f === 0 ? '0' : F.nf.format(Math.round(topo * f / 1000)) + 'k') + '</text>';
+    });
+    vals.forEach(function (v, i) {
+      if (v === null || v === undefined) return;
+      var x = X0 + i * passo + (passo - larg) / 2, y = yv(v);
+      var destaque = i === iMax;
+      out += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + larg.toFixed(1) + '" height="' + (Y0 - y).toFixed(1) +
+        '" rx="3" fill="' + (destaque ? '#F26B00' : 'url(#barGradTopo)') + '"><title>' +
+        (nomes[i] || '') + ': ' + F.nf.format(Math.round(v)) + ' kWh</title></rect>';
+      if (i === iMax || i === iMin) {
+        out += '<text x="' + (x + larg / 2).toFixed(1) + '" y="' + (y - 5).toFixed(1) + '" text-anchor="middle" fill="' +
+          (destaque ? '#FF9B52' : '#6FE9F0') + '" font-family="JetBrains Mono" font-size="9" font-weight="700">' +
+          F.nf.format(Math.round(v)) + '</text>';
+      }
+      out += '<text x="' + (x + larg / 2).toFixed(1) + '" y="140" text-anchor="middle" fill="#B8BCCE" font-family="JetBrains Mono" font-size="8.5">' +
+        String(nomes[i] || '').slice(0, 3).toUpperCase() + '</text>';
+    });
+    g.innerHTML = out;
+    põe('geracaoPicoTopo', 'Pico: ' + String(nomes[iMax] || '').slice(0, 3));
+  })();
+
   /* ================================================== HARDWARE =========== */
   põe('moduloNome', u.moduloModelo || (u.wModulo ? 'Módulo de ' + F.nf.format(u.wModulo) + ' W' : traco));
   põe('moduloChip', [u.wModulo ? F.nf.format(u.wModulo) + 'W' : null, u.moduloTec].filter(Boolean).join(' · ') || traco);
@@ -709,6 +768,7 @@
          '.flex.justify-between');
     some(['curvaLegCA', 'curvaLegClip', 'curvaLegOver'], '.rounded-lg');
     some(['curvaRatio', 'curvaGanho', 'curvaClip'], '.rounded-xl');
+    some(['potInstalada', 'potCA', 'paineisQtd'], '.tile-pot');
 
     // O selo do módulo ficava por baixo da foto.
     var chipModulo = document.querySelector('[data-f="moduloChip"]');
