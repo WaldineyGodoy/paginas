@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>B2W Invest</title>
+<!--
+  Endereço antigo da página da usina: b2wenergia.com.br/usina?<código>.
+  O CRM gerou links curtos para ele antes da página ir para b2winvest.com.br.
+  Esta página só repassa o visitante, levando o código (?...) e o #. A página de
+  verdade mora em um lugar só.
+-->
+<script>
+  var DESTINO = 'https://b2winvest.com.br/paginas/usinasroi/';
+  location.replace(DESTINO + location.search + location.hash);
+</script>
+<noscript><meta http-equiv="refresh" content="0;url=https://b2winvest.com.br/paginas/usinasroi/"></noscript>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0B0F1E;
+    color:#B8BCCE;font:16px/1.5 Inter,system-ui,sans-serif;text-align:center;padding:24px}
+  a{color:#F26B00}
+</style>
+</head>
+<body>
+  <p>Abrindo a página da usina…<br>
+  Se não abrir sozinho, <a id="seguir" href="https://b2winvest.com.br/paginas/usinasroi/">toque aqui</a>.</p>
+  <script>document.getElementById('seguir').href = DESTINO + location.search + location.hash;</script>
+</body>
+</html>
