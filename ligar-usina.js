@@ -109,6 +109,9 @@
   }
   comUnidade('potInstalada', u.kwp, 'kWp');
   comUnidade('potCA', u.kwCA, 'kW');
+  // overload (kWp / kW CA): efetivo quando o modelo o trouxe, nominal caso contrário
+  var overloadTopo = u.fdiEfetivo !== null ? u.fdiEfetivo : u.fdiNominal;
+  põe('overloadTopo', ou(overloadTopo, function (x) { return F.nf1.format(x) + 'x'; }));
   põe('potCANota', u.qtdInv ? (u.qtdInv === 1 ? 'de 1 inversor' : 'de ' + F.nf.format(u.qtdInv) + ' inversores') : 'do inversor');
   põe('paineisQtd', ou(u.modulos, function (x) { return F.nf.format(x); }));
   põe('paineisPot', u.wModulo ? F.nf.format(u.wModulo) + ' W cada' : 'módulos instalados');
@@ -769,6 +772,7 @@
     some(['curvaLegCA', 'curvaLegClip', 'curvaLegOver'], '.rounded-lg');
     some(['curvaRatio', 'curvaGanho', 'curvaClip'], '.rounded-xl');
     some(['potInstalada', 'potCA', 'paineisQtd'], '.tile-pot');
+    some(['overloadTopo'], '.over-linha');
 
     // O selo do módulo ficava por baixo da foto.
     var chipModulo = document.querySelector('[data-f="moduloChip"]');
