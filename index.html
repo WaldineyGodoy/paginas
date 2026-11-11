@@ -29,6 +29,65 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://b2wenergia.com.br/#organization",
+      "name": "B2W Energia",
+      "alternateName": "B2W Energia Solar",
+      "legalName": "B2W Projetos & Soluções Solares Ltda",
+      "taxID": "34.999.115/0002-34",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "CNPJ",
+        "value": "34.999.115/0002-34"
+      },
+      "foundingDate": "2019-09-26",
+      "url": "https://b2wenergia.com.br/",
+      "logo": "https://b2wenergia.com.br/assets/logos/b2w-energia-v1.png",
+      "description": "Energia solar por assinatura: a energia gerada em usinas solares vira créditos que reduzem a conta de luz do assinante, sem obras nem instalação de painéis.",
+      "telephone": "+55-31-99536-7744",
+      "email": "contato@b2wenergia.com.br",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Av. Olavo Lacerda Montenegro, 467",
+        "addressLocality": "Parnamirim",
+        "addressRegion": "RN",
+        "addressCountry": "BR"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+55-31-99536-7744",
+          "contactType": "customer service",
+          "availableLanguage": [
+            "Portuguese"
+          ],
+          "areaServed": "BR"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/b2wenergia",
+        "https://www.facebook.com/b2wenergia",
+        "https://www.linkedin.com/company/b2wenergiasolar/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://b2wenergia.com.br/#website",
+      "url": "https://b2wenergia.com.br/",
+      "name": "B2W Energia",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@id": "https://b2wenergia.com.br/#organization"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "Service",
   "name": "B2W Energia Solar por Assinatura",
   "description": "Serviço de assinatura de energia solar que proporciona economia direta na conta de luz sem necessidade de instalação de painéis.",
@@ -360,6 +419,10 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
 .socials a:hover{border-color:var(--flame-500);color:var(--ink)}
 .socials svg{width:18px;height:18px}
 
+.footer-trust{flex-basis:100%;display:grid;gap:6px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:rgba(242,107,0,.05);font-size:13px;line-height:1.55;color:var(--ink-2);max-width:900px}
+.footer-trust strong{color:#F26B00;font-weight:600}
+.footer-trust a{color:#F26B00;text-decoration:underline;text-underline-offset:2px}
+.footer-legal{font-size:12px;color:var(--ink-3)}
 .footer{padding:44px var(--gutter);border-top:1px solid var(--border);background:var(--bg)}
 .footer .wrap{display:flex;flex-wrap:wrap;gap:22px 40px;align-items:center;justify-content:space-between}
 .footer img{height:32px;width:auto}
@@ -768,9 +831,15 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
       <a href="#como-funciona">Como Funciona</a><a href="#vantagens">Vantagens</a><a href="#simulador">Simulador</a><a href="#faq">Dúvidas Frequentes</a><a href="#contato">Contato</a>
       <a href="https://wa.me/5531995367744" target="_blank" rel="noopener" data-wa="rodape">WhatsApp</a>
     </nav>
+    <div class="footer-trust">
+      <p><strong>Segurança:</strong> a B2W Energia não pede Pix, depósitos ou qualquer pagamento antes de um contrato assinado e não oferece ganhos por “tarefas” ou “missões”. O WhatsApp oficial é o <a href="https://wa.me/5531995367744" target="_blank" rel="noopener" data-wa="rodape-seguranca">(31) 99536-7744</a>.</p>
+      <p>A B2W Energia não tem relação com a antiga B2W Digital (Americanas S.A.) nem com a 2W Energia.</p>
+      <p class="footer-legal">B2W Projetos &amp; Soluções Solares Ltda · CNPJ 34.999.115/0002-34<br>Av. Olavo Lacerda Montenegro, 467 – Parque das Nações · Parnamirim/RN</p>
+      <!-- CEP pendente: Receita = 59158-400 (Loja 06); dono informou 59158-155 -->
+    </div>
     <small>&copy; <span id="ano">2026</span> B2W Energia. Todos os direitos reservados. Feito com energia limpa ☀️ · Imagens e vídeos da jornada são representações ilustrativas geradas por IA.</small>
     <!-- Versão do site: atualizar a cada publicação (número, data e o que mudou). -->
-    <small class="versao" data-versao="1.1.1">Versão do site 1.1.1 · 15/10/2026 · correção: o cadastro da simulação voltou a funcionar</small>
+    <small class="versao" data-versao="1.1.2">Versão do site 1.1.2 · 11/11/2026 · dados da empresa e aviso de segurança no rodapé</small>
   </div>
 </footer>
 
