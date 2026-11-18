@@ -502,6 +502,31 @@ table.plan.sim{min-width:640px}
 .pp-grid h3{font-family:var(--f-display);font-size:20px;font-weight:700}
 .pp-grid p{color:var(--ink-2)}
 .pp .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(28px,3vw,40px)}
+.sim-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(36px,4.5vw,64px)}
+.sim-top .section-head{margin-bottom:0}
+.km-n{font-variant-numeric:tabular-nums}
+.route{margin:0;position:relative}
+.route svg{display:block;width:100%;height:auto;overflow:visible}
+.rt-road{stroke:rgba(255,255,255,.07);stroke-width:22;stroke-linecap:round;stroke-linejoin:round}
+.rt-lane{stroke:rgba(255,255,255,.16);stroke-width:1.2;stroke-dasharray:6 9}
+.rt-line{stroke:var(--green-500);stroke-opacity:.28;stroke-width:3;stroke-linecap:round}
+.rt-trail{stroke:var(--green-400);stroke-width:3.2;stroke-linecap:round}
+.rt-trail-glow{stroke-width:9;stroke-opacity:.55;filter:url(#rt-blur)}
+.rt-stop .ring{stroke:var(--green-400);stroke-width:2;fill:var(--bg)}
+.rt-stop .dot{fill:var(--green-400);opacity:.35;transition:opacity .3s}
+.rt-stop.done .dot{opacity:1}
+.rt-pax{fill:#F4F1EA}
+.rt-cable{stroke:#5a554c;stroke-width:3;stroke-linecap:round}
+.rt-screen{fill:var(--flame-500);transition:fill .5s}
+.rt-bolt{fill:#fff;opacity:.92}
+.rt-btn{fill:none;stroke:var(--flame-400);stroke-width:1.6;transition:stroke .5s}
+.rt-pulse{fill:none;stroke:var(--green-400);stroke-width:2;opacity:0}
+.rt-ev.on .rt-screen{fill:var(--green-500)}
+.rt-ev.on .rt-btn{stroke:var(--green-400)}
+.keys{position:relative}
+.coin{position:absolute;left:0;top:0;opacity:0;z-index:6;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;pointer-events:none;display:grid;place-items:center;font:800 9px/1 var(--f-display);color:#7a5207;letter-spacing:-.02em;background:radial-gradient(circle at 35% 30%,#fff3c4 0 12%,#f7d26a 30%,#d9a12b 70%,#a8740f);box-shadow:inset 0 0 0 2px rgba(122,82,7,.45),0 4px 10px rgba(0,0,0,.35)}
+.half{font-size:clamp(46px,8vw,128px);text-align:center;margin-top:clamp(32px,4vw,56px);line-height:1;transform-origin:50% 100%;will-change:transform}
+@media (max-width:1024px){.sim-top{grid-template-columns:1fr}}
 @media (max-width:1024px){
   .offer{grid-template-columns:1fr}
   .refer,.keys{grid-template-columns:1fr}
@@ -684,11 +709,48 @@ table.plan.sim{min-width:640px}
   <!-- ═════════ ECONOMIA (slide 22) ═════════ -->
   <section class="section earn" id="economia" aria-labelledby="economia-titulo">
     <div class="wrap">
-      <header class="section-head reveal">
-        <span class="tag">Simule e compare</span>
-        <h2 class="display" id="economia-titulo">300 km por dia, <em>metade do custo.</em></h2>
-        <p class="lead">Motorista de aplicativo rodando 300 km por dia, 30 dias por mês. Compare a gasolina, a recarga avulsa e a recarga do sócio Drive Connect PRO.</p>
-      </header>
+      <div class="sim-top">
+        <header class="section-head reveal">
+          <span class="tag">Simule e compare</span>
+          <h2 class="display" id="economia-titulo" aria-label="300 km por dia, metade do custo."><span class="km-n">300</span> km por dia,</h2>
+          <p class="lead">Motorista de aplicativo rodando 300 km por dia, 30 dias por mês. Compare a gasolina, a recarga avulsa e a recarga do sócio Drive Connect PRO.</p>
+        </header>
+        <figure class="route reveal" aria-hidden="true">
+          <svg viewBox="0 0 640 320" fill="none">
+            <defs>
+              <filter id="rt-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+              <linearGradient id="rt-beam" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".42"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></linearGradient>
+              <linearGradient id="rt-steel" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#8F8B84"/><stop offset=".45" stop-color="#E9E6DF"/><stop offset="1" stop-color="#9C978F"/></linearGradient>
+            </defs>
+            <path class="rt-road" d="M24 46 C150 12 330 16 452 44 C566 70 616 122 572 160 C532 194 440 172 330 162 C212 152 72 152 58 212 C46 264 150 294 292 288 C392 284 474 274 562 276"/>
+            <path class="rt-lane" d="M24 46 C150 12 330 16 452 44 C566 70 616 122 572 160 C532 194 440 172 330 162 C212 152 72 152 58 212 C46 264 150 294 292 288 C392 284 474 274 562 276"/>
+            <path class="rt-line" d="M24 46 C150 12 330 16 452 44 C566 70 616 122 572 160 C532 194 440 172 330 162 C212 152 72 152 58 212 C46 264 150 294 292 288 C392 284 474 274 562 276"/>
+            <path class="rt-trail rt-trail-glow" d="M24 46 C150 12 330 16 452 44 C566 70 616 122 572 160 C532 194 440 172 330 162 C212 152 72 152 58 212 C46 264 150 294 292 288 C392 284 474 274 562 276"/>
+            <path class="rt-trail" id="rt-path" d="M24 46 C150 12 330 16 452 44 C566 70 616 122 572 160 C532 194 440 172 330 162 C212 152 72 152 58 212 C46 264 150 294 292 288 C392 284 474 274 562 276"/>
+            <g class="rt-stops"></g>
+            <g class="rt-ev" transform="translate(612 266) scale(1.25)">
+              <ellipse cy="2" rx="18" ry="4" fill="rgba(0,0,0,.45)"/>
+              <path class="rt-cable" d="M-11 -14 C-30 -10 -34 10 -46 12"/>
+              <circle class="rt-pulse" cy="-31" r="11"/>
+              <rect x="-11" y="-46" width="22" height="46" rx="4" fill="url(#rt-steel)"/>
+              <rect class="rt-screen" x="-7.5" y="-40" width="15" height="15" rx="2"/>
+              <path class="rt-bolt" d="M1.2 -38 L-3.4 -31.6 H-0.2 L-1.4 -26.8 L3.4 -33.4 H0.2 Z"/>
+              <circle class="rt-btn" cy="-16" r="3.4"/>
+            </g>
+            <g class="rt-car" transform="translate(24 46)"><g class="rt-body"><g transform="scale(1.3)">
+              <ellipse rx="24" ry="14" fill="#34D399" opacity=".22" filter="url(#rt-blur)"/>
+              <path d="M13 -6 L64 -24 L64 24 L13 6Z" fill="url(#rt-beam)"/>
+              <rect x="-14" y="-8" width="28" height="16" rx="6" fill="#F4F1EA"/>
+              <rect x="-6" y="-6" width="8" height="12" rx="1.5" fill="#DDD8CE"/>
+              <rect x="2" y="-6.5" width="6" height="13" rx="2" fill="#16202B"/>
+              <rect x="-10.5" y="-6" width="4" height="12" rx="1.5" fill="#16202B"/>
+              <circle cx="13" cy="-5" r="1.4" fill="#FFE9A8"/><circle cx="13" cy="5" r="1.4" fill="#FFE9A8"/>
+              <rect x="-14.6" y="-6.5" width="1.6" height="3" rx=".8" fill="#EE4A22"/><rect x="-14.6" y="3.5" width="1.6" height="3" rx=".8" fill="#EE4A22"/>
+            </g></g></g>
+            <g class="rt-people"></g>
+          </svg>
+        </figure>
+      </div>
       <div class="table-wrap reveal">
         <table class="plan sim">
           <caption class="sr-only">Custo de abastecimento para 300 km por dia, 30 dias por mês</caption>
@@ -701,9 +763,10 @@ table.plan.sim{min-width:640px}
         </table>
       </div>
       <div class="keys">
-        <div class="key reveal"><b>R$ 61.560</b><span>por ano a menos que a gasolina</span></div>
-        <div class="key reveal"><b>R$ 10.800</b><span>por ano a menos que a recarga avulsa</span></div>
+        <div class="key reveal"><b data-to="61560">R$ 61.560</b><span>por ano a menos que a gasolina</span></div>
+        <div class="key reveal"><b data-to="10800">R$ 10.800</b><span>por ano a menos que a recarga avulsa</span></div>
       </div>
+      <p class="half display" aria-hidden="true"><em>metade do custo.</em></p>
       <p class="meta reveal">Simulação ilustrativa da apresentação do Plano de Negócios B2W: 300 km por dia, 30 dias por mês, gasolina a R$ 6,70 o litro e recarga avulsa a R$ 2,00 o kWh.</p>
     </div>
   </section>
@@ -1151,6 +1214,158 @@ table.plan.sim{min-width:640px}
   // aba aberta em segundo plano não roda requestAnimationFrame: ao voltar, recalcula pin e quadro
   document.addEventListener('visibilitychange', () => { if (!document.hidden) { ScrollTrigger.refresh(); drawn = -1; render(); } });
   window.__b2w = { lenis, tl, st, COUNT, setKey, clips, frames: () => frames.filter(Boolean).length };
+})();
+</script>
+<script>
+/* Simule e compare: rota com passageiros → eletroposto → contador de economia → moedas → "metade do custo." */
+(() => {
+  const sec = document.getElementById('economia');
+  if (!sec) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = sec.querySelector('.route svg');
+  const path = svg.querySelector('#rt-path');
+  const trails = svg.querySelectorAll('.rt-trail');
+  const car = svg.querySelector('.rt-car'), body = svg.querySelector('.rt-body');
+  const ev = svg.querySelector('.rt-ev'), cable = svg.querySelector('.rt-cable'), pulse = svg.querySelector('.rt-pulse');
+  const kmEl = sec.querySelector('.km-n');
+  const keysBox = sec.querySelector('.keys');
+  const nums = [...sec.querySelectorAll('.key b[data-to]')];
+  const half = sec.querySelector('.half');
+  const L = path.getTotalLength();
+  const KM = 300;
+  // paradas: on = embarque, off = desembarque; side = lado da calçada
+  const STOPS = [{ f: .16, on: 1, side: 1 }, { f: .37, on: 0, side: 1 }, { f: .6, on: 1, side: 1 }, { f: .82, on: 0, side: -1 }];
+  const pt = l => path.getPointAtLength(Math.min(L, Math.max(0, l)));
+  const ang = l => { const a = pt(l - 1), b = pt(l + 1); return Math.atan2(b.y - a.y, b.x - a.x); };
+  const put = f => {
+    const l = f * L, p = pt(l);
+    car.setAttribute('transform', `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) rotate(${(ang(l) * 180 / Math.PI).toFixed(2)})`);
+    trails.forEach(t => (t.style.strokeDashoffset = L - l));
+    kmEl.textContent = Math.round(f * KM);
+  };
+  trails.forEach(t => (t.style.strokeDasharray = L));
+  const cl = cable.getTotalLength();
+  cable.style.strokeDasharray = cl;
+
+  // marcadores das paradas e passageiros
+  const stopsG = svg.querySelector('.rt-stops'), peopleG = svg.querySelector('.rt-people');
+  STOPS.forEach(s => {
+    const l = s.f * L, p = pt(l), a = ang(l);
+    const nx = -Math.sin(a) * s.side, ny = Math.cos(a) * s.side;
+    s.p = p;
+    s.curb = { x: p.x + nx * 30, y: p.y + ny * 30 };
+    s.away = { x: p.x + nx * 50, y: p.y + ny * 50 };
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'rt-stop');
+    g.setAttribute('transform', `translate(${p.x} ${p.y})`);
+    g.innerHTML = '<circle class="ring" r="7"/><circle class="dot" r="3"/>';
+    stopsG.appendChild(g); s.mark = g;
+    const pax = document.createElementNS(NS, 'g');
+    pax.setAttribute('class', 'rt-pax');
+    pax.innerHTML = '<g transform="scale(1.55)"><circle cy="-13" r="3.6"/><path d="M-4.6 -1 v-4.4 a4.6 4.6 0 0 1 9.2 0 V-1 Z"/></g>';
+    peopleG.appendChild(pax); s.pax = pax;
+  });
+
+  const fmt = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+  const rm = document.documentElement.classList.contains('rm') || !window.gsap || !window.ScrollTrigger;
+  if (rm) {
+    put(1);
+    ev.classList.add('on');
+    cable.style.strokeDashoffset = 0;
+    STOPS.forEach(s => { s.mark.classList.add('done'); s.pax.style.display = 'none'; });
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+
+  // estado inicial
+  put(0);
+  cable.style.strokeDashoffset = cl;
+  STOPS.forEach(s => gsap.set(s.pax, { x: s.curb.x, y: s.curb.y, scale: 0, autoAlpha: 0, transformOrigin: '50% 100%' }));
+  nums.forEach(b => (b.textContent = fmt(0)));
+  gsap.set(half, { autoAlpha: 0 });
+  gsap.set(body, { transformOrigin: '50% 50%' });
+
+  const passenger = s => {
+    const t = gsap.timeline();
+    t.call(() => s.mark.classList.add('done'));
+    t.to(body, { scale: 1.12, duration: .12, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 0);
+    if (s.on) {
+      t.to(s.pax, { scale: 1, autoAlpha: 1, duration: .22, ease: 'back.out(2.4)' }, 0)
+       .to(s.pax, { x: s.p.x, y: s.p.y, scale: .3, autoAlpha: 0, duration: .32, ease: 'power2.in' }, .3);
+    } else {
+      t.set(s.pax, { x: s.p.x, y: s.p.y, scale: .3 }, 0)
+       .to(s.pax, { x: s.curb.x, y: s.curb.y, scale: 1, autoAlpha: 1, duration: .3, ease: 'power2.out' }, .02)
+       .to(s.pax, { x: s.away.x, y: s.away.y, autoAlpha: 0, duration: .35, ease: 'power1.in' }, .4);
+    }
+    return t;
+  };
+
+  let arrived = false, keysIn = false, counted = false;
+  const st = { f: 0 };
+  const drive = gsap.timeline({ paused: true });
+  let prev = 0;
+  [...STOPS, { f: 1, end: 1 }].forEach(s => {
+    drive.to(st, { f: s.f, duration: (s.f - prev) * 3.4 + .3, ease: 'power2.inOut', onUpdate: () => put(st.f) });
+    if (!s.end) drive.add(passenger(s), '+=.04');
+    prev = s.f;
+  });
+  drive.call(() => ev.classList.add('on'))
+    .to(cable, { strokeDashoffset: 0, duration: .45, ease: 'power2.out' }, '<')
+    .fromTo(pulse, { scale: .6, opacity: .9, transformOrigin: '50% 50%' }, { scale: 2.6, opacity: 0, duration: .9, ease: 'power2.out', repeat: 2 }, '<.1')
+    .call(() => { arrived = true; tryCount(); }, null, '<.25');
+
+  // economia: conta até o valor final, solta moedas no máximo e então entra "metade do custo."
+  const coins = b => {
+    const hb = keysBox.getBoundingClientRect(), r = b.getBoundingClientRect();
+    const cx = r.left - hb.left + r.width * .55, cy = r.top - hb.top + r.height * .35;
+    const n = innerWidth < 640 ? 12 : 20;
+    for (let i = 0; i < n; i++) {
+      const c = document.createElement('i');
+      c.className = 'coin'; c.textContent = 'R$';
+      keysBox.appendChild(c);
+      const a = gsap.utils.random(-160, -20) * Math.PI / 180, v = gsap.utils.random(260, 560);
+      const vx = Math.cos(a) * v, vy = Math.sin(a) * v, g = 1500, spin = gsap.utils.random(8, 18), T = gsap.utils.random(1.1, 1.6);
+      const sc = gsap.utils.random(.7, 1.15), o = { t: 0 };
+      gsap.set(c, { x: cx, y: cy, scale: 0 });
+      gsap.to(o, { t: T, duration: T, ease: 'none', delay: i * .012,
+        onUpdate: () => {
+          const t = o.t;
+          gsap.set(c, { x: cx + vx * t, y: cy + vy * t + .5 * g * t * t, rotation: vx * t * .4, scaleX: sc * Math.cos(t * spin), scaleY: sc, opacity: t > T - .35 ? (T - t) / .35 : 1 });
+        },
+        onComplete: () => c.remove() });
+    }
+  };
+  // entra acelerada, freia e balança no fim da frenagem
+  const halfIn = () => gsap.timeline()
+    .set(half, { x: () => -innerWidth * .7, skewX: 16 })
+    .to(half, { autoAlpha: 1, duration: .28, ease: 'power2.in' }, 0)
+    .to(half, { x: 0, duration: .8, ease: 'expo.out' }, 0)
+    .to(half, { skewX: -13, duration: .2, ease: 'power2.out' }, .3)
+    .to(half, { skewX: 7, duration: .22, ease: 'sine.inOut' })
+    .to(half, { skewX: -3.5, duration: .2, ease: 'sine.inOut' })
+    .to(half, { skewX: 1.2, duration: .18, ease: 'sine.inOut' })
+    .to(half, { skewX: 0, duration: .2, ease: 'sine.out' });
+  const tryCount = () => {
+    if (counted || !arrived || !keysIn) return;
+    counted = true;
+    const t = gsap.timeline();
+    window.__sim.k = t;
+    nums.forEach(b => {
+      const o = { v: 0 }, to = +b.dataset.to;
+      t.to(o, { v: to, duration: 2.4, ease: 'power3.out', onUpdate: () => (b.textContent = fmt(o.v)) }, 0);
+    });
+    t.call(() => nums.forEach(coins));
+    t.to(nums, { scale: 1.08, duration: .14, yoyo: true, repeat: 1, ease: 'power2.out', transformOrigin: '0% 60%' }, '<');
+    t.add(halfIn(), '<.25');
+  };
+
+  ScrollTrigger.create({ trigger: svg, start: 'top 78%', once: true, onEnter: () => drive.play() });
+  ScrollTrigger.create({ trigger: keysBox, start: 'top 82%', once: true, onEnter: () => {
+    keysIn = true;
+    if (!arrived) { drive.play(); drive.timeScale(3); }
+    tryCount();
+  } });
+  window.__sim = { drive, put };
 })();
 </script>
 </body>
