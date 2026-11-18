@@ -38,14 +38,14 @@ window.B2W_FRAMES = {
    "path": "assets/frames/d/",
    "w": 1280,
    "h": 720,
-   "bytes": 24128878
+   "bytes": 24601510
   },
   "m": {
    "count": 360,
    "path": "assets/frames/m/",
    "w": 640,
    "h": 360,
-   "bytes": 5262844
+   "bytes": 5382614
   }
  }
 };
