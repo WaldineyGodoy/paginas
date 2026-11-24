@@ -316,7 +316,7 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
 
 /* como funciona */
 .how{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-subtle) 100%);border-top:1px solid var(--border)}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;list-style:none;counter-reset:s}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;list-style:none;counter-reset:s}
 .how-card{position:relative;padding:clamp(26px,3vw,40px);border:1px solid var(--border);border-radius:20px;background:linear-gradient(160deg,rgba(46,43,38,.55),rgba(20,19,16,.7));overflow:hidden;display:grid;gap:14px;align-content:start;isolation:isolate;min-height:340px;transition:border-color .4s,transform .6s var(--ease)}
 .how-card:hover{border-color:var(--flame-line);transform:translateY(-4px)}
 .how-card img{position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover;opacity:.2}
@@ -441,6 +441,53 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
 .wa-float::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--wa);animation:ping 2.6s var(--ease) infinite}
 @keyframes ping{0%{transform:scale(1);opacity:.7}80%,100%{transform:scale(1.5);opacity:0}}
 
+/* convite do Parceiro Power (link de indicacao com id) */
+.convite-banner{display:flex;gap:16px;align-items:center;margin:0 0 clamp(28px,4vw,44px);padding:18px 22px;border-radius:18px;border:1px solid var(--flame-line);background:linear-gradient(120deg,rgba(238,74,34,.16),rgba(238,74,34,.03));max-width:860px}
+.convite-banner[hidden]{display:none}
+.convite-banner .ico{flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--flame-500);color:#fff}
+.convite-banner .ico svg{width:24px;height:24px}
+.convite-banner p{color:var(--ink-2);font-size:clamp(15px,1.3vw,17px);line-height:1.5}
+.convite-banner strong{color:var(--ink);font-family:var(--f-display);font-weight:800}
+/* comparativo de planos */
+.planos{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,28px);margin-top:clamp(20px,3vw,32px);position:relative}
+.planos[hidden]{display:none}
+.plano{position:relative;border:1px solid var(--border);border-radius:24px;background:rgba(13,13,13,.72);padding:clamp(22px,3vw,34px);display:grid;gap:16px;align-content:start;transition:border-color .3s,box-shadow .3s}
+.plano.is-melhor{border-color:var(--flame-500);box-shadow:0 0 0 1px var(--flame-500),0 24px 60px -30px rgba(238,74,34,.55)}
+.plano .selo{position:absolute;top:-12px;right:22px;padding:5px 12px;border-radius:999px;background:var(--flame-500);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.plano .selo[hidden]{display:none}
+.plano-head{display:grid;gap:6px}
+.plano-head small{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--flame-400)}
+.plano-head h3{font-family:var(--f-display);font-size:clamp(24px,2.4vw,32px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.plano-head h3 span{color:var(--flame-500)}
+.plano .para{color:var(--ink-2);font-size:15px;padding:12px 14px;border-radius:12px;background:rgba(245,245,244,.04);border:1px dashed var(--border-strong)}
+.plano .para b{color:var(--ink)}
+.plano .valor{display:grid;gap:2px}
+.plano .valor small{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.plano .valor strong{font-family:var(--f-display);font-size:clamp(32px,3.6vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.plano .valor span{color:var(--ink-2);font-size:14px}
+.plano .btn{width:100%}
+.planos-nota{grid-column:1/-1;font-size:13px;color:var(--ink-3);text-align:center;max-width:820px;margin-inline:auto}
+.planos-nota b{color:var(--ink-2)}
+.signup.panel{margin:clamp(20px,3vw,32px) auto 0;max-width:760px;border-top:1px solid var(--border)}
+.plano-escolhido{font-size:14px;color:var(--ink-2);padding:12px 14px;border-radius:12px;background:var(--flame-soft);border:1px solid var(--flame-line)}
+.plano-escolhido b{color:var(--ink)}
+.link-trocar{background:none;border:0;padding:0;color:var(--flame-300);text-decoration:underline;cursor:pointer;font:inherit}
+.cashback-help b{color:var(--flame-300);font-weight:600}
+/* bloco do aplicativo */
+.app{background:linear-gradient(180deg,var(--bg-subtle) 0%,var(--bg) 100%);overflow:hidden;border-top:1px solid var(--border)}
+.app-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,90px);align-items:center}
+.app-list{display:grid;gap:18px;list-style:none;margin-top:30px}
+.app-list li{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start}
+.app-list .ico{width:44px;height:44px;border-radius:12px;background:var(--flame-soft);color:var(--flame-400);display:grid;place-items:center}
+.app-list .ico svg{width:22px;height:22px}
+.app-list h3{font-family:var(--f-display);font-size:18px;font-weight:700}
+.app-list p{color:var(--ink-2);font-size:15px;margin-top:2px}
+.app-visual{position:relative;display:grid;place-items:center;margin:0}
+.app-visual::before{content:'';position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(238,74,34,.28),transparent 65%);filter:blur(10px)}
+.app-visual img{position:relative;width:min(520px,100%);height:auto;filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
+.app .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+
+@media (max-width:1240px){.how-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:1100px){
   .nav-links{display:none}
   .nav .nav-cta{display:none}
@@ -453,7 +500,7 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
   .nav.menu-open .nav-cta{display:inline-flex;order:4;width:100%;margin-bottom:6px}
 }
 @media (max-width:1024px){
-  .how-grid{grid-template-columns:1fr}
+  .app-grid{grid-template-columns:1fr}
   .how-card{min-height:0}
   .sim-grid,.adv-grid{grid-template-columns:1fr}
   .result{position:static}
@@ -480,10 +527,12 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
   html.seq .chapter.right{padding-right:var(--gutter)}
   html.seq .chapter{padding-bottom:clamp(80px,11vh,110px)}
   .two{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:1fr}
   .seg span{font-size:13px}
   .range-row .input{width:96px}
   .wa-float{width:54px;height:54px}
 }
+@media (max-width:760px){.planos{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
@@ -621,6 +670,10 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
   <!-- ═════════ COMO FUNCIONA ═════════ -->
   <section class="section how" id="como-funciona" aria-labelledby="como-titulo">
     <div class="wrap">
+      <div class="convite-banner reveal" id="convite-banner" role="note" hidden>
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></span>
+        <p><strong id="convite-nome"></strong> reservou um benefício para você. Um desconto como prêmio para consumir energia limpa e renovável.</p>
+      </div>
       <header class="section-head reveal">
         <span class="tag">Economia Sustentável e Prática</span>
         <h2 class="display" id="como-titulo">Como Funciona a <em>Energia Solar por Assinatura?</em></h2>
@@ -644,6 +697,12 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
           <h3>Duas Faturas (Transparência)</h3>
           <p>Você recebe a conta da distribuidora (apenas taxa mínima) e a fatura B2W com a energia injetada e seu desconto garantido.</p>
         </li>
+        <li class="how-card reveal">
+          <img src="assets/posters/e5-final.jpg" alt="" loading="lazy" width="1280" height="720">
+          <span class="num">04</span>
+          <h3>Livre de Bandeiras Tarifárias</h3>
+          <p>Além do desconto fixo por ser energia de fonte renovável, a energia da assinatura é livre das cobranças de bandeiras tarifárias. Em bandeira vermelha, o desconto pode chegar a 30%.</p>
+        </li>
       </ol>
     </div>
   </section>
@@ -657,8 +716,9 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
         <p class="lead">Descubra quanto você vai economizar todos os meses com a B2W Energia.</p>
       </header>
 
+      <form id="sim-form" novalidate>
       <div class="sim-grid">
-        <form class="panel reveal" id="sim-form" novalidate>
+        <div class="panel reveal" id="sim-dados">
           <p id="convite" class="note" hidden></p>
           <div class="field">
             <label for="cep">CEP do imóvel</label>
@@ -668,8 +728,8 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
           <fieldset class="field" style="border:0">
             <legend class="label">Padrão de ligação</legend>
             <div class="seg">
-              <label><input type="radio" name="padrao" value="mono"><span>Monofásico</span></label>
-              <label><input type="radio" name="padrao" value="bi" checked><span>Bifásico</span></label>
+              <label><input type="radio" name="padrao" value="mono" checked><span>Monofásico</span></label>
+              <label><input type="radio" name="padrao" value="bi"><span>Bifásico</span></label>
               <label><input type="radio" name="padrao" value="tri"><span>Trifásico</span></label>
             </div>
           </fieldset>
@@ -681,57 +741,131 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
             </div>
             <p class="help" id="consumo-help">Está na sua conta de luz, no histórico de consumo.</p>
           </div>
-
-          <div class="signup" id="signup" hidden>
-            <p class="label" style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--flame-300)">Garantir meu desconto</p>
-            <div class="field">
-              <label for="nome">Nome completo</label>
-              <input class="input" id="nome" name="nome" autocomplete="name" placeholder="Como devemos te chamar?" required>
+          <div class="field">
+            <label for="indicacoes">Quantas pessoas você vai indicar?</label>
+            <div class="range-row">
+              <input type="range" id="indicacoes-range" min="0" max="100" step="1" value="5" aria-label="Número de pessoas que você vai indicar">
+              <input class="input" id="indicacoes" name="indicacoes" type="number" inputmode="numeric" min="0" max="500" value="5" aria-describedby="indicacoes-help">
             </div>
-            <div class="two">
-              <div class="field">
-                <label for="email">E-mail</label>
-                <input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="exemplo@email.com" required>
-              </div>
-              <div class="field">
-                <label for="whats">WhatsApp</label>
-                <input class="input" id="whats" name="whats" type="tel" autocomplete="tel" inputmode="tel" maxlength="15" placeholder="(00) 00000-0000" required>
-              </div>
-            </div>
-            <label class="check"><input type="checkbox" id="aceite" required><span>Autorizo a B2W Energia a usar estes dados para enviar minha proposta e entrar em contato pelo WhatsApp.</span></label>
-            <p class="help" id="signup-help" role="alert"></p>
-            <button class="btn btn-flame" type="submit" id="btn-adesao">Continuar para a adesão</button>
-            <p class="note">Na próxima página você informa CPF/CNPJ e a unidade consumidora e recebe o contrato para assinatura digital.</p>
+            <p class="help cashback-help" id="indicacoes-help"><b>Indique uma única vez e receba cashback todo mês</b>, abatido na sua fatura do Plano Ultra Connect, enquanto as pessoas indicadas continuarem assinantes.</p>
           </div>
-        </form>
+        </div>
 
         <div class="panel result reveal" id="result" aria-live="polite">
           <div class="result-empty" id="result-empty">
-            <p>Informe o CEP e o consumo para ver o seu desconto calculado com as tarifas da sua concessionária.</p>
+            <p>Informe o CEP e o consumo para comparar os planos com as tarifas da sua concessionária.</p>
           </div>
           <div id="result-body" hidden>
             <div class="big">
-              <small>Economia estimada por mês</small>
-              <strong id="r-mensal">R$ 0,00</strong>
-              <span id="r-anual">R$ 0,00 por ano</span>
+              <small>Sua conta de luz hoje (estimada)</small>
+              <strong id="r-atual">R$ 0,00</strong>
+              <span>sem a assinatura B2W</span>
             </div>
             <dl class="rows">
               <div><dt>Concessionária</dt><dd id="r-conc">—</dd></div>
-              <div><dt>Desconto garantido</dt><dd id="r-desc">—</dd></div>
-              <div><dt>Conta atual estimada</dt><dd id="r-atual">—</dd></div>
+              <div><dt>Consumo informado</dt><dd id="r-kwh">—</dd></div>
               <div><dt>Conta da distribuidora (taxa mínima)</dt><dd id="r-min">—</dd></div>
-              <div><dt>Fatura B2W com desconto</dt><dd id="r-b2w">—</dd></div>
-              <div class="total"><dt>Total previsto por mês</dt><dd id="r-total">—</dd></div>
             </dl>
-            <p class="note">Estimativa com a tarifa vigente da sua concessionária (R$ <span id="r-tarifa">0</span>/kWh) e o consumo informado. Os valores reais dependem da leitura, de impostos e da iluminação pública do seu município.</p>
-            <div class="actions" style="display:grid;gap:10px;margin-top:6px">
-              <button class="btn btn-flame" type="button" id="btn-garantir">Garantir meu desconto</button>
-              <a class="btn btn-ghost" id="wa-sim" href="https://wa.me/5531995367744" target="_blank" rel="noopener" data-wa="simulador"><svg aria-hidden="true"><use href="#i-wa"/></svg>Tirar dúvidas no WhatsApp</a>
-            </div>
+            <p class="note">Estimativa com a tarifa vigente da sua concessionária (R$ <span id="r-tarifa">0</span>/kWh) e o consumo informado. Os valores reais dependem da leitura, de impostos e da iluminação pública do seu município. Compare os planos logo abaixo.</p>
+            <a class="btn btn-ghost" id="wa-sim" href="https://wa.me/5531995367744" target="_blank" rel="noopener" data-wa="simulador"><svg aria-hidden="true"><use href="#i-wa"/></svg>Tirar dúvidas no WhatsApp</a>
           </div>
           <div id="result-none" class="alert warn" hidden></div>
         </div>
       </div>
+
+      <div class="planos" id="planos" aria-live="polite" hidden>
+        <article class="plano" id="plano-ultra">
+          <span class="selo" hidden>Mais economia para você</span>
+          <header class="plano-head">
+            <small>15% de desconto + cashback</small>
+            <h3>Plano <span>Ultra Connect</span></h3>
+          </header>
+          <p class="para"><b>Para quem</b> possui amigos e clientes para compartilhar e indicar, e também receber descontos na fatura — podendo zerar a fatura.</p>
+          <div class="valor">
+            <small>Economia estimada por mês</small>
+            <strong id="u-economia">R$ 0,00</strong>
+            <span id="u-anual">R$ 0,00 por ano</span>
+          </div>
+          <dl class="rows">
+            <div><dt>Desconto de 15%</dt><dd id="u-desc">—</dd></div>
+            <div><dt>Cashback de <span id="u-n">5 indicações</span></dt><dd id="u-cash">—</dd></div>
+            <div><dt>Fatura B2W (após desconto e cashback)</dt><dd id="u-b2w">—</dd></div>
+            <div class="total"><dt>Total previsto por mês</dt><dd id="u-total">—</dd></div>
+          </dl>
+          <button class="btn btn-flame" type="button" data-escolher="ultra">Garantir meu desconto no Ultra Connect</button>
+        </article>
+        <article class="plano" id="plano-premium">
+          <span class="selo" hidden>Mais economia para você</span>
+          <header class="plano-head">
+            <small>20% de desconto</small>
+            <h3>Plano <span>Premium</span></h3>
+          </header>
+          <p class="para"><b>Para quem</b> não gosta de indicação e quer um desconto maior.</p>
+          <div class="valor">
+            <small>Economia estimada por mês</small>
+            <strong id="p-economia">R$ 0,00</strong>
+            <span id="p-anual">R$ 0,00 por ano</span>
+          </div>
+          <dl class="rows">
+            <div><dt>Desconto de 20%</dt><dd id="p-desc">—</dd></div>
+            <div><dt>Cashback por indicação</dt><dd>Não se aplica</dd></div>
+            <div><dt>Fatura B2W com desconto</dt><dd id="p-b2w">—</dd></div>
+            <div class="total"><dt>Total previsto por mês</dt><dd id="p-total">—</dd></div>
+          </dl>
+          <button class="btn btn-ghost" type="button" data-escolher="premium">Garantir meu desconto no Premium</button>
+        </article>
+        <p class="planos-nota" id="planos-nota"></p>
+      </div>
+
+      <div class="panel signup" id="signup" hidden>
+        <p class="plano-escolhido">Plano escolhido: <b id="plano-escolhido-nome">—</b> · <span id="plano-escolhido-detalhe"></span> · <button type="button" class="link-trocar" id="trocar-plano">trocar de plano</button></p>
+        <div class="field">
+          <label for="nome">Nome completo</label>
+          <input class="input" id="nome" name="nome" autocomplete="name" placeholder="Como devemos te chamar?" required>
+        </div>
+        <div class="two">
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="exemplo@email.com" required>
+          </div>
+          <div class="field">
+            <label for="whats">WhatsApp</label>
+            <input class="input" id="whats" name="whats" type="tel" autocomplete="tel" inputmode="tel" maxlength="15" placeholder="(00) 00000-0000" required>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="aceite" required><span>Autorizo a B2W Energia a usar estes dados para enviar minha proposta e entrar em contato pelo WhatsApp.</span></label>
+        <p class="help" id="signup-help" role="alert"></p>
+        <button class="btn btn-flame" type="submit" id="btn-adesao">Continuar para a adesão</button>
+        <p class="note">Na próxima página você informa CPF/CNPJ e a unidade consumidora e recebe o contrato para assinatura digital.</p>
+      </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═════════ APLICATIVO ═════════ -->
+  <section class="section app" id="aplicativo" aria-labelledby="app-titulo">
+    <div class="wrap app-grid">
+      <div>
+        <header class="section-head reveal" style="margin-bottom:0">
+          <span class="tag">Aplicativo B2W Energia</span>
+          <h2 class="display" id="app-titulo">Sua energia <em>na palma da mão.</em></h2>
+          <p class="lead">Depois de assinar, você acompanha tudo pelo aplicativo da B2W Energia, sem precisar ligar para ninguém.</p>
+        </header>
+        <ul class="app-list">
+          <li class="reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><div><h3>Acompanhe seu consumo</h3><p>Veja quanto você consome e quanto economiza, mês a mês.</p></div></li>
+          <li class="reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span><div><h3>Histórico de faturas</h3><p>Todas as suas faturas em um só lugar, para consultar quando quiser.</p></div></li>
+          <li class="reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v5M9.5 15.5h5"/></svg></span><div><h3>Inclua novos imóveis</h3><p>Leve o desconto para outra casa ou para a sua empresa direto pelo aplicativo.</p></div></li>
+          <li class="reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></span><div><h3>Indique e receba cashback</h3><p>Compartilhe seu link com amigos e clientes e receba cashback abatido na sua fatura.</p></div></li>
+          <li class="reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg></span><div><h3>Cancele quando quiser</h3><p>Sem fidelidade: você pede o cancelamento direto pelo aplicativo.</p></div></li>
+        </ul>
+        <div class="actions reveal">
+          <a class="btn btn-flame" href="#simulador">Simular e assinar</a>
+          <a class="btn btn-ghost" href="https://app.b2wenergia.com.br/login">Já sou assinante · Entrar</a>
+        </div>
+      </div>
+      <figure class="app-visual reveal">
+        <img src="assets/app/app-home-connect.webp" alt="Tela do aplicativo B2W Energia com o link de indicação, o consumo da rede e os rendimentos de cashback" width="900" height="1086" loading="lazy">
+      </figure>
     </div>
   </section>
 
@@ -843,7 +977,7 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
     </div>
     <small>&copy; <span id="ano">2026</span> B2W Energia. Todos os direitos reservados. Feito com energia limpa ☀️ · Imagens e vídeos da jornada são representações ilustrativas geradas por IA.</small>
     <!-- Versão do site: atualizar a cada publicação (número, data e o que mudou). -->
-    <small class="versao" data-versao="1.1.3">Versão do site 1.1.3 · 11/11/2026 · Associação como titular, cobertura no RN (Cosern) e endereço completo</small>
+    <small class="versao" data-versao="1.2.0">Versão do site 1.2.0 · 24/11/2026 · Comparativo Premium × Ultra Connect com cashback, bloco do aplicativo, convite do Parceiro Power e energia livre de bandeiras</small>
   </div>
 </footer>
 
@@ -891,10 +1025,32 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
   const originatorName = qs.get('name') || qs.get('originador');
   if (originatorName) { $('convite').hidden = false; $('convite').textContent = `Convite de ${originatorName}`; }
 
+  // Convite do Parceiro Power: primeiro nome dele acima de "Economia Sustentável".
+  // Só com o id do originador (link de indicação); o nome fica na sessão, como o id.
+  const nomeConvite = sessao('b2w_originador_nome', originatorId && originatorName ? originatorName.trim() : null);
+  if (originatorId && nomeConvite) {
+    const primeiro = nomeConvite.split(/\s+/)[0] || '';
+    if (primeiro) {
+      $('convite-nome').textContent = primeiro.charAt(0).toLocaleUpperCase('pt-BR') + primeiro.slice(1).toLocaleLowerCase('pt-BR');
+      $('convite-banner').hidden = false;
+    }
+  }
+
   const cep = $('cep'), range = $('consumo-range'), consumo = $('consumo');
-  const state = { addr: null, offer: null, calc: null };
+  const indicRange = $('indicacoes-range'), indic = $('indicacoes');
+  const state = { addr: null, offer: null, calc: null, plano: null };
   const MIN_KWH = { mono: 30, bi: 50, tri: 100 };
   const MIN_COL = { mono: 'Tarifa Min. Mono -30 kwh + CIP', bi: 'Tarifa Min. Bifasico - 50 Kwh + CIP', tri: 'Tarifa Min. Trifásico 100 Kwh + CIP' };
+
+  // Planos de assinatura do CRM (planos_assinatura_energia, conferidos em 24/11/2026).
+  // O anon não lê essa tabela: ao mudar um plano no CRM, atualizar também aqui.
+  // Cashback = "Assinante Conect" nível 1 do Ultra Connect: 1,2% sobre a energia de
+  // cada pessoa indicada × tarifa cheia, abatido na fatura de quem indicou e
+  // limitado a ela. No Premium (recompensa só de Start) quem indica não recebe.
+  const PLANOS = {
+    ultra: { id: '29c46292-363d-46d2-87f5-7cae59c8ee69', nome: 'Plano Ultra Connect', desconto: 0.15, cashback: 0.012 },
+    premium: { id: 'b0298e43-9f01-4104-b77a-c01d3f30310c', nome: 'Plano Premium', desconto: 0.20, cashback: 0 }
+  };
 
   cep.addEventListener('input', () => {
     let v = cep.value.replace(/\D/g, '').slice(0, 8);
@@ -904,6 +1060,8 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
   });
   range.addEventListener('input', () => { consumo.value = range.value; calc(); });
   consumo.addEventListener('input', () => { range.value = Math.min(10000, Number(consumo.value) || 0); calc(); });
+  indicRange.addEventListener('input', () => { indic.value = indicRange.value; calc(); });
+  indic.addEventListener('input', () => { indicRange.value = Math.min(100, Math.max(0, Number(indic.value) || 0)); calc(); });
   document.querySelectorAll('input[name=padrao]').forEach(r => r.addEventListener('change', calc));
 
   let lastCep = '';
@@ -930,65 +1088,109 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
 
   // mesma tabela usada pelo simulador do CRM (LeadCaptureForm): Concessionaria por código IBGE.
   // Na falta do município, a tarifa da concessionária é a mesma em toda a UF — usa a da UF.
+  // Aqui ela só diz se a região tem oferta e qual é a tarifa; o desconto vem do plano.
   async function fetchOffer(ibge, uf) {
     if (!db) throw new Error('Simulador indisponível no momento. Fale com a gente no WhatsApp.');
     let { data } = await db.from('Concessionaria').select('*').eq('"Cod. Ibge"', ibge).limit(1);
     if (!(data && data[0])) ({ data } = await db.from('Concessionaria').select('*').eq('UF', uf).gt('"Desconto Assinante"', 0).limit(1));
-    const o = data && data[0] ? data[0] : null;
-    if (!o) return null;
-    // Desconto do plano vigente da distribuidora, o mesmo que a adesão aplica
-    // (decisão do dono, 15/10/2026). Sem plano único ativo, fica o do município.
-    try {
-      const { data: descPlano } = await db.rpc('fn_desconto_plano_vigente', { p_concessionaria: o.Concessionaria || '' });
-      if (descPlano != null) return { ...o, 'Desconto Assinante': Number(descPlano) };
-    } catch (e) { /* segue com o desconto do município */ }
-    return o;
+    return data && data[0] ? data[0] : null;
   }
 
   const pct = o => { let d = Number(o?.['Desconto Assinante']) || 0; return d > 1 ? d / 100 : d; };
 
   function calc() {
     const o = state.offer, kwh = Math.max(0, Number(consumo.value) || 0);
+    const n = Math.max(0, Math.floor(Number(indic.value) || 0));
     const padrao = document.querySelector('input[name=padrao]:checked').value;
     const none = $('result-none');
     none.hidden = true;
-    if (!state.addr) { $('result-empty').hidden = false; $('result-body').hidden = true; return; }
+    const esconder = () => { $('result-body').hidden = true; $('planos').hidden = true; $('signup').hidden = true; state.calc = null; };
+    if (!state.addr) { $('result-empty').hidden = false; esconder(); return; }
     $('result-empty').hidden = true;
     const d = pct(o), tarifa = Number(o?.['Tarifa Concessionaria']) || 0;
     if (!o || !d || !tarifa) {
-      $('result-body').hidden = true;
+      esconder();
       none.hidden = false;
       const local = `${state.addr.cidade} - ${state.addr.uf}`;
       none.innerHTML = `Ainda não temos desconto disponível pelo simulador para ${local}${o ? ` (${o.Concessionaria})` : ''}. <a href="https://wa.me/${WA}?text=${encodeURIComponent(`Olá! Simulei no site da B2W Energia para ${local} e quero saber sobre a assinatura na minha região.`)}" target="_blank" rel="noopener" style="text-decoration:underline" data-wa="sim-sem-oferta">Fale com um especialista no WhatsApp</a>.`;
-      $('signup').hidden = true;
-      state.calc = null;
       return;
     }
-    // Fórmula do CRM: desconto = consumo × tarifa × desconto do assinante
+    // Fórmula do CRM: desconto = consumo × tarifa × desconto do plano. A conta da
+    // distribuidora fica com a taxa mínima; o resto é a fatura B2W.
     const atual = kwh * tarifa;
-    const desconto = atual * d;
     const minimo = Math.min(Number(o[MIN_COL[padrao]]) || MIN_KWH[padrao] * tarifa, atual);
-    const total = atual - desconto;
-    const b2w = Math.max(0, total - minimo);
-    state.calc = { kwh, tarifa, d, desconto, anual: desconto * 12, atual, minimo, total, b2w };
-    $('r-mensal').textContent = brl(desconto);
-    $('r-anual').textContent = `${brl(desconto * 12)} por ano`;
-    $('r-conc').textContent = o.Concessionaria;
-    $('r-desc').textContent = `${Math.round(d * 100)}%`;
+    // Cashback por pessoa indicada, considerando que ela consome o mesmo que você.
+    const porIndicacao = kwh * tarifa * PLANOS.ultra.cashback;
+    const simular = (p, indicacoes) => {
+      const desconto = atual * p.desconto;
+      const b2w = Math.max(0, atual - desconto - minimo);
+      const cashback = Math.min(indicacoes * kwh * tarifa * p.cashback, b2w);
+      const economia = desconto + cashback;
+      return { desconto, b2w, cashback, economia, anual: economia * 12, total: atual - economia };
+    };
+    const u = simular(PLANOS.ultra, n), pr = simular(PLANOS.premium, 0);
+    state.calc = { kwh, tarifa, atual, minimo, n, ultra: u, premium: pr };
+
     $('r-atual').textContent = brl(atual);
+    $('r-conc').textContent = o.Concessionaria;
+    $('r-kwh').textContent = `${kwh.toLocaleString('pt-BR')} kWh/mês`;
     $('r-min').textContent = brl(minimo);
-    $('r-b2w').textContent = brl(b2w);
-    $('r-total').textContent = brl(total);
     $('r-tarifa').textContent = tarifa.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 5 });
-    $('wa-sim').href = `https://wa.me/${WA}?text=${encodeURIComponent(`Olá! Simulei no site da B2W Energia: ${o.Concessionaria}, ${kwh} kWh/mês, economia estimada de ${brl(desconto)} por mês. Quero assinar.`)}`;
+
+    $('u-economia').textContent = brl(u.economia);
+    $('u-anual').textContent = `${brl(u.anual)} por ano`;
+    $('u-desc').textContent = `− ${brl(u.desconto)}`;
+    $('u-n').textContent = n === 1 ? '1 indicação' : `${n} indicações`;
+    $('u-cash').textContent = n ? `− ${brl(u.cashback)}` : brl(0);
+    $('u-b2w').textContent = brl(u.b2w - u.cashback);
+    $('u-total').textContent = brl(u.total);
+    $('p-economia').textContent = brl(pr.economia);
+    $('p-anual').textContent = `${brl(pr.anual)} por ano`;
+    $('p-desc').textContent = `− ${brl(pr.desconto)}`;
+    $('p-b2w').textContent = brl(pr.b2w);
+    $('p-total').textContent = brl(pr.total);
+
+    const melhor = u.economia > pr.economia ? 'ultra' : 'premium';
+    ['ultra', 'premium'].forEach(k => {
+      const card = $(`plano-${k}`), btn = card.querySelector('[data-escolher]');
+      card.classList.toggle('is-melhor', k === melhor);
+      card.querySelector('.selo').hidden = k !== melhor;
+      btn.classList.toggle('btn-flame', k === melhor);
+      btn.classList.toggle('btn-ghost', k !== melhor);
+    });
+
+    const aPartir = porIndicacao > 0 ? Math.floor((pr.desconto - u.desconto) / porIndicacao) + 1 : null;
+    const zera = porIndicacao > 0 && u.b2w > 0 ? Math.ceil(u.b2w / porIndicacao) : null;
+    const partes = [];
+    if (aPartir) partes.push(`Com <b>${aPartir} indicações ou mais</b>, o Ultra Connect passa a economizar mais que o Premium.`);
+    if (zera) partes.push(`Com <b>${zera} indicações</b>, o cashback cobre toda a sua fatura B2W e ela chega a zero.`);
+    partes.push('O cashback considera que cada pessoa indicada consome o mesmo que você e vale todo mês enquanto ela for assinante.');
+    $('planos-nota').innerHTML = partes.join(' ');
+
+    $('wa-sim').href = `https://wa.me/${WA}?text=${encodeURIComponent(`Olá! Simulei no site da B2W Energia: ${o.Concessionaria}, ${kwh} kWh/mês. Premium (20%): economia de ${brl(pr.economia)} por mês. Ultra Connect (15% + ${n} indicações): ${brl(u.economia)} por mês. Quero assinar.`)}`;
     $('result-body').hidden = false;
+    $('planos').hidden = false;
+    atualizarEscolha();
   }
 
-  $('btn-garantir').addEventListener('click', () => {
+  function atualizarEscolha() {
+    const k = state.plano, p = PLANOS[k], r = state.calc && state.calc[k];
+    if (!p || !r) return;
+    $('plano-escolhido-nome').textContent = p.nome;
+    $('plano-escolhido-detalhe').textContent = k === 'ultra' && state.calc.n
+      ? `${Math.round(p.desconto * 100)}% de desconto + cashback estimado de ${brl(r.cashback)} por mês`
+      : `${Math.round(p.desconto * 100)}% de desconto · economia estimada de ${brl(r.economia)} por mês`;
+  }
+
+  document.querySelectorAll('[data-escolher]').forEach(b => b.addEventListener('click', () => {
+    if (!state.calc) return;
+    state.plano = b.dataset.escolher;
+    atualizarEscolha();
     $('signup').hidden = false;
     $('nome').focus({ preventScroll: true });
     $('signup').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
+  }));
+  $('trocar-plano').addEventListener('click', () => $('planos').scrollIntoView({ behavior: 'smooth', block: 'start' }));
 
   $('whats').addEventListener('input', e => {
     let v = e.target.value.replace(/\D/g, '').slice(0, 11);
@@ -1000,10 +1202,11 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
     e.preventDefault();
     const help = $('signup-help');
     help.className = 'help err';
-    if ($('signup').hidden) { if (state.calc) $('btn-garantir').click(); return; }
-    const c = state.calc;
+    const c = state.calc, plano = PLANOS[state.plano];
+    if ($('signup').hidden || !plano) { if (c) $('planos').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    const r = c && c[state.plano];
     const nome = $('nome').value.trim(), email = $('email').value.trim(), phone = $('whats').value.replace(/\D/g, '');
-    if (!c) return (help.textContent = 'Faça a simulação com CEP e consumo antes de continuar.');
+    if (!c || !r) return (help.textContent = 'Faça a simulação com CEP e consumo antes de continuar.');
     if (nome.split(/\s+/).length < 2) return (help.textContent = 'Informe seu nome completo.');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return (help.textContent = 'Informe um e-mail válido.');
     if (phone.length !== 11) return (help.textContent = 'WhatsApp inválido. Informe DDD + 9 dígitos.');
@@ -1013,6 +1216,7 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
     const btn = $('btn-adesao');
     btn.disabled = true; btn.textContent = 'Registrando sua simulação…';
     const a = state.addr, o = state.offer;
+    const descontoPct = Math.round(plano.desconto * 100);
     // Mesmo caminho do LeadCaptureForm do CRM: o banco não aceita mais insert
     // anônimo em leads (20261006c, lead único). fn_registrar_lead_publico acha o
     // lead em aberto do mesmo celular/e-mail e devolve o id da VISITA, que é o
@@ -1020,9 +1224,10 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
     const { data: leadId, error } = await db.rpc('fn_registrar_lead_publico', {
       p_dados: {
         name: nome, email, phone,
-        cep: cep.value, concessionaria: o.Concessionaria || '', consumo_kwh: String(c.kwh ?? ''), calculated_discount: String(c.desconto ?? ''),
+        cep: cep.value, concessionaria: o.Concessionaria || '', consumo_kwh: String(c.kwh ?? ''), calculated_discount: String(r.desconto ?? ''),
         rua: a.rua || '', numero: '', bairro: a.bairro || '', cidade: a.cidade || '', uf: a.uf || '',
-        tarifa_concessionaria: String(c.tarifa ?? ''), desconto_assinante: String(Number(o['Desconto Assinante']) || 0),
+        tarifa_concessionaria: String(c.tarifa ?? ''), desconto_assinante: String(descontoPct),
+        plano_id: plano.id,
         status: 'simulacao', originator_id: originatorId, indicador_assinante_id: indicadorId
       },
       p_meio: 'link',
@@ -1037,7 +1242,8 @@ html.no-js .reveal,html.rm .reveal{opacity:1;transform:none}
     if (window.fbq) fbq('track', 'Lead', {}, { eventID: leadId });
     const p = new URLSearchParams({ name: nome, email, phone, cep: cep.value, consumo: String(c.kwh), lead_id: leadId,
       concessionaria: o.Concessionaria, rua: a.rua || '', bairro: a.bairro || '', cidade: a.cidade || '', uf: a.uf || '',
-      discount_percent: String(Math.round(c.d * 100)), savings_annual: c.anual.toFixed(2) });
+      discount_percent: String(descontoPct), savings_annual: (r.desconto * 12).toFixed(2),
+      plano: plano.id, plano_nome: plano.nome });
     if (originatorId) p.set('originator_id', originatorId);
     btn.textContent = 'Abrindo sua adesão…';
     // a pagina sai logo em seguida: espera a conversao do Google ser enviada (no maximo 1,2 s)
