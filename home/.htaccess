@@ -1,0 +1,6 @@
+# /home/ não tem página própria (só guarda a cópia em /home/dominio/) e respondia 403;
+# o Search Console listava como "acesso proibido". Leva à home do site.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^$ / [R=301,L]
+</IfModule>
